@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router";
 import { Hero } from "../components/Hero";
 import { ProjectOverview } from "../components/ProjectOverview";
@@ -7,6 +7,7 @@ import { Design } from "../components/Design";
 import { Impact } from "../components/Impact";
 
 export function CtrlZProjectPage() {
+  const contentRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState<
     "discovery" | "design" | "impact"
   >("discovery");
@@ -42,7 +43,13 @@ export function CtrlZProjectPage() {
               {(["discovery", "design", "impact"] as const).map((section) => (
                 <button
                   key={section}
-                  onClick={() => setActiveSection(section)}
+                  onClick={() => {
+                    setActiveSection(section);
+                    contentRef.current?.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                  }}
                   className={`text-sm uppercase tracking-wider transition-colors pb-1 ${
                     activeSection === section
                       ? "text-[#b87673] border-b-2 border-[#b87673]"
@@ -57,7 +64,10 @@ export function CtrlZProjectPage() {
         </nav>
 
         {/* Content Sections */}
-        <div className="max-w-6xl mx-auto px-6 py-16">
+        <div
+          ref={contentRef}
+          className="max-w-6xl mx-auto px-6 py-16 scroll-mt-[115px]"
+        >
           {activeSection === "discovery" && <Research />}
           {activeSection === "design" && <Design />}
           {activeSection === "impact" && <Impact />}

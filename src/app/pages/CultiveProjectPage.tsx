@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router";
 import { CultiveHero } from "../components/cultive/CultiveHero";
 import { CultiveProjectOverview } from "../components/cultive/CultiveProjectOverview";
@@ -7,6 +7,7 @@ import { CultiveDesign } from "../components/cultive/CultiveDesign";
 import { CultiveImpact } from "../components/cultive/CultiveImpact";
 
 export function CultiveProjectPage() {
+  const contentRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState<
     "discovery" | "design" | "impact"
   >("discovery");
@@ -42,7 +43,13 @@ export function CultiveProjectPage() {
               {(["discovery", "design", "impact"] as const).map((section) => (
                 <button
                   key={section}
-                  onClick={() => setActiveSection(section)}
+                  onClick={() => {
+                    setActiveSection(section);
+                    contentRef.current?.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                  }}
                   className={`text-sm uppercase tracking-wider transition-colors pb-1 ${
                     activeSection === section
                       ? "text-[#6b8e6b] border-b-2 border-[#6b8e6b]"
@@ -57,7 +64,10 @@ export function CultiveProjectPage() {
         </nav>
 
         {/* Content Sections */}
-        <div className="max-w-6xl mx-auto px-6 py-16">
+        <div
+          ref={contentRef}
+          className="max-w-6xl mx-auto px-6 py-16 scroll-mt-[115px]"
+        >
           {activeSection === "discovery" && <CultiveResearch />}
           {activeSection === "design" && <CultiveDesign />}
           {activeSection === "impact" && <CultiveImpact />}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router";
 import { TrackingToolHero } from "../components/tracking-tool/TrackingToolHero";
 import { TrackingToolProjectOverview } from "../components/tracking-tool/TrackingToolProjectOverview";
@@ -7,6 +7,7 @@ import { TrackingToolDesign } from "../components/tracking-tool/TrackingToolDesi
 import { TrackingToolImpact } from "../components/tracking-tool/TrackingToolImpact";
 
 export function TrackingToolProjectPage() {
+  const contentRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState<
     "discovery" | "design" | "impact"
   >("discovery");
@@ -42,7 +43,13 @@ export function TrackingToolProjectPage() {
               {(["discovery", "design", "impact"] as const).map((section) => (
                 <button
                   key={section}
-                  onClick={() => setActiveSection(section)}
+                  onClick={() => {
+                    setActiveSection(section);
+                    contentRef.current?.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                  }}
                   className={`text-sm uppercase tracking-wider transition-colors pb-1 ${
                     activeSection === section
                       ? "text-[#d4834f] border-b-2 border-[#d4834f]"
@@ -57,7 +64,10 @@ export function TrackingToolProjectPage() {
         </nav>
 
         {/* Content Sections */}
-        <div className="max-w-6xl mx-auto px-6 py-16">
+        <div
+          ref={contentRef}
+          className="max-w-6xl mx-auto px-6 py-16 scroll-mt-[115px]"
+        >
           {activeSection === "discovery" && <TrackingToolResearch />}
           {activeSection === "design" && <TrackingToolDesign />}
           {activeSection === "impact" && <TrackingToolImpact />}

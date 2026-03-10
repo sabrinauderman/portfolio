@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link } from "react-router";
 import { CountingLandHero } from "../components/counting-land/CountingLandHero";
 import { CountingLandProjectOverview } from "../components/counting-land/CountingLandProjectOverview";
@@ -7,6 +7,7 @@ import { CountingLandDesign } from "../components/counting-land/CountingLandDesi
 import { CountingLandImpact } from "../components/counting-land/CountingLandImpact";
 
 export function CountingLandProjectPage() {
+  const contentRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState<
     "discovery" | "design" | "impact"
   >("discovery");
@@ -42,7 +43,13 @@ export function CountingLandProjectPage() {
               {(["discovery", "design", "impact"] as const).map((section) => (
                 <button
                   key={section}
-                  onClick={() => setActiveSection(section)}
+                  onClick={() => {
+                    setActiveSection(section);
+                    contentRef.current?.scrollIntoView({
+                      behavior: "smooth",
+                      block: "start",
+                    });
+                  }}
                   className={`text-sm uppercase tracking-wider transition-colors pb-1 ${
                     activeSection === section
                       ? "text-[#8b6b87] border-b-2 border-[#8b6b87]"
@@ -57,7 +64,10 @@ export function CountingLandProjectPage() {
         </nav>
 
         {/* Content Sections */}
-        <div className="max-w-6xl mx-auto px-6 py-16">
+        <div
+          ref={contentRef}
+          className="max-w-6xl mx-auto px-6 py-16 scroll-mt-[115px]"
+        >
           {activeSection === "discovery" && <CountingLandResearch />}
           {activeSection === "design" && <CountingLandDesign />}
           {activeSection === "impact" && <CountingLandImpact />}
