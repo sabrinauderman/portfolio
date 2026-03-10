@@ -1,7 +1,3 @@
-import React from "react";
-
-import imgO7SFQpds9TclnKbcnAsNyEr4Mp4 from "@/assets/0157d7204cc8742bd42d1befd4c6d95e87e3f92f.png";
-
 export function Research() {
   return (
     <div className="max-w-5xl mx-auto space-y-32">
@@ -42,16 +38,6 @@ export function Research() {
             We interviewed emerging and established designers to understand
             what's blocking creative collaboration.
           </p>
-
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 space-y-6">
-            <div className="flex items-center gap-3">
-              <span className="text-2xl">💡</span>
-              <p className="font-medium text-gray-900">The pattern:</p>
-            </div>
-            <p className="text-2xl italic text-gray-800 font-light">
-              What if the platform did the matchmaking?
-            </p>
-          </div>
 
           {/* User Quotes */}
           <div className="grid md:grid-cols-2 gap-8 pt-8">
