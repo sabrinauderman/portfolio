@@ -11,7 +11,7 @@ export function TrackingToolResearch() {
             At Madbox, we have a process called "Tracking Update" where we add
             new events to our games. This involves Analytics Design, Game
             Developer Implementation, and QA testing—requiring extensive
-            communication across teams. We found the following problems:
+            communication across teams. We found the following challenges:
           </p>
           <ul className="list-disc pl-6 space-y-2">
             <li>
