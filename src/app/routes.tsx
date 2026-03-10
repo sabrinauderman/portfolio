@@ -6,29 +6,35 @@ import { TrackingToolProjectPage } from "./pages/TrackingToolProjectPage";
 import { CountingLandProjectPage } from "./pages/CountingLandProjectPage";
 import { CultiveProjectPage } from "./pages/CultiveProjectPage";
 
-export const router = createBrowserRouter([
+export const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      Component: HomePage,
+    },
+    {
+      path: "/projects",
+      Component: ProjectsPage,
+    },
+    {
+      path: "/projects/ctrl-z",
+      Component: CtrlZProjectPage,
+    },
+    {
+      path: "/projects/tracking-tool",
+      Component: TrackingToolProjectPage,
+    },
+    {
+      path: "/projects/counting-land",
+      Component: CountingLandProjectPage,
+    },
+    {
+      path: "/projects/cultive",
+      Component: CultiveProjectPage,
+    },
+  ],
   {
-    path: "/",
-    Component: HomePage,
-  },
-  {
-    path: "/projects",
-    Component: ProjectsPage,
-  },
-  {
-    path: "/projects/ctrl-z",
-    Component: CtrlZProjectPage,
-  },
-  {
-    path: "/projects/tracking-tool",
-    Component: TrackingToolProjectPage,
-  },
-  {
-    path: "/projects/counting-land",
-    Component: CountingLandProjectPage,
-  },
-  {
-    path: "/projects/cultive",
-    Component: CultiveProjectPage,
-  },
-]);
+    // Usa o mesmo base que o Vite ("/Sabrina-Portfolio/")
+    basename: import.meta.env.BASE_URL,
+  }
+);
