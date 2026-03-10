@@ -1,4 +1,3 @@
-import React from "react";
 import clsx from "clsx";
 import svgPaths from "./svg-xiuottjrqe";
 import imgText from "@/assets/73278865dc6a2cc9a03fd1463d7b140d53ca4241.png";
@@ -31,11 +30,7 @@ function Button1({ children }: React.PropsWithChildren<{}>) {
         aria-hidden="true"
         className="absolute border border-[#e0e5eb] border-solid inset-0 pointer-events-none rounded-[8px]"
       />
-      <div
-        className="bg-clip
--       padding border-0 border-[transparent] border-solid content-stretch flex items-center justify-betwee
-n      px-[13px] py-px relative size-full"
-      >
+      <div className="bg-clip-padding border-0 border-[transparent] border-solid content-stretch flex items-center justify-between px-[13px] py-px relative size-full">
         {children}
       </div>
     </div>
@@ -131,10 +126,7 @@ function Button({ children }: React.PropsWithChildren<{}>) {
         aria-hidden="true"
         className="absolute border border-[#e0e5eb] border-solid inset-0 pointer-events-none rounded-[8px]"
       />
-      <div
-        className="flex fl
-e       x-row items-center size-full"
-      >
+      <div className="flex flex-row items-center size-full">
         <div className="bg-clip-padding border-0 border-[transparent] border-solid content-stretch flex items-center justify-between px-[13px] py-px relative size-full">
           {children}
         </div>
@@ -272,11 +264,7 @@ function TextText({
       )}
     >
       <p
-        className={`font
-        -['Inter:Medium',sans-serif] font-medium leading-[20px] not-italic rel
-a       tive shrink-0 text-[,
-      #1
-    31720] text-[14px] text-center tracking-[-0.1504px] whitespace-nowrap ${blurName ? "privacy-blur" : ""}`}
+        className={`font-['Inter:Medium',sans-serif] font-medium leading-[20px] not-italic relative shrink-0 text-[#131720] text-[14px] text-center tracking-[-0.1504px] whitespace-nowrap ${blurName ? "privacy-blur" : ""}`}
       >
         {text}
       </p>
@@ -306,38 +294,24 @@ export default function BasicInfoContextCreate() {
         className="bg-[#f9fbfc] h-[1858px] relative shrink-0 w-full"
         data-name="T0"
       >
-        <div
-          className="content-stretch flex flex-col gap-[32px] items-
-s       tart pt-[32px]
-       px-[24px] relative size-full"
-        >
+        <div className="content-stretch flex flex-col gap-[32px] items-start pt-[32px] px-[24px] relative size-full">
           <div
             className="content-stretch flex flex-col gap-[8px] h-[68px] items-start relative shrink-0 w-full"
             data-name="Container"
           >
             <div
               className="content-stretch flex h-[36px] items-start relative shrink-0 w-full"
-              data-name="Headi
-n           g 1"
+              data-name="Heading 1"
             >
-              <p
-                className="flex-[1_0_0] font-['Inter:Bold',sans-serif] font-bold leading-[36px
-]              min-h-px min-w-px no
-            t-italic relative text-[#131720] text-[30px] tracking-[0.3955px]"
-              >
+              <p className="flex-[1_0_0] font-['Inter:Bold',sans-serif] font-bold leading-[36px] min-h-px min-w-px not-italic relative text-[#131720] text-[30px] tracking-[0.3955px]">
                 Create Tracking Update
               </p>
             </div>
-
             <div
               className="h-[24px] relative shrink-0 w-full"
               data-name="Paragraph"
             >
-              <p
-                className="absolute font-['Inter:Regular',san
-s             -serif] font-normal l
-            eading-[24px] left-0 not-italic text-[#66758a] text-[16px] top-[-0.5px] tracking-[-0.3125px] whitespace-nowrap"
-              >
+              <p className="absolute font-['Inter:Regular',sans-serif] font-normal leading-[24px] left-0 not-italic text-[#66758a] text-[16px] top-[-0.5px] tracking-[-0.3125px] whitespace-nowrap">
                 Fill in the details below to create a new tracking update
               </p>
             </div>
@@ -350,11 +324,7 @@ s             -serif] font-normal l
               className="h-[1256px] relative shrink-0 w-[1123px]"
               data-name="Container"
             >
-              <div
-                className="bg-clip-padding border-0 border-[trans
-p             arent] border-solid r
-            elative size-full"
-              >
+              <div className="bg-clip-padding border-0 border-[transparent] border-solid relative size-full">
                 <div
                   className="absolute bg-white content-stretch flex flex-col h-[1170px] items-start left-0 p-px rounded-[10px] top-[74px] w-[1123px]"
                   data-name="Container"
@@ -363,17 +333,11 @@ p             arent] border-solid r
                     aria-hidden="true"
                     className="absolute border border-[#e0e5eb] border-solid inset-0 pointer-events-none rounded-[10px]"
                   />
-
                   <div
-                    className="h-[1168
-p                   x] relative shrink-0 w-full"
+                    className="h-[1168px] relative shrink-0 w-full"
                     data-name="Container"
                   >
-                    <div
-                      className="content-stretch flex flex-col gap-
-[                   24px] items-start pl-
-                  [24px] py-[24px] relative size-full"
-                    >
+                    <div className="content-stretch flex flex-col gap-[24px] items-start pl-[24px] py-[24px] relative size-full">
                       <Container>
                         <LabelText text="Game" />
                         <Button1>
@@ -385,13 +349,10 @@ p                   x] relative shrink-0 w-full"
                               >
                                 <img
                                   alt=""
-                                  className="absolute inset-0 max-w-none object-c
-                               over pointer-even
-                              ts-none rounded-[20px] size-full"
+                                  className="absolute inset-0 max-w-none object-cover pointer-events-none rounded-[20px] size-full"
                                   src={imgText}
                                 />
                               </div>
-
                               <TextText
                                 text="Mini Ants Empire"
                                 additionalClassNames="w-[117px]"
@@ -408,7 +369,6 @@ p                   x] relative shrink-0 w-full"
                             data-name="Container"
                           >
                             <LabelText1 text="Dev Assignee" />
-
                             <Button>
                               <Wrapper4>
                                 <div className="content-stretch flex items-center relative shrink-0 w-[156px]">
@@ -428,7 +388,6 @@ p                   x] relative shrink-0 w-full"
                             data-name="Container"
                           >
                             <LabelText1 text="QA Assignee" />
-
                             <Button>
                               <Wrapper4>
                                 <div className="content-stretch flex items-center relative shrink-0 w-[156px]">
@@ -456,11 +415,7 @@ p                   x] relative shrink-0 w-full"
                             className="bg-[#fee2e2] h-[20px] relative rounded-[8px] shrink-0 w-[77.141px]"
                             data-name="Text"
                           >
-                            <div
-                              className="bg-clip-padding border-0 border-[transparent] border-solid conten
-                           t-stretch flex it
-                          ems-center px-[8px] py-[2px] relative size-full"
-                            >
+                            <div className="bg-clip-padding border-0 border-[transparent] border-solid content-stretch flex items-center px-[8px] py-[2px] relative size-full">
                               <p className="font-['Inter:Medium',sans-serif] font-medium leading-[16px] not-italic relative shrink-0 text-[#dc2828] text-[12px] text-center whitespace-nowrap">
                                 0 - Critical
                               </p>
@@ -473,20 +428,12 @@ p                   x] relative shrink-0 w-full"
                         className="flex-[1_0_0] min-h-px min-w-px relative w-[1073px]"
                         data-name="Container"
                       >
-                        <div
-                          className="bg-clip-padding border-0 border-[transparent] bor
-                       der-solid relative siz
-                      e-full"
-                        >
+                        <div className="bg-clip-padding border-0 border-[transparent] border-solid relative size-full">
                           <div
                             className="absolute h-[20px] left-0 top-0 w-[1073px]"
                             data-name="Label"
                           >
-                            <p
-                              className="absolute font-['Inter:Medium',sans-serif] 
-                           font-medium leadin
-                          g-[0] left-0 not-italic text-[#131720] text-[14px] top-[0.5px] tracking-[-0.1504px] whitespace-nowrap"
-                            >
+                            <p className="absolute font-['Inter:Medium',sans-serif] font-medium leading-[0] left-0 not-italic text-[#131720] text-[14px] top-[0.5px] tracking-[-0.1504px] whitespace-nowrap">
                               <span className="leading-[20px]">{`Update Type `}</span>
                               <span className="leading-[20px] text-[#dc2828]">
                                 *
@@ -498,16 +445,11 @@ p                   x] relative shrink-0 w-full"
                             data-name="Container"
                           >
                             <Text>Event</Text>
-
                             <div
                               className="flex-[1_0_0] min-h-px min-w-px relative w-[1073px]"
                               data-name="Container"
                             >
-                              <div
-                                className="bg-clip-padding border-0 border-[transparent] bor
-d                             er-solid relative siz
-                            e-full"
-                              >
+                              <div className="bg-clip-padding border-0 border-[transparent] border-solid relative size-full">
                                 <div
                                   className="absolute bg-white content-stretch flex flex-col gap-[4px] h-[76px] items-start left-0 pb-[2px] pt-[18px] px-[18px] rounded-[10px] top-0 w-[349.664px]"
                                   data-name="Button"
@@ -516,12 +458,7 @@ d                             er-solid relative siz
                                     aria-hidden="true"
                                     className="absolute border-2 border-[#e0e5eb] border-solid inset-0 pointer-events-none rounded-[10px]"
                                   />
-
-                                  <ContainerText
-                                    text="Ev
-e                                   nt: Create"
-                                  />
-
+                                  <ContainerText text="Event: Create" />
                                   <ContainerText1 text="Create a new event with attributes and triggers" />
                                 </div>
                                 <div
@@ -532,12 +469,7 @@ e                                   nt: Create"
                                     aria-hidden="true"
                                     className="absolute border-2 border-[#e0e5eb] border-solid inset-0 pointer-events-none rounded-[10px]"
                                   />
-
-                                  <ContainerText
-                                    text="Ev
-e                                   nt: Edit"
-                                  />
-
+                                  <ContainerText text="Event: Edit" />
                                   <ContainerText1 text="Add/remove attributes or modify triggers" />
                                 </div>
                                 <div
@@ -548,12 +480,7 @@ e                                   nt: Edit"
                                     aria-hidden="true"
                                     className="absolute border-2 border-[#e0e5eb] border-solid inset-0 pointer-events-none rounded-[10px]"
                                   />
-
-                                  <ContainerText
-                                    text="Ev
-e                                   nt: Archive"
-                                  />
-
+                                  <ContainerText text="Event: Archive" />
                                   <ContainerText1 text="Archive and stop tracking an event" />
                                 </div>
                               </div>
@@ -603,15 +530,10 @@ e                                   nt: Archive"
                                 className="absolute h-[16px] left-0 top-0 w-[62.25px]"
                                 data-name="Text"
                               >
-                                <p
-                                  className="absolute font-['Inter:Medium',sans-serif] f
-                               ont-medium leadin
-                              g-[16px] left-0 not-italic text-[#66758a] text-[12px] top-px tracking-[0.6px] uppercase whitespace-nowrap"
-                                >
+                                <p className="absolute font-['Inter:Medium',sans-serif] font-medium leading-[16px] left-0 not-italic text-[#66758a] text-[12px] top-px tracking-[0.6px] uppercase whitespace-nowrap">
                                   Context
                                 </p>
                               </div>
-
                               <div
                                 className="absolute content-stretch flex flex-col items-start left-[68.25px] size-[14px] top-px"
                                 data-name="Container"
@@ -654,12 +576,9 @@ e                                   nt: Archive"
                                         viewBox="0 0 1.16667 3.5"
                                       >
                                         <path
-                                          d="M0.583333 2.91667V0.5
-8                                       3333"
-                                          id="V
-e                                       ctor"
-                                          stroke="var(--stroke
--                                       0, #66758A)"
+                                          d="M0.583333 2.91667V0.583333"
+                                          id="Vector"
+                                          stroke="var(--stroke-0, #66758A)"
                                           strokeLinecap="round"
                                           strokeLinejoin="round"
                                           strokeWidth="1.16667"
@@ -679,12 +598,9 @@ e                                       ctor"
                                         viewBox="0 0 1.1725 1.16667"
                                       >
                                         <path
-                                          d="M0.583333 0.583333H0.
-                                       589167"
-                                          id="
-                                       Vector"
-                                          stroke="var(--strok
-                          e             -0, #66758A)"
+                                          d="M0.583333 0.583333H0.589167"
+                                          id="Vector"
+                                          stroke="var(--stroke-0, #66758A)"
                                           strokeLinecap="round"
                                           strokeLinejoin="round"
                                           strokeWidth="1.16667"
@@ -699,11 +615,7 @@ e                                       ctor"
                               className="flex-[1_0_0] min-h-px min-w-px relative w-[1073px]"
                               data-name="Container"
                             >
-                              <div
-                                className="bg-clip-padding border-0 border-[transparent] bor
-d                             er-solid relative siz
-                            e-full"
-                              >
+                              <div className="bg-clip-padding border-0 border-[transparent] border-solid relative size-full">
                                 <div
                                   className="absolute bg-[#f0f7ff] content-stretch flex flex-col gap-[4px] h-[92px] items-start left-0 pb-[2px] pt-[18px] px-[18px] rounded-[10px] top-0 w-[349.664px]"
                                   data-name="Button"
@@ -712,21 +624,12 @@ d                             er-solid relative siz
                                     aria-hidden="true"
                                     className="absolute border-2 border-[#0b64f4] border-solid inset-0 pointer-events-none rounded-[10px]"
                                   />
-
-                                  <ContainerText
-                                    text="Co
-n                                   text: Create"
-                                  />
-
+                                  <ContainerText text="Context: Create" />
                                   <div
                                     className="h-[32px] relative shrink-0 w-full"
                                     data-name="Container"
                                   >
-                                    <p
-                                      className="absolute font-['Inter:Medium',sans
--                                   serif] font-medium le
-                                  ading-[16px] left-0 not-italic text-[#66758a] text-[12px] top-px w-[262px]"
-                                    >
+                                    <p className="absolute font-['Inter:Medium',sans-serif] font-medium leading-[16px] left-0 not-italic text-[#66758a] text-[12px] top-px w-[262px]">
                                       Create a new feature context with events
                                       and attributes
                                     </p>
@@ -740,12 +643,7 @@ n                                   text: Create"
                                     aria-hidden="true"
                                     className="absolute border-2 border-[#e0e5eb] border-solid inset-0 pointer-events-none rounded-[10px]"
                                   />
-
-                                  <ContainerText
-                                    text="Co
-                                   ntext: Edit"
-                                  />
-
+                                  <ContainerText text="Context: Edit" />
                                   <ContainerText1 text="Modify existing feature or global context" />
                                 </div>
                                 <div
@@ -756,12 +654,7 @@ n                                   text: Create"
                                     aria-hidden="true"
                                     className="absolute border-2 border-[#e0e5eb] border-solid inset-0 pointer-events-none rounded-[10px]"
                                   />
-
-                                  <ContainerText
-                                    text="Co
-n                                   text: Archive"
-                                  />
-
+                                  <ContainerText text="Context: Archive" />
                                   <ContainerText1 text="Archive and remove a context from tracking" />
                                 </div>
                               </div>
@@ -776,7 +669,6 @@ n                                   text: Archive"
                             *
                           </span>
                         </Wrapper>
-
                         <TextInputText text="Create New Context" />
                       </Container>
                       <Container>
@@ -786,11 +678,7 @@ n                                   text: Archive"
                             className="h-[20px] relative shrink-0 w-[25.148px]"
                             data-name="Text"
                           >
-                            <div
-                              className="bg-clip-padding border-0 border-[trans
-p                           arent] border-so
-                          lid relative size-full"
-                            >
+                            <div className="bg-clip-padding border-0 border-[transparent] border-solid relative size-full">
                               <p className="-translate-x-1/2 absolute font-['Inter:Medium',sans-serif] font-medium leading-[20px] left-[13px] not-italic text-[#131720] text-[14px] text-center top-[0.5px] tracking-[-0.1504px] whitespace-nowrap">
                                 Ads
                               </p>
@@ -806,11 +694,7 @@ p                           arent] border-so
                             className="h-[20px] relative shrink-0 w-[93.266px]"
                             data-name="Text"
                           >
-                            <div
-                              className="bg-clip-padding border-0 border-[trans
-p                           arent] border-so
-                          lid relative size-full"
-                            >
+                            <div className="bg-clip-padding border-0 border-[transparent] border-solid relative size-full">
                               <p className="-translate-x-1/2 absolute font-['Inter:Medium',sans-serif] font-medium leading-[20px] left-[47px] not-italic text-[#131720] text-[14px] text-center top-[0.5px] tracking-[-0.1504px] whitespace-nowrap">
                                 Game Custom
                               </p>
@@ -823,19 +707,12 @@ p                           arent] border-so
                         className="h-[40px] relative shrink-0 w-[1073px]"
                         data-name="Container"
                       >
-                        <div
-                          className="bg-clip-padding border-0 border-[tra
-n                       sparent] border-solid
-                       content-stretch flex items-start justify-end relative size-full"
-                        >
+                        <div className="bg-clip-padding border-0 border-[transparent] border-solid content-stretch flex items-start justify-end relative size-full">
                           <div
                             className="bg-[#0b64f4] h-[40px] relative rounded-[8px] shrink-0 w-[91.563px]"
                             data-name="Button"
                           >
-                            <div
-                              className="bg-clip-padding border-0 border-[transparent] border-solid relati
-v                           e size-full"
-                            >
+                            <div className="bg-clip-padding border-0 border-[transparent] border-solid relative size-full">
                               <p className="-translate-x-1/2 absolute font-['Inter:Medium',sans-serif] font-medium leading-[20px] left-[46px] not-italic text-[14px] text-center text-white top-[10.5px] tracking-[-0.1504px] whitespace-nowrap">
                                 Continue
                               </p>
@@ -872,11 +749,7 @@ v                           e size-full"
                       className="flex-[1_0_0] h-[24px] min-h-px min-w-px relative"
                       data-name="Text"
                     >
-                      <div
-                        className="bg-clip-padding border-0 border-[transparent] b
-o                     rder-solid relat
-                    ive size-full"
-                      >
+                      <div className="bg-clip-padding border-0 border-[transparent] border-solid relative size-full">
                         <p className="-translate-x-1/2 absolute font-['Inter:Semi_Bold',sans-serif] font-semibold leading-[24px] left-[66.5px] not-italic text-[#131720] text-[16px] text-center top-[-0.5px] tracking-[-0.3125px] whitespace-nowrap">
                           Basic Information
                         </p>
@@ -914,11 +787,7 @@ o                     rder-solid relat
                     className="absolute h-[24px] left-[504.58px] top-[20px] w-[111.836px]"
                     data-name="Container"
                   >
-                    <p
-                      className="-translate-x-1/2 absolute font-['Inter:Medium',sans-serif] 
-                   font-medium leading-[2
-                  4px] left-[56.5px] not-italic text-[#4a5568] text-[16px] text-center top-[-0.5px] tracking-[-0.3125px] whitespace-nowrap"
-                    >
+                    <p className="-translate-x-1/2 absolute font-['Inter:Medium',sans-serif] font-medium leading-[24px] left-[56.5px] not-italic text-[#4a5568] text-[16px] text-center top-[-0.5px] tracking-[-0.3125px] whitespace-nowrap">
                       Context: Create
                     </p>
                   </div>
@@ -929,11 +798,7 @@ o                     rder-solid relat
               className="h-[66px] relative shrink-0 w-[1123px]"
               data-name="Container"
             >
-              <div
-                className="bg-clip-padding border-0 border-[tra
-             nsparent] border-solid
-             relative size-full"
-              >
+              <div className="bg-clip-padding border-0 border-[transparent] border-solid relative size-full">
                 <div
                   className="absolute bg-[#f5f7fa] content-stretch flex h-[66px] items-center justify-between left-0 opacity-60 px-[17px] py-px rounded-[10px] top-0 w-[1123px]"
                   data-name="Button"
@@ -942,18 +807,13 @@ o                     rder-solid relat
                     aria-hidden="true"
                     className="absolute border border-[#e0e5eb] border-solid inset-0 pointer-events-none rounded-[10px]"
                   />
-
                   <Container1>
                     <ContainerText2 text="2" />
                     <div
                       className="h-[24px] relative shrink-0 w-[118px]"
                       data-name="Text"
                     >
-                      <div
-                        className="bg-clip-padding border-0 border-[tr
-                     ansparent] border
-                    -solid relative size-full"
-                      >
+                      <div className="bg-clip-padding border-0 border-[transparent] border-solid relative size-full">
                         <p className="-translate-x-1/2 absolute font-['Inter:Semi_Bold',sans-serif] font-semibold leading-[24px] left-[23px] not-italic text-[#66758a] text-[16px] text-center top-[-0.5px] tracking-[-0.3125px] whitespace-nowrap">
                           Details
                         </p>
@@ -968,11 +828,7 @@ o                     rder-solid relat
               className="h-[66px] relative shrink-0 w-[1123px]"
               data-name="Container"
             >
-              <div
-                className="bg-clip-padding border-0 border-[tra
-             nsparent] border-solid
-             relative size-full"
-              >
+              <div className="bg-clip-padding border-0 border-[transparent] border-solid relative size-full">
                 <div
                   className="absolute bg-[#f5f7fa] content-stretch flex h-[66px] items-center justify-between left-0 opacity-60 px-[17px] py-px rounded-[10px] top-0 w-[1123px]"
                   data-name="Button"
@@ -981,18 +837,13 @@ o                     rder-solid relat
                     aria-hidden="true"
                     className="absolute border border-[#e0e5eb] border-solid inset-0 pointer-events-none rounded-[10px]"
                   />
-
                   <Container1>
                     <ContainerText2 text="3" />
                     <div
                       className="flex-[1_0_0] h-[24px] min-h-px min-w-px relative"
                       data-name="Text"
                     >
-                      <div
-                        className="bg-clip-padding border-0 border-[transparent] b
-                     order-solid relat
-                    ive size-full"
-                      >
+                      <div className="bg-clip-padding border-0 border-[transparent] border-solid relative size-full">
                         <p className="-translate-x-1/2 absolute font-['Inter:Semi_Bold',sans-serif] font-semibold leading-[24px] left-[73px] not-italic text-[#66758a] text-[16px] text-center top-[-0.5px] tracking-[-0.3125px] whitespace-nowrap">{`Events & Attributes`}</p>
                       </div>
                     </div>

@@ -53,16 +53,6 @@ export function Research() {
             </p>
           </div>
 
-          <div className="pt-6 space-y-4">
-            <p className="text-gray-700">
-              From that point, we designed CTRL+Z with AI at the core.
-            </p>
-            <p className="text-gray-700">
-              Not as a gimmick, but as infrastructure that evaluates skills,
-              availability, and project goals to generate ranked matches.
-            </p>
-          </div>
-
           {/* User Quotes */}
           <div className="grid md:grid-cols-2 gap-8 pt-8">
             <div className="bg-[#ffef9c] rounded-2xl p-8 space-y-6 shadow-sm relative">
@@ -275,4 +265,3 @@ export function Research() {
     </div>
   );
 }
-
