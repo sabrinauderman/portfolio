@@ -5,7 +5,7 @@ import react from "@vitejs/plugin-react";
 
 export default defineConfig({
   // GitHub Pages: sabrinauderman.github.io/Portfolio/
-  base: "/Portfolio/",
+  base: "/portfolio/",
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
