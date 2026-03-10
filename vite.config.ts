@@ -4,8 +4,8 @@ import tailwindcss from "@tailwindcss/vite";
 import react from "@vitejs/plugin-react";
 
 export default defineConfig({
-  // Importante para GitHub Pages em vitorkrau.github.io/Sabrina-Portfolio/
-  base: "/Sabrina-Portfolio/",
+  // GitHub Pages: sabrinauderman.github.io/Portfolio/
+  base: "/Portfolio/",
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {

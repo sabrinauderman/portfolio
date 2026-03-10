@@ -34,7 +34,7 @@ export const router = createBrowserRouter(
     },
   ],
   {
-    // Usa o mesmo base que o Vite ("/Sabrina-Portfolio/")
+    // Usa o mesmo base que o Vite ("/Portfolio/")
     basename: import.meta.env.BASE_URL,
   }
 );
