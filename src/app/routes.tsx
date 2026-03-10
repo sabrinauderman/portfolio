@@ -34,7 +34,7 @@ export const router = createBrowserRouter(
     },
   ],
   {
-    // Usa o mesmo base que o Vite ("/Portfolio/")
+    // Usa o mesmo base que o Vite ("/portfolio/")
     basename: import.meta.env.BASE_URL,
-  }
+  },
 );
