@@ -28,12 +28,24 @@ export function HomePage() {
       {/* Hero Section */}
       <section className="max-w-6xl mx-auto px-6 pt-32 pb-24">
         <div className="space-y-8">
+          {/* Availability */}
+          <a
+            href="#next-chapter"
+            className="inline-flex items-center gap-3 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm text-emerald-900 hover:bg-emerald-100 transition-colors"
+          >
+            <span className="relative flex h-2.5 w-2.5">
+              <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+              <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
+            </span>
+            Open to work · Landing in Tel Aviv on November 8
+          </a>
+
           {/* Name with Profile Photo */}
           <div className="flex items-center gap-6">
-            <h1 className="text-7xl font-light tracking-tight text-gray-900">
+            <h1 className="text-5xl md:text-7xl font-light tracking-tight text-gray-900">
               Sabrina Uderman
             </h1>
-            <div className="w-24 h-24 rounded-full overflow-hidden border-2 border-gray-200 flex-shrink-0">
+            <div className="w-16 h-16 md:w-24 md:h-24 rounded-full overflow-hidden border-2 border-gray-200 flex-shrink-0">
               <ImageWithFallback
                 src={profilePhoto}
                 alt="Sabrina Uderman"
@@ -63,6 +75,37 @@ export function HomePage() {
         </div>
       </section>
 
+      {/* Next Chapter */}
+      <section
+        id="next-chapter"
+        className="max-w-6xl mx-auto px-6 pb-24 scroll-mt-24"
+      >
+        <div className="rounded-3xl bg-gray-900 text-white p-10 md:p-14 grid md:grid-cols-[2fr,1fr] gap-10 items-end">
+          <div className="space-y-5">
+            <p className="text-sm uppercase tracking-wider text-emerald-300">
+              Next chapter
+            </p>
+            <h2 className="text-4xl md:text-5xl font-light tracking-tight leading-tight">
+              Tel Aviv, November 8.
+            </h2>
+            <p className="text-lg text-gray-300 leading-relaxed max-w-2xl">
+              My Aliyah visa is approved and I land in Tel Aviv on November 8,
+              2026. No visa sponsorship needed. I&apos;m looking for UX/UI
+              design and product roles where I can take tools from discovery to
+              launch, with AI at the core of how the team works.
+            </p>
+          </div>
+          <div className="flex md:justify-end">
+            <a
+              href="#contact"
+              className="inline-block bg-white text-gray-900 px-8 py-4 rounded-full hover:bg-gray-100 transition-colors text-sm uppercase tracking-wider"
+            >
+              Let&apos;s talk →
+            </a>
+          </div>
+        </div>
+      </section>
+
       {/* About Section */}
       <section className="max-w-6xl mx-auto px-6 pb-24">
         <div className="grid md:grid-cols-[1fr,2fr] gap-16">
@@ -75,17 +118,18 @@ export function HomePage() {
             <p className="text-lg text-gray-700 leading-relaxed">
               I&apos;m a UX/UI designer and product manager who takes tools
               from discovery to launch. I own the roadmap, align stakeholders
-              and design the solution, grounding every decision in evidence:
-              user research, real incident data and fast prototypes built with
-              Figma and AI. I do my best work in technical teams
-              where accountability and iteration matter.
+              and design the solution, grounding every decision in evidence
+              rather than opinion. I do my best work in technical teams where
+              accountability and iteration matter.
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
-              My workflow is AI-first. I use Claude, Figma Make and
-              HTML-to-Design to go from idea to clickable prototype in days, and
-              to turn scattered feedback into clear decisions. I&apos;m looking
-              for teams that value ownership and respect, invest in
-              growth, and embrace what AI can do for product work.
+              I start with the problem, not the tool. I map it end to end,
+              from research and real incidents to every edge case of the flow,
+              and design the solution in Figma. Then I use AI to move faster:
+              synthesizing feedback, prototyping in code and automating the
+              repetitive parts, so my time goes into the decisions that matter.
+              I&apos;m looking for teams that value ownership and respect, invest
+              in growth, and embrace what AI can do for product work.
             </p>
           </div>
         </div>
