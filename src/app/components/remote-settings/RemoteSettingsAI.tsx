@@ -43,10 +43,11 @@ export function RemoteSettingsAI() {
             question became: <strong>who needs to look at this change?</strong>
           </p>
           <p>
-            When someone sends a change, Claude reads what changed (modules,
-            baselines, audience size) and classifies it against a{" "}
-            <strong>risk ruleset</strong>. The first matching rule decides who
-            reviews it.
+            AI works at both gates. At save, the validation check finds what
+            is broken and explains why it matters for players. At Send to QA,
+            Claude reads what changed (modules, baselines, audience size) and
+            classifies it against a <strong>risk ruleset</strong>. The first
+            matching rule decides who reviews it.
           </p>
         </div>
 

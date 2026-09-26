@@ -7,6 +7,7 @@ import qa from "@/assets/remote-settings/qa.jpg";
 import bulkEdit from "@/assets/remote-settings/bulk-edit.jpg";
 import abTests from "@/assets/remote-settings/ab-tests.jpg";
 import modules from "@/assets/remote-settings/modules.jpg";
+import validationGate from "@/assets/remote-settings/validation-gate.jpg";
 
 const ACCENT = "#5b7fa6";
 
@@ -83,9 +84,10 @@ export function RemoteSettingsDesign() {
             Two Gates Before Production
           </h2>
           <p className="text-gray-600 leading-relaxed">
-            The core of v5 is a two-gate flow. The first gate catches broken
-            configs before they can even be saved; the second decides who needs
-            to review a change before it goes live.
+            The core of v5 is a two-gate flow, and AI powers both. The first
+            gate catches every problem introduced along the way before a config
+            can even be saved; the second decides who needs to review a change
+            before it goes live.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -98,10 +100,12 @@ export function RemoteSettingsDesign() {
             </p>
             <h4 className="text-2xl font-light text-gray-900">Validation</h4>
             <p className="text-gray-600 leading-relaxed">
-              The Events Config Check Tool, built by my teammate Fran, runs a
-              few hundred validation rules on every config coming from Grist.
-              Designers see each problem down to the row, can fix it by hand or
-              hand it to Claude for help, and recheck in one click.
+              An AI-powered check, built on the Events Config Check tool by my
+              teammate Fran, scans the whole config on save and surfaces every
+              problem introduced during the process: problems, warnings and
+              notes, each explained by its impact on players (crashes, wrong
+              behavior, progression blockers). Designers fix them by hand or
+              with Claude, then re-run the check.
             </p>
             <p className="text-sm text-gray-500 leading-relaxed">
               Decision: saving is fully blocked, with no skip button. Past
@@ -129,6 +133,10 @@ export function RemoteSettingsDesign() {
             </p>
           </div>
         </div>
+        <Screenshot
+          src={validationGate}
+          alt="Save modal blocked by the validation gate, listing problems, warnings and notes"
+        />
       </div>
 
       {workflows.map((w, i) => (
