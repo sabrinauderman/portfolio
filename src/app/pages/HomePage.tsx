@@ -77,20 +77,15 @@ export function HomePage() {
               from discovery to launch. I own the roadmap, align stakeholders
               and design the solution, grounding every decision in evidence:
               user research, real incident data and fast prototypes built with
-              Figma and AI-first workflows. I do my best work in technical teams
+              Figma and AI. I do my best work in technical teams
               where accountability and iteration matter.
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
-              I am a creative thinker with strong communication and clear
-              documentation skills. Proactive, responsible, and empathetic, I am
-              committed to delivering meaningful results.
-            </p>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              My work is driven by AI-powered workflows, using tools like Figma
-              Make and HTML-to-Design to accelerate ideation, prototyping, and
-              execution. I aim to collaborate with companies that foster growth,
-              value accountability and respect, and embrace the transformative
-              potential of artificial intelligence.
+              My workflow is AI-first. I use Claude, Figma Make and
+              HTML-to-Design to go from idea to clickable prototype in days, and
+              to turn scattered feedback into clear decisions. I&apos;m looking
+              for teams that value ownership and respect, invest in
+              growth, and embrace what AI can do for product work.
             </p>
           </div>
         </div>
