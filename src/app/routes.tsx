@@ -5,6 +5,7 @@ import { CtrlZProjectPage } from "./pages/CtrlZProjectPage";
 import { TrackingToolProjectPage } from "./pages/TrackingToolProjectPage";
 import { CountingLandProjectPage } from "./pages/CountingLandProjectPage";
 import { CultiveProjectPage } from "./pages/CultiveProjectPage";
+import { RemoteSettingsProjectPage } from "./pages/RemoteSettingsProjectPage";
 
 export const router = createBrowserRouter(
   [
@@ -19,6 +20,10 @@ export const router = createBrowserRouter(
     {
       path: "/projects/ctrl-z",
       Component: CtrlZProjectPage,
+    },
+    {
+      path: "/projects/remote-settings",
+      Component: RemoteSettingsProjectPage,
     },
     {
       path: "/projects/tracking-tool",

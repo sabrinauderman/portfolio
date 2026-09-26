@@ -7,8 +7,20 @@ import ctrlZCover from "@/assets/9485a0016410605ce824e62572d37418cbfccffd.png";
 import countingLandCover from "@/assets/868a48a727e9336537459cfa3c0a01865a90d3fd.png";
 import cultiveCover from "@/assets/09319fc5b22c8317d7fc141ad4a210009295fbda.png";
 import trackingToolCover from "@/assets/13ea1494f77e74c75cc4b6c229fae9de3e2ae247.png";
+import remoteSettingsCover from "@/assets/remote-settings/baselines.jpg";
 
 const projects = [
+  {
+    id: "remote-settings",
+    title: "Remote Settings",
+    description:
+      "A redesign of Madbox's live configuration tool, bringing QA into the flow and using AI to decide how much review each change needs before it reaches players. In progress, not shipped yet.",
+    role: "UX/UI Designer & PM",
+    color: "#5b7fa6",
+    image: remoteSettingsCover,
+    isComponent: false,
+    hasNDA: true,
+  },
   {
     id: "ctrl-z",
     title: "CTRL+Z",
