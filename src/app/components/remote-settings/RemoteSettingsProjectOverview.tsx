@@ -29,6 +29,9 @@ export function RemoteSettingsProjectOverview() {
               Tools
             </h3>
             <div className="flex flex-wrap gap-2">
+              <span className="px-3 py-1 bg-green-100 text-green-800 rounded-full text-xs">
+                Figma
+              </span>
               <span className="px-3 py-1 bg-orange-100 text-orange-800 rounded-full text-xs">
                 Claude
               </span>
