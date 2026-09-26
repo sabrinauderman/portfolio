@@ -5,18 +5,18 @@ import { RemoteSettingsProjectOverview } from "../components/remote-settings/Rem
 import { RemoteSettingsResearch } from "../components/remote-settings/RemoteSettingsResearch";
 import { RemoteSettingsDesign } from "../components/remote-settings/RemoteSettingsDesign";
 import { RemoteSettingsAI } from "../components/remote-settings/RemoteSettingsAI";
-import { RemoteSettingsStatus } from "../components/remote-settings/RemoteSettingsStatus";
+import { RemoteSettingsImpact } from "../components/remote-settings/RemoteSettingsImpact";
 
 export function RemoteSettingsProjectPage() {
   const contentRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState<
-    "discovery" | "design" | "ai" | "status"
+    "discovery" | "design" | "ai" | "impact"
   >("discovery");
   const sectionLabels = {
     discovery: "discovery",
     design: "design",
     ai: "AI in the flow",
-    status: "status",
+    impact: "impact",
   } as const;
 
   return (
@@ -47,7 +47,7 @@ export function RemoteSettingsProjectPage() {
         <nav className="sticky top-[59px] z-40 bg-white border-y border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
           <div className="max-w-6xl mx-auto px-6 py-4">
             <div className="flex gap-8 overflow-x-auto whitespace-nowrap">
-              {(["discovery", "design", "ai", "status"] as const).map((section) => (
+              {(["discovery", "design", "ai", "impact"] as const).map((section) => (
                 <button
                   key={section}
                   onClick={() => {
@@ -78,7 +78,7 @@ export function RemoteSettingsProjectPage() {
           {activeSection === "discovery" && <RemoteSettingsResearch />}
           {activeSection === "design" && <RemoteSettingsDesign />}
           {activeSection === "ai" && <RemoteSettingsAI />}
-          {activeSection === "status" && <RemoteSettingsStatus />}
+          {activeSection === "impact" && <RemoteSettingsImpact />}
         </div>
 
         {/* Footer */}
