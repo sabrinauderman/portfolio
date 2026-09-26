@@ -73,6 +73,14 @@ export function HomePage() {
           </div>
           <div className="space-y-6">
             <p className="text-lg text-gray-700 leading-relaxed">
+              I&apos;m a UX/UI designer and product manager who takes tools
+              from discovery to launch. I own the roadmap, align stakeholders
+              and design the solution, grounding every decision in evidence:
+              user research, real incident data and fast prototypes built with
+              Figma and AI-first workflows. I do my best work in technical teams
+              where accountability and iteration matter.
+            </p>
+            <p className="text-lg text-gray-700 leading-relaxed">
               I am a creative thinker with strong communication and clear
               documentation skills. Proactive, responsible, and empathetic, I am
               committed to delivering meaningful results.
