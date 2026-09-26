@@ -37,20 +37,28 @@ const personas = [
 
 const insights = [
   {
-    title: "Safety is the real problem",
-    text: "Changes could go to production without proper testing. Nothing in the flow tied a push to a QA verdict.",
+    title: "The feature existed, the process didn\u2019t",
+    text: "v4 already had a QA tab and a \u201cTested\u201d status. Nothing enforced them, so anyone could push to prod whatever the status. The gap wasn\u2019t UI, it was process.",
+  },
+  {
+    title: "Avoid checkbox theater",
+    text: "Engineering\u2019s main concern: people would click \u201ctested\u201d just to unblock themselves. Attribution (who tested, when, with a written reason) makes the gate real.",
   },
   {
     title: "Not every change deserves the same review",
-    text: "A copy fix and an economy rebalance went through the same path. Forcing manual QA on everything would only recreate the unused “Tested” flag.",
+    text: "A copy fix and an economy rebalance went through the same path. Forcing manual QA on everything would overload a QA team that was already underwater.",
   },
   {
-    title: "Legibility prevents errors",
-    text: "Baseline groups were only version ranges and the “live” indicator was unreliable. People relied on memory to know which group was which.",
+    title: "Baselines grow until nobody can read them",
+    text: "Every train, web build and version added a group, none were archived, and the \u201clive\u201d marker stayed green months after a version went inactive.",
   },
   {
-    title: "A/B tests fight the rest of the tool",
-    text: "Tests couldn’t span versions, a running test blocked edits on other modules, and moving the winner to production took hours.",
+    title: "A/B tests drift from their baselines",
+    text: "Tests built for 1\u20133 modules were used for 20+. Designers updated the main config but not the test, or only one of two live versions.",
+  },
+  {
+    title: "Diffs cried wolf",
+    text: "Line-by-line diffs flagged reordered rows as changes, burying the edits that mattered and training people to ignore the diff.",
   },
 ];
 
@@ -107,7 +115,7 @@ export function RemoteSettingsResearch() {
       {/* Personas */}
       <section className="space-y-10">
         <h2 className="text-3xl font-light tracking-tight text-gray-900 mb-8">
-          Who Uses It
+          User Personas
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {personas.map((p) => (

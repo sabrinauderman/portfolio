@@ -33,7 +33,7 @@ export function RemoteSettingsAI() {
     <div className="space-y-24">
       {/* AI in the product */}
       <section className="space-y-10">
-        <h2 className="text-3xl font-light" style={{ color: ACCENT }}>
+        <h2 className="text-3xl font-light tracking-tight text-gray-900">
           AI Inside the Flow
         </h2>
         <div className="space-y-6 text-gray-600 leading-relaxed">

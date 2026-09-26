@@ -1,5 +1,6 @@
 import React from "react";
 import { Screenshot } from "./Screenshot";
+import { RemoteSettingsAI } from "./RemoteSettingsAI";
 import baselines from "@/assets/remote-settings/baselines.jpg";
 import baselineDetail from "@/assets/remote-settings/baseline-detail.jpg";
 import qa from "@/assets/remote-settings/qa.jpg";
@@ -75,6 +76,61 @@ export function RemoteSettingsDesign() {
         </p>
       </div>
 
+      {/* Two gates */}
+      <div className="max-w-5xl mx-auto px-8 space-y-8">
+        <div>
+          <h2 className="text-3xl font-light tracking-tight text-gray-900 mb-4">
+            Two Gates Before Production
+          </h2>
+          <p className="text-gray-600 leading-relaxed">
+            The core of v5 is a two-gate flow. The first gate catches broken
+            configs before they can even be saved; the second decides who needs
+            to review a change before it goes live.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div
+            className="border-l-4 p-8 space-y-3"
+            style={{ backgroundColor: `${ACCENT}0d`, borderColor: ACCENT }}
+          >
+            <p className="text-xs uppercase tracking-wider" style={{ color: ACCENT }}>
+              Gate 1 · Before save
+            </p>
+            <h4 className="text-2xl font-light text-gray-900">Validation</h4>
+            <p className="text-gray-600 leading-relaxed">
+              The Events Config Check Tool, built by my teammate Fran, runs a
+              few hundred validation rules on every config coming from Grist.
+              Designers see each problem down to the row, can fix it by hand or
+              hand it to Claude for help, and recheck in one click.
+            </p>
+            <p className="text-sm text-gray-500 leading-relaxed">
+              Decision: saving is fully blocked, with no skip button. Past
+              versions had one, everybody used it, and the gate became useless.
+            </p>
+          </div>
+          <div
+            className="border-l-4 p-8 space-y-3"
+            style={{ backgroundColor: `${ACCENT}0d`, borderColor: ACCENT }}
+          >
+            <p className="text-xs uppercase tracking-wider" style={{ color: ACCENT }}>
+              Gate 2 · Before prod
+            </p>
+            <h4 className="text-2xl font-light text-gray-900">QA risk routing</h4>
+            <p className="text-gray-600 leading-relaxed">
+              On Send to QA, Claude classifies each change against a risk
+              ruleset. Low risk is auto-approved, mid risk goes to a peer (never
+              the author), and high risk goes to the QA queue with the
+              designer&apos;s test notes. Every verdict needs a written reason,
+              and the baseline only reaches prod once its review is cleared.
+            </p>
+            <p className="text-sm text-gray-500 leading-relaxed">
+              Decision: the rules live in config, not in code, so the team can
+              add new cases without engineering.
+            </p>
+          </div>
+        </div>
+      </div>
+
       {workflows.map((w, i) => (
         <div key={w.title} className="space-y-5 max-w-5xl mx-auto px-8">
           <div className="flex items-start gap-5">
@@ -105,6 +161,10 @@ export function RemoteSettingsDesign() {
           <Screenshot src={w.image} alt={w.alt} />
         </div>
       ))}
+
+      <div className="max-w-5xl mx-auto px-8 pt-16">
+        <RemoteSettingsAI />
+      </div>
     </div>
   );
 }

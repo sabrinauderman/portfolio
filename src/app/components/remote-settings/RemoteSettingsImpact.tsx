@@ -2,308 +2,231 @@ import React from "react";
 
 const ACCENT = "#5b7fa6";
 
-const costOfToday = [
+const success = [
+  {
+    icon: "🛡️",
+    title: "Safe by Default",
+    text: "No configuration reaches live players without the level of review its risk requires. Production stays locked until QA gives a verdict.",
+    benefits: ["Broken configs caught before save", "No untested pushes", "Full audit trail"],
+  },
+  {
+    icon: "⚡",
+    title: "Review Where It Matters",
+    text: "Claude triages every change, so low-risk edits flow through and QA time goes to the changes that can actually break the game.",
+    benefits: ["Less waiting for safe changes", "QA focused on high risk", "Rules owned by the team"],
+  },
+  {
+    icon: "🧪",
+    title: "A/B Tests You Can Trust",
+    text: "Tests stay in sync with their baselines, flag when they drift out of date, and winners reach production without manual rework.",
+    benefits: ["Out-of-date detection", "Faster setup and rollout", "Reliable results"],
+  },
+];
+
+const stats = [
   { value: "4", label: "war rooms in 2026 traced back to remote settings pushes" },
-  { value: "12,785", label: "players stuck on the previous season for a month, fixable only with a new build" },
-  { value: "94% \u2192 41%", label: "drop in race starts in one evening after a single broken push" },
+  { value: "12,785", label: "players stuck on the previous season for a month" },
+  { value: "94% → 41%", label: "drop in race starts in one evening after one broken push" },
   { value: "~10%", label: "of Android players unable to load the game for an hour" },
 ];
 
 const incidents = [
   {
-    date: "Aug 2026",
     title: "A deleted modifier broke a live event",
-    what: "A push removed one entry from a config list. The event screen stopped loading during a peak weekend: race starts fell from 94% to 41% and 7\u201314k players were affected. War room at 22:34, full fix by 23:50, compensation modeled the next day.",
-    catch: "The QA gate would have blocked the push; the triage flags gameplay modules on live baselines as high risk.",
+    text: "A push removed one entry from a config list and an event screen stopped loading during a peak weekend. 7–14k players affected, a war room late at night and a compensation plan the next day. The QA gate would have blocked it.",
   },
   {
-    date: "Sep 2026",
     title: "An A/B group silently served old content",
-    what: "A control group kept its own copy of the content and never picked up the new season. Up to 12,785 players were locked out of it for the whole month, and it could only be fixed with a special build.",
-    catch: "Out-of-date detection on A/B tests would have flagged the group before launch.",
+    text: "A control group kept its own copy of the content and never received the new season. Up to 12,785 players were locked out for a month, fixable only with a new build. Out-of-date detection would have flagged it before launch.",
   },
   {
-    date: "Feb 2026",
     title: "A content push blocked the game from loading",
-    what: "About 10% of Android players couldn\u2019t load the game for an hour. The issue had been seen in staging but dismissed. The postmortem asked for a mandatory QA step on remote content pushes.",
-    catch: "That mandatory step is exactly the QA gate, with the test plan attached to the request.",
+    text: "About 10% of Android players couldn’t load the game for an hour. The postmortem asked for a mandatory QA step on remote content pushes: exactly what the QA gate does.",
   },
   {
-    date: "Jul 2026",
-    title: "New players dropped out at a tutorial step",
-    what: "After a push, first-session engagement got worse and dropout spiked at one tutorial step. The team spent the rest of that day and the next investigating.",
-    catch: "A targeted QA sign-off on new-player flows before launch.",
+    title: "New players dropped out mid-tutorial",
+    text: "After a push, first-session engagement worsened and dropout spiked at one tutorial step, costing two days of investigation. A targeted QA sign-off on new-player flows would have caught it.",
   },
 ];
 
-const beforeAfter = [
+const learnings = [
   {
-    area: "Pushing to production",
-    before: "Any config could go live, whatever its QA status. Untested changes reached players several times in a year.",
-    after: "“Send to prod” stays locked until a verdict. Changes are tested on an OTA baseline, never on live.",
+    title: "A Gate With a Skip Button Isn\u2019t a Gate",
+    text: "Earlier validation had a skip option, and everyone used it. We chose to block saving entirely: noisier at first, but better than silent failures reaching players.",
   },
   {
-    area: "QA involvement",
-    before: "A “Tested” flag nobody used. QA had no queue and no link to what was being pushed.",
-    after: "One QA pool with diffs, impacted modules and test instructions. The verdict unlocks the push.",
+    title: "Safety Can’t Slow the Company Down",
+    text: "A gate on every change would have recreated the “Tested” flag nobody used. The real design problem was deciding how much review each change needs, not adding more review.",
   },
   {
-    area: "Review effort",
-    before: "Every change followed the same path: either everything was reviewed, or nothing was.",
-    after: "Claude triages each change: low risk auto-approved, mid risk to a peer, high risk to QA.",
+    title: "Incidents Make the Case",
+    text: "Abstract pain points didn’t move priorities. Tracing real war rooms and postmortems back to specific gaps in the tool turned a redesign into a business case.",
   },
   {
-    area: "Editing many baselines",
-    before: "One change meant editing the same module in several baselines, one by one.",
-    after: "Bulk Edit applies a change to every matching baseline in four steps, with a confirm screen.",
-  },
-  {
-    area: "A/B tests",
-    before: "Tests couldn’t span versions and blocked edits on unrelated modules.",
-    after: "Tests show their baselines and modules, and warn when they drift out of date.",
-  },
-  {
-    area: "Traceability",
-    before: "Tracing an incident meant cross-referencing Slack threads, Grist history and war room recaps.",
-    after: "Every revision carries who pushed it, what changed and the diff against the previous version.",
-  },
-  {
-    area: "Knowing what’s live",
-    before: "Baseline groups were only version ranges; the “live” marker was unreliable.",
-    after: "Every group shows platform, environment, QA state and running tests in one row.",
+    title: "AI Classifies, People Decide",
+    text: "Claude is good at reading a change and matching it to a rule. Keeping the ruleset in plain language, editable by the team, is what makes that automation trustworthy.",
   },
 ];
 
-const metrics = [
+const quotes = [
   {
-    metric: "War rooms caused by remote settings pushes",
-    baseline: "4 in 2026 so far",
-    goal: "Trending to zero",
+    who: "Game Designer",
+    text: "Without clear context, it’s difficult to confidently know which revisions should be used, which makes baseline creation risky and can also make prod pushes risky.",
   },
   {
-    metric: "Untested pushes to production",
-    baseline: "No gate: any status can go live",
-    goal: "0, enforced by the QA gate",
+    who: "A/B Test Postmortem",
+    text: "Not enough time or resources were dedicated to testing the AB on Prod.",
   },
   {
-    metric: "Share of changes needing manual QA",
-    baseline: "All or nothing",
-    goal: "Only high-risk changes",
+    who: "Team Member",
+    text: "Could it be that I changed the remote settings while the event was live?",
   },
   {
-    metric: "Time to launch an A/B test",
-    baseline: "More than a day",
-    goal: "Same day",
-  },
-  {
-    metric: "Time to promote an A/B winner",
-    baseline: "Hours",
-    goal: "Minutes, via Bulk Edit",
-  },
-  {
-    metric: "Time to trace an incident to its push",
-    baseline: "Hours to days",
-    goal: "Minutes, from the audit trail",
+    who: "Developer",
+    text: "It works, I pushed it, if I broke it for everyone else, I’m sorry, we can revert and figure out.",
   },
 ];
 
 export function RemoteSettingsImpact() {
   return (
-    <div className="space-y-32">
-      {/* Honest framing */}
-      <section className="space-y-8">
-        <div className="flex flex-wrap items-center gap-4">
-          <h2 className="text-3xl font-light" style={{ color: ACCENT }}>
-            Impact
-          </h2>
-          <span className="text-xs uppercase tracking-wider px-3 py-1.5 rounded-full bg-amber-100 text-amber-800 border border-amber-200">
-            Not shipped yet
-          </span>
-        </div>
-        <p className="text-gray-600 leading-relaxed max-w-3xl">
-          Remote Settings hasn&apos;t shipped, so there are no production
-          results yet. What follows is the real cost of the current tool, the
-          incidents the redesign would have prevented, what it changes, and
-          how its impact will be measured once it goes live.
+    <div className="space-y-16">
+      {/* Definition of Success */}
+      <div>
+        <h2 className="text-3xl font-light tracking-tight text-gray-900 mb-8">
+          Definition of Success
+        </h2>
+        <p className="text-gray-600 leading-relaxed mb-8">
+          Remote Settings is still in progress and hasn&apos;t shipped, so
+          there are no production results yet. The redesign aims to make
+          changing a live game safe without making it slow.
         </p>
-      </section>
 
-      {/* Cost of today */}
-      <section className="space-y-10">
-        <h3 className="text-2xl font-light text-gray-900">
-          The cost of the current tool
-        </h3>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          {costOfToday.map((c) => (
-            <div
-              key={c.label}
-              className="bg-white border border-gray-100 rounded-lg p-6 space-y-3"
-            >
-              <p
-                className="text-4xl font-light tracking-tight"
-                style={{ color: ACCENT }}
-              >
-                {c.value}
-              </p>
-              <p className="text-sm text-gray-600 leading-relaxed">{c.label}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Real incidents */}
-      <section className="space-y-10">
-        <div className="space-y-4">
-          <h3 className="text-2xl font-light text-gray-900">
-            Real incidents the redesign would have caught
-          </h3>
-          <p className="text-gray-600 leading-relaxed max-w-3xl">
-            To make the case for the project, I went back through Slack
-            threads and war room postmortems. The pattern was always the same:
-            something reached production without being caught, and the cost
-            was a war room, a compensation effort, or players stuck in a
-            broken experience.
-          </p>
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {incidents.map((i) => (
-            <div
-              key={i.title}
-              className="bg-white border border-gray-100 rounded-lg p-6 space-y-4"
-            >
-              <p className="text-xs uppercase tracking-wider text-gray-400">
-                {i.date}
-              </p>
-              <h4 className="text-lg font-medium text-gray-900">{i.title}</h4>
-              <p className="text-sm text-gray-600 leading-relaxed">{i.what}</p>
-              <p
-                className="text-sm leading-relaxed pt-4 border-t border-gray-100"
-                style={{ color: ACCENT }}
-              >
-                <span className="font-medium">Would have been caught by: </span>
-                {i.catch}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Before / after */}
-      <section className="space-y-10">
-        <h3 className="text-2xl font-light text-gray-900">
-          What the redesign changes
-        </h3>
-        <div className="border border-gray-100 rounded-lg overflow-hidden">
-          <div className="hidden md:grid grid-cols-[1fr_2fr_2fr] bg-gray-50 text-xs uppercase tracking-wider text-gray-400">
-            <div className="px-6 py-4">Area</div>
-            <div className="px-6 py-4">Before</div>
-            <div className="px-6 py-4" style={{ color: ACCENT }}>
-              After
-            </div>
-          </div>
-          {beforeAfter.map((row) => (
-            <div
-              key={row.area}
-              className="grid grid-cols-1 md:grid-cols-[1fr_2fr_2fr] border-t border-gray-100 first:border-t-0 md:first:border-t"
-            >
-              <div className="px-6 pt-5 md:py-5 font-medium text-gray-900 text-sm">
-                {row.area}
-              </div>
-              <div className="px-6 py-2 md:py-5 text-sm text-gray-500 leading-relaxed">
-                <span className="md:hidden text-xs uppercase tracking-wider text-gray-400 block mb-1">
-                  Before
-                </span>
-                {row.before}
-              </div>
-              <div
-                className="px-6 pb-5 pt-2 md:py-5 text-sm text-gray-900 leading-relaxed"
-                style={{ backgroundColor: `${ACCENT}0d` }}
-              >
-                <span
-                  className="md:hidden text-xs uppercase tracking-wider block mb-1"
-                  style={{ color: ACCENT }}
-                >
-                  After
-                </span>
-                {row.after}
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Measurement plan */}
-      <section className="space-y-10">
-        <div className="space-y-4">
-          <h3 className="text-2xl font-light text-gray-900">
-            How success will be measured
-          </h3>
-          <p className="text-gray-600 leading-relaxed max-w-3xl">
-            Goals are hypotheses to validate after rollout, starting with one
-            game before extending to the rest of the studio.
-          </p>
-        </div>
-        <div className="space-y-3">
-          {metrics.map((m) => (
-            <div
-              key={m.metric}
-              className="grid grid-cols-1 md:grid-cols-[2fr_1.3fr_1.3fr] gap-2 md:gap-6 items-center bg-white border border-gray-100 rounded-lg px-6 py-5"
-            >
-              <p className="text-gray-900">{m.metric}</p>
-              <p className="text-sm text-gray-500">
-                <span className="text-xs uppercase tracking-wider text-gray-400 mr-2">
-                  Today
-                </span>
-                {m.baseline}
-              </p>
-              <p className="text-sm font-medium" style={{ color: ACCENT }}>
-                <span className="text-xs uppercase tracking-wider text-gray-400 font-normal mr-2">
-                  Goal
-                </span>
-                {m.goal}
-              </p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Impact so far */}
-      <section className="space-y-10">
-        <h3 className="text-2xl font-light text-gray-900">
-          Impact so far
-        </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            ["🧭", "One shared problem statement", "Around 16 feedback threads and 10 real incidents from Slack, Notion and postmortems turned into a clear case for the project: what it prevents, and the proof."],
-            ["🖱️", "A prototype people can use", "A clickable prototype covering the whole flow, from baselines to QA verdict, built with Claude so discussions happen on real behavior."],
-            ["🤖", "A new role for AI", "Moved the conversation from “should QA test everything?” to “who needs to look at this change?”, with rules the team owns."],
-          ].map(([icon, title, text]) => (
+          {success.map((s) => (
             <div
-              key={title}
+              key={s.title}
               className="bg-white border border-gray-100 rounded-lg p-8 space-y-4"
             >
               <div
                 className="w-12 h-12 rounded-full flex items-center justify-center"
                 style={{ backgroundColor: `${ACCENT}1a` }}
               >
-                <span className="text-2xl">{icon}</span>
+                <span className="text-2xl">{s.icon}</span>
               </div>
-              <h4 className="text-xl font-light text-gray-900">{title}</h4>
-              <p className="text-sm text-gray-600 leading-relaxed">{text}</p>
+              <h3 className="text-xl font-light text-gray-900">{s.title}</h3>
+              <p className="text-sm text-gray-600 leading-relaxed">{s.text}</p>
+              <div className="pt-4 border-t border-gray-100">
+                <p
+                  className="text-xs uppercase tracking-wider mb-2"
+                  style={{ color: ACCENT }}
+                >
+                  Benefits
+                </p>
+                <ul className="text-sm text-gray-600 space-y-1">
+                  {s.benefits.map((b) => (
+                    <li key={b}>• {b}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
           ))}
         </div>
-      </section>
+      </div>
 
-      {/* Next steps */}
-      <section className="bg-gray-50 rounded-lg p-8 space-y-4">
-        <h3 className="text-xl font-light text-gray-900">Next steps</h3>
-        <ul className="text-gray-600 space-y-2 list-disc pl-6">
-          <li>Validate the prototype with designers, developers and QA</li>
-          <li>Tune the risk ruleset on real changes before trusting auto-approval</li>
-          <li>Roll out on one game first, then measure against the goals above</li>
-        </ul>
-      </section>
+      {/* Why It Matters */}
+      <div>
+        <h2 className="text-3xl font-light tracking-tight text-gray-900 mb-8">
+          Why It Matters
+        </h2>
+        <p className="text-gray-600 leading-relaxed mb-8">
+          To build the case for the project, I traced real incidents from Slack
+          threads and war room postmortems back to gaps in the tool. The
+          pattern was always the same: something reached production without
+          being caught.
+        </p>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+          {stats.map((s) => (
+            <div
+              key={s.label}
+              className="bg-white border border-gray-100 rounded-lg p-6 space-y-3"
+            >
+              <p
+                className="text-3xl font-light tracking-tight"
+                style={{ color: ACCENT }}
+              >
+                {s.value}
+              </p>
+              <p className="text-sm text-gray-600 leading-relaxed">{s.label}</p>
+            </div>
+          ))}
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {incidents.map((i) => (
+            <div
+              key={i.title}
+              className="border-l-4 p-8"
+              style={{ backgroundColor: `${ACCENT}0d`, borderColor: ACCENT }}
+            >
+              <h4 className="text-2xl font-light text-gray-900 mb-2">
+                {i.title}
+              </h4>
+              <p className="text-gray-600 leading-relaxed">{i.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Learnings */}
+      <div>
+        <h2 className="text-3xl font-light tracking-tight text-gray-900 mb-8">
+          Key Learnings
+        </h2>
+        <div className="space-y-6">
+          {learnings.map((l) => (
+            <div
+              key={l.title}
+              className="bg-white border border-gray-100 rounded-lg p-8"
+            >
+              <h4 className="font-medium text-gray-900 mb-3">{l.title}</h4>
+              <p className="text-gray-600 leading-relaxed">{l.text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Voices from the team */}
+      <div>
+        <h2 className="text-3xl font-light tracking-tight text-gray-900 mb-8">
+          Voices from the Team
+        </h2>
+        <p className="text-gray-600 leading-relaxed mb-8">
+          What people said about the current tool during discovery, in Slack
+          threads and postmortems.
+        </p>
+        <div className="space-y-6">
+          {quotes.map((q) => (
+            <div
+              key={q.text}
+              className="bg-[#f5f6f6] rounded-2xl p-10 shadow-sm relative"
+            >
+              <div className="absolute top-6 left-6 text-6xl text-[#7a9b7c] opacity-20 font-serif">
+                "
+              </div>
+              <div className="relative z-10 space-y-2">
+                <p className="text-xs uppercase tracking-wider text-gray-400 text-center">
+                  {q.who}
+                </p>
+                <p className="text-2xl italic text-gray-800 font-light leading-relaxed text-center">
+                  {q.text}
+                </p>
+              </div>
+              <div className="absolute bottom-6 right-6 text-6xl text-[#7a9b7c] opacity-20 font-serif">
+                "
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }
