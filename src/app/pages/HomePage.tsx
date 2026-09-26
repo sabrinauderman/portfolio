@@ -117,18 +117,21 @@ export function HomePage() {
           </div>
           <div className="space-y-6">
             <p className="text-lg text-gray-700 leading-relaxed">
-              I&apos;m a product designer who also owns the product side,
+              I&apos;m a product designer who also runs the product side,
               taking tools from discovery to launch. I own the roadmap, align stakeholders
               and design the solution, grounding every decision in evidence
               rather than opinion. I do my best work in technical teams where
               accountability and iteration matter.
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
-              I start with the problem, not the tool. I map it end to end,
-              from research and real incidents to every edge case of the flow,
-              and design the solution in Figma. Then I use AI to move faster:
-              synthesizing feedback, prototyping in code and automating the
-              repetitive parts, so my time goes into the decisions that matter.
+              I fall in love with the problem, not the solution. Before I open
+              Figma, I dig into the pain points myself, map the problem end to
+              end and build the user journeys myself. Only then do I design.
+              AI is a tool in my process, never the one making the calls: it
+              helps me synthesize, prototype and automate, while the judgment
+              stays mine.
+            </p>
+            <p className="text-lg text-gray-700 leading-relaxed">
               I&apos;m looking for teams that value ownership and respect, invest
               in growth, and embrace what AI can do for product work.
             </p>
