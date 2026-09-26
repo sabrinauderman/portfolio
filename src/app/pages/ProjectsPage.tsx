@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 
 // Import project cover images
-import ctrlZCover from "@/assets/9485a0016410605ce824e62572d37418cbfccffd.png";
+import testHubCover from "@/assets/test-hub/cover.jpg";
 import countingLandCover from "@/assets/868a48a727e9336537459cfa3c0a01865a90d3fd.png";
 import cultiveCover from "@/assets/09319fc5b22c8317d7fc141ad4a210009295fbda.png";
 import trackingToolCover from "@/assets/13ea1494f77e74c75cc4b6c229fae9de3e2ae247.png";
@@ -22,15 +22,15 @@ const projects = [
     hasNDA: true,
   },
   {
-    id: "ctrl-z",
-    title: "CTRL+Z",
+    id: "test-hub",
+    title: "Test Hub",
     description:
-      "A collaborative platform connecting senior and junior designers through AI-powered project matching for real-world collaborations.",
-    role: "UX Researcher",
-    color: "#b87673",
-    image: ctrlZCover,
+      "Madbox's internal platform for game tests: Game Managers see what's live, how it's performing and whether to ship, without opening Looker. Launched in four months.",
+    role: "UX/UI Designer & PM",
+    color: "#3f8f8a",
+    image: testHubCover,
     isComponent: false,
-    hasNDA: false,
+    hasNDA: true,
   },
   {
     id: "tracking-tool",

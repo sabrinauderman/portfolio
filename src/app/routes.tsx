@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router";
 import { HomePage } from "./pages/HomePage";
 import { ProjectsPage } from "./pages/ProjectsPage";
-import { CtrlZProjectPage } from "./pages/CtrlZProjectPage";
+import { TestHubProjectPage } from "./pages/TestHubProjectPage";
 import { TrackingToolProjectPage } from "./pages/TrackingToolProjectPage";
 import { CountingLandProjectPage } from "./pages/CountingLandProjectPage";
 import { CultiveProjectPage } from "./pages/CultiveProjectPage";
@@ -18,8 +18,8 @@ export const router = createBrowserRouter(
       Component: ProjectsPage,
     },
     {
-      path: "/projects/ctrl-z",
-      Component: CtrlZProjectPage,
+      path: "/projects/test-hub",
+      Component: TestHubProjectPage,
     },
     {
       path: "/projects/remote-settings",
