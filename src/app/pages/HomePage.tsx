@@ -30,7 +30,7 @@ export function HomePage() {
         <div className="space-y-8">
           {/* Availability */}
           <a
-            href="#next-chapter"
+            href="#contact"
             className="inline-flex items-center gap-3 rounded-full border border-emerald-200 bg-emerald-50 px-4 py-2 text-sm text-emerald-900 hover:bg-emerald-100 transition-colors"
           >
             <span className="relative flex h-2.5 w-2.5">
@@ -102,36 +102,6 @@ export function HomePage() {
             <p className="text-lg text-gray-700 leading-relaxed">
               I&apos;m looking for teams that value ownership and respect, invest
               in growth, and embrace what AI can do for product work.
-            </p>
-          </div>
-        </div>
-      </section>
-
-      {/* Next Chapter */}
-      <section
-        id="next-chapter"
-        className="max-w-6xl mx-auto px-6 pb-24 scroll-mt-24"
-      >
-        <div className="grid md:grid-cols-[1fr,2fr] gap-16">
-          <div>
-            <h2 className="text-sm uppercase tracking-wider text-gray-400 mb-6">
-              Next Chapter
-            </h2>
-          </div>
-          <div className="border-l-2 border-emerald-400 pl-6 space-y-3">
-            <p className="text-2xl font-light text-gray-900">
-              Based in Tel Aviv
-            </p>
-            <p className="text-lg text-gray-700 leading-relaxed">
-              Israeli citizen through Aliyah, so no visa sponsorship is needed.
-              I&apos;m open to product design roles, including hybrid design
-              and product positions.{" "}
-              <a
-                href="#contact"
-                className="text-gray-900 underline underline-offset-4 decoration-emerald-400 hover:decoration-2"
-              >
-                Let&apos;s talk
-              </a>
             </p>
           </div>
         </div>
@@ -251,6 +221,7 @@ export function HomePage() {
               Contact
             </h2>
             <div className="space-y-3 text-lg text-gray-700">
+              <p>Tel Aviv, Israel</p>
               <a
                 href="mailto:sabrina.u@hotmail.com"
                 className="block hover:text-gray-900 transition-colors"
