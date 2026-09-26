@@ -55,8 +55,8 @@ export function HomePage() {
           </div>
 
           <p className="text-2xl text-gray-600 max-w-2xl leading-relaxed">
-            UX/UI Designer & Product Manager specializing in AI-powered design
-            workflows
+            Product Designer with a PM&apos;s toolkit. From discovery to launch,
+            powered by AI.
           </p>
           <div className="flex gap-4 pt-4">
             <Link
@@ -90,9 +90,10 @@ export function HomePage() {
             </h2>
             <p className="text-lg text-gray-300 leading-relaxed max-w-2xl">
               My Aliyah visa is approved and I land in Tel Aviv on November 8,
-              2026. No visa sponsorship needed. I&apos;m looking for UX/UI
-              design and product roles where I can take tools from discovery to
-              launch, with AI at the core of how the team works.
+              2026. No visa sponsorship needed. I&apos;m looking for product
+              design roles, including hybrid design and product positions,
+              where I can take tools from discovery to launch with AI at the
+              core of how the team works.
             </p>
           </div>
           <div className="flex md:justify-end">
@@ -116,8 +117,8 @@ export function HomePage() {
           </div>
           <div className="space-y-6">
             <p className="text-lg text-gray-700 leading-relaxed">
-              I&apos;m a UX/UI designer and product manager who takes tools
-              from discovery to launch. I own the roadmap, align stakeholders
+              I&apos;m a product designer who also owns the product side,
+              taking tools from discovery to launch. I own the roadmap, align stakeholders
               and design the solution, grounding every decision in evidence
               rather than opinion. I do my best work in technical teams where
               accountability and iteration matter.
