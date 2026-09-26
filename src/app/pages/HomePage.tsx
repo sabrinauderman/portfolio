@@ -75,38 +75,6 @@ export function HomePage() {
         </div>
       </section>
 
-      {/* Next Chapter */}
-      <section
-        id="next-chapter"
-        className="max-w-6xl mx-auto px-6 pb-24 scroll-mt-24"
-      >
-        <div className="rounded-3xl bg-gray-900 text-white p-10 md:p-14 grid md:grid-cols-[2fr,1fr] gap-10 items-end">
-          <div className="space-y-5">
-            <p className="text-sm uppercase tracking-wider text-emerald-300">
-              Next chapter
-            </p>
-            <h2 className="text-4xl md:text-5xl font-light tracking-tight leading-tight">
-              Tel Aviv, November 8.
-            </h2>
-            <p className="text-lg text-gray-300 leading-relaxed max-w-2xl">
-              My Aliyah visa is approved and I land in Tel Aviv on November 8,
-              2026. No visa sponsorship needed. I&apos;m looking for product
-              design roles, including hybrid design and product positions,
-              where I can take tools from discovery to launch with AI at the
-              core of how the team works.
-            </p>
-          </div>
-          <div className="flex md:justify-end">
-            <a
-              href="#contact"
-              className="inline-block bg-white text-gray-900 px-8 py-4 rounded-full hover:bg-gray-100 transition-colors text-sm uppercase tracking-wider"
-            >
-              Let&apos;s talk →
-            </a>
-          </div>
-        </div>
-      </section>
-
       {/* About Section */}
       <section className="max-w-6xl mx-auto px-6 pb-24">
         <div className="grid md:grid-cols-[1fr,2fr] gap-16">
@@ -134,6 +102,36 @@ export function HomePage() {
             <p className="text-lg text-gray-700 leading-relaxed">
               I&apos;m looking for teams that value ownership and respect, invest
               in growth, and embrace what AI can do for product work.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Next Chapter */}
+      <section
+        id="next-chapter"
+        className="max-w-6xl mx-auto px-6 pb-24 scroll-mt-24"
+      >
+        <div className="grid md:grid-cols-[1fr,2fr] gap-16">
+          <div>
+            <h2 className="text-sm uppercase tracking-wider text-gray-400 mb-6">
+              Next Chapter
+            </h2>
+          </div>
+          <div className="border-l-2 border-emerald-400 pl-6 space-y-3">
+            <p className="text-2xl font-light text-gray-900">
+              Tel Aviv, from November 8, 2026
+            </p>
+            <p className="text-lg text-gray-700 leading-relaxed">
+              My Aliyah visa is approved, so no visa sponsorship is needed.
+              I&apos;m open to product design roles, including hybrid design
+              and product positions.{" "}
+              <a
+                href="#contact"
+                className="text-gray-900 underline underline-offset-4 decoration-emerald-400 hover:decoration-2"
+              >
+                Let&apos;s talk
+              </a>
             </p>
           </div>
         </div>
