@@ -237,7 +237,9 @@ export function HomePage() {
               <h3 className="text-sm uppercase tracking-wider text-gray-400 mb-3">
                 Nationalities
               </h3>
-              <p className="text-gray-600">Brazilian • Portuguese • Spanish</p>
+              <p className="text-gray-600">
+                Brazilian • Portuguese • Spanish • Israeli (from November 2026)
+              </p>
             </div>
           </div>
 
