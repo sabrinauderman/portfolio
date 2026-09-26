@@ -43,7 +43,7 @@ export function HomePage() {
           </div>
 
           <p className="text-2xl text-gray-600 max-w-2xl leading-relaxed">
-            UX/UI Designer & Researcher specializing in AI-powered design
+            UX/UI Designer & Product Manager specializing in AI-powered design
             workflows
           </p>
           <div className="flex gap-4 pt-4">
