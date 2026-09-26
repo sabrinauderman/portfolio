@@ -77,9 +77,9 @@ export function HomePage() {
 
       {/* About Section */}
       <section className="max-w-6xl mx-auto px-6 pb-24">
-        <div className="grid md:grid-cols-[1fr,2fr] gap-16">
+        <div className="grid md:grid-cols-[1fr_2fr] gap-4 md:gap-16">
           <div>
-            <h2 className="text-sm uppercase tracking-wider text-gray-400 mb-6">
+            <h2 className="text-sm uppercase tracking-wider text-gray-400">
               About
             </h2>
           </div>
@@ -120,32 +120,37 @@ export function HomePage() {
                 <h3 className="text-base font-medium text-gray-900 mb-2">
                   Design & Prototyping
                 </h3>
-                <p className="text-gray-600">
-                  Figma Design, Figma Make, UI Kit/Swift UI, Sketch, Adobe
-                  Photoshop
-                </p>
+                <p className="text-gray-600">Figma, Figma Make, Claude Design, UIKit/SwiftUI, Sketch, Adobe Photoshop</p>
               </div>
               <div>
                 <h3 className="text-base font-medium text-gray-900 mb-2">
-                  Development
+                  AI & Development
                 </h3>
-                <p className="text-gray-600">Vibe Coding, Swift</p>
+                <p className="text-gray-600">Claude, Claude Code, Vibe Coding, Swift</p>
+              </div>
+              <div>
+                <h3 className="text-base font-medium text-gray-900 mb-2">
+                  Product
+                </h3>
+                <p className="text-gray-600">Discovery & User Research, User Journeys, Roadmapping, Stakeholder Alignment, A/B Testing</p>
+              </div>
+              <div>
+                <h3 className="text-base font-medium text-gray-900 mb-2">
+                  Data & Collaboration
+                </h3>
+                <p className="text-gray-600">Looker, Notion, Jira, Slack</p>
               </div>
               <div>
                 <h3 className="text-base font-medium text-gray-900 mb-2">
                   Methodology
                 </h3>
-                <p className="text-gray-600">
-                  Agile, Enterprise Design Thinking, Project Management
-                </p>
+                <p className="text-gray-600">Agile, Enterprise Design Thinking, Project Management</p>
               </div>
               <div>
                 <h3 className="text-base font-medium text-gray-900 mb-2">
                   Soft Skills
                 </h3>
-                <p className="text-gray-600">
-                  Clear Communication, Leadership, Documentation
-                </p>
+                <p className="text-gray-600">Clear Communication, Leadership, Documentation</p>
               </div>
             </div>
           </div>
