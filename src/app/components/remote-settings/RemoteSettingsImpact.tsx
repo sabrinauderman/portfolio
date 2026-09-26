@@ -13,7 +13,7 @@ const success = [
     icon: "⚡",
     title: "Review Where It Matters",
     text: "Claude triages every change, so low-risk edits flow through and QA time goes to the changes that can actually break the game.",
-    benefits: ["Less waiting for safe changes", "QA focused on high risk", "Rules owned by the team"],
+    benefits: ["Every change reviewed, none bypassed", "QA focused on high risk", "Rules owned by the team"],
   },
   {
     icon: "🧪",
@@ -52,7 +52,7 @@ const incidents = [
 const learnings = [
   {
     title: "A Gate With a Skip Button Isn\u2019t a Gate",
-    text: "Earlier validation had a skip option, and everyone used it. We chose to block saving entirely: noisier at first, but better than silent failures reaching players.",
+    text: "Earlier versions had a skip option, and everyone used it. v5 has no bypass at all: saving is blocked until the config is clean, and the small changes people used to skip QA for are now tested by Claude instead.",
   },
   {
     title: "Safety Can’t Slow the Company Down",

@@ -10,7 +10,7 @@ const tiers = [
     who: "Claude",
     color: "bg-emerald-800 text-white",
     example: "Text & localization only, no gameplay module, audience under 15%.",
-    outcome: "Claude approves it. No human bottleneck for safe changes.",
+    outcome: "Claude tests and approves it. No human bottleneck, and nothing skips review.",
   },
   {
     level: "Mid risk",
@@ -47,7 +47,9 @@ export function RemoteSettingsAI() {
             is broken and explains why it matters for players. At Send to QA,
             Claude reads what changed (modules, baselines, audience size) and
             classifies it against a <strong>risk ruleset</strong>. The first
-            matching rule decides who reviews it.
+            matching rule decides who reviews it. There is no
+            &ldquo;bypassed&rdquo; state anymore: the changes people used to
+            skip QA for are now tested by Claude.
           </p>
         </div>
 

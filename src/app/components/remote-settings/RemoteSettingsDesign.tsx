@@ -122,14 +122,15 @@ export function RemoteSettingsDesign() {
             <h4 className="text-2xl font-light text-gray-900">QA risk routing</h4>
             <p className="text-gray-600 leading-relaxed">
               On Send to QA, Claude classifies each change against a risk
-              ruleset. Low risk is auto-approved, mid risk goes to a peer (never
+              ruleset. Low risk is tested by Claude, mid risk goes to a peer (never
               the author), and high risk goes to the QA queue with the
               designer&apos;s test notes. Every verdict needs a written reason,
               and the baseline only reaches prod once its review is cleared.
             </p>
             <p className="text-sm text-gray-500 leading-relaxed">
-              Decision: the rules live in config, not in code, so the team can
-              add new cases without engineering.
+              Decision: no bypass. Changes that used to skip QA are now tested
+              by Claude, and the rules live in config so the team can add cases
+              without engineering.
             </p>
           </div>
         </div>
