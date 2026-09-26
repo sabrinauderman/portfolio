@@ -57,7 +57,7 @@ const insights = [
     text: "Tests built for 1\u20133 modules were used for 20+. Designers updated the main config but not the test, or only one of two live versions.",
   },
   {
-    title: "Diffs cried wolf",
+    title: "Noisy diffs hid real changes",
     text: "Line-by-line diffs flagged reordered rows as changes, burying the edits that mattered and training people to ignore the diff.",
   },
 ];
