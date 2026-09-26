@@ -37,7 +37,7 @@ export function HomePage() {
               <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
               <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
             </span>
-            Open to work · Landing in Tel Aviv on November 8
+            Open to work · Based in Tel Aviv
           </a>
 
           {/* Name with Profile Photo */}
@@ -120,10 +120,10 @@ export function HomePage() {
           </div>
           <div className="border-l-2 border-emerald-400 pl-6 space-y-3">
             <p className="text-2xl font-light text-gray-900">
-              Tel Aviv, from November 8, 2026
+              Based in Tel Aviv
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
-              My Aliyah visa is approved, so no visa sponsorship is needed.
+              Israeli citizen through Aliyah, so no visa sponsorship is needed.
               I&apos;m open to product design roles, including hybrid design
               and product positions.{" "}
               <a
@@ -240,7 +240,7 @@ export function HomePage() {
                 Nationalities
               </h3>
               <p className="text-gray-600">
-                Brazilian • Portuguese • Spanish • Israeli (from November 2026)
+                Brazilian • Portuguese • Spanish • Israeli
               </p>
             </div>
           </div>
