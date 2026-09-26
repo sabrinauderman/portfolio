@@ -210,7 +210,7 @@ export function HomePage() {
                 Nationalities
               </h3>
               <p className="text-gray-600">
-                Brazilian • Portuguese • Spanish • Israeli
+                Brazilian • Portuguese • Israeli
               </p>
             </div>
           </div>
