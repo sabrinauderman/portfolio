@@ -98,50 +98,6 @@ export function ProjectsPage() {
             </h1>
           </div>
 
-          {/* Game Design folder */}
-          <Link to="/projects/game-design" className="group block">
-            <div className="relative">
-              {/* Folder tab */}
-              <div className="absolute -top-4 left-0 h-5 w-40 rounded-t-xl bg-[#fde8d4]" />
-              <div className="relative grid md:grid-cols-[1fr_1.1fr] gap-8 items-center rounded-2xl rounded-tl-none bg-[#fde8d4] p-8 md:p-10 transition-transform group-hover:scale-[1.01]">
-                <div className="space-y-4">
-                  <span className="text-xs uppercase tracking-wider text-[#b4560f]">
-                    Folder · {gameProjects.length} {gameProjects.length === 1 ? "project" : "projects"}
-                  </span>
-                  <h2 className="text-4xl font-light text-gray-900">
-                    Game Design
-                  </h2>
-                  <p className="text-gray-700 leading-relaxed max-w-md">
-                    Playable prototypes and game UX studies: core loops,
-                    onboarding, HUDs, controls and game feel.
-                  </p>
-                  <span className="inline-flex items-center gap-2 text-sm text-gray-900 group-hover:gap-3 transition-all">
-                    Open folder <span aria-hidden>→</span>
-                  </span>
-                </div>
-                <div className="relative h-56 md:h-64">
-                  {gameProjects.slice(0, 3).map((g, i) => (
-                    <div
-                      key={g.id}
-                      className="absolute inset-y-0 w-[85%] rounded-xl overflow-hidden shadow-xl bg-white"
-                      style={{
-                        right: `${i * 6}%`,
-                        transform: `rotate(${i === 0 ? 2 : -3 * i}deg)`,
-                        zIndex: 3 - i,
-                      }}
-                    >
-                      <ImageWithFallback
-                        src={g.image}
-                        alt={`${g.title} preview`}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </Link>
-
           <div className="grid md:grid-cols-2 gap-12">
             {projects.map((project) => (
               <Link
@@ -205,6 +161,51 @@ export function ProjectsPage() {
                 </div>
               </Link>
             ))}
+
+            {/* Game Design folder: opens a page listing the game projects. */}
+            <Link to="/projects/game-design" className="group space-y-6">
+              <div className="relative aspect-[4/3] transition-transform group-hover:scale-[1.02]">
+                {/* Folder tab */}
+                <div className="absolute top-0 left-0 h-6 w-2/5 rounded-t-2xl bg-[#f6cfa8]" />
+                <div className="absolute inset-x-0 bottom-0 top-4 rounded-2xl rounded-tl-none bg-[#fde8d4] shadow-lg overflow-hidden">
+                  {gameProjects.slice(0, 3).map((g, i) => (
+                    <div
+                      key={g.id}
+                      className="absolute left-[10%] right-[10%] top-[12%] bottom-[12%] rounded-xl overflow-hidden shadow-xl bg-white"
+                      style={{
+                        transform: `translate(${i * 4}%, ${i * -4}%) rotate(${i === 0 ? -2 : 3 * i}deg)`,
+                        zIndex: 3 - i,
+                      }}
+                    >
+                      <ImageWithFallback
+                        src={g.image}
+                        alt={`${g.title} preview`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ))}
+                  <div className="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur-sm text-gray-900 text-xs font-medium px-3 py-1.5 rounded-full shadow-lg">
+                    {gameProjects.length} {gameProjects.length === 1 ? "project" : "projects"}
+                  </div>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex flex-col gap-2">
+                  <h2 className="text-3xl font-light text-gray-900 group-hover:text-gray-600 transition-colors">
+                    Game Design
+                  </h2>
+                  <span className="text-xs uppercase tracking-wider px-3 py-1 rounded-full self-start bg-[#e8741a20] text-[#e8741a]">
+                    Folder · Game & UX/UI Design
+                  </span>
+                </div>
+                <p className="text-gray-600 leading-relaxed">
+                  Playable prototypes and game UX studies: core loops,
+                  onboarding, HUDs, controls and game feel, tested on real
+                  devices.
+                </p>
+              </div>
+            </Link>
           </div>
         </div>
       </section>
