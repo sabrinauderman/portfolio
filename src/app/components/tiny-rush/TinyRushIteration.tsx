@@ -1,22 +1,59 @@
 import React from "react";
 import phoneMud from "@/assets/tiny-rush/phone-mud.jpg";
 import phonePause from "@/assets/tiny-rush/phone-pause.jpg";
+import cargoBefore from "@/assets/tiny-rush/cargo-before.jpg";
+import cargoAfter from "@/assets/tiny-rush/cargo-after.jpg";
 import { ACCENT, Card, Lead, Phone, SectionTitle, Stat } from "./shared";
+import { DiagramLegend, FrameDiagram, JoystickDiagram } from "./TinyRushDiagrams";
+
+/** Before / after visuals for each playtest fix. v1 wasn't kept, so these are diagrams or a recreation. */
+const fixVisuals: Record<string, React.ReactNode> = {
+  slower: (
+    <figure className="space-y-3">
+      <FrameDiagram />
+      <DiagramLegend />
+      <figcaption className="text-sm text-gray-500 text-center">Schematic, not measured frame times.</figcaption>
+    </figure>
+  ),
+  joystick: (
+    <figure className="space-y-3">
+      <JoystickDiagram />
+      <figcaption className="text-sm text-gray-500 text-center">Schematic of the thumb zone below the arena.</figcaption>
+    </figure>
+  ),
+  cargo: (
+    <div className="grid grid-cols-2 gap-6 max-w-xl mx-auto">
+      <Phone
+        src={cargoBefore}
+        alt="Recreated v1 on a phone web view: the arena overflows and covers the cargo bar"
+        caption="Before (v1 rule, recreated): the arena covers the cargo bar. You're carrying 3 apples and can't see it."
+      />
+      <Phone
+        src={cargoAfter}
+        alt="Current version on the same web view: the cargo bar shows 3 of 5 apples below the arena"
+        caption="After: same screen, the arena fits the space left for it and the cargo shows 3/5."
+      />
+    </div>
+  ),
+};
 
 const fixes = [
   {
+    id: "slower",
     problem: "“On mobile it feels slower.”",
     cause:
       "The farm scenery (hundreds of flowers, bushes and fence posts) was redrawn as vectors every frame. Phones dropped frames, and the game clock slowed with them.",
     fix: "Draw the scenery once into a single image, and let the clock keep real time even when frames drop. Trucks also accelerate a little faster.",
   },
   {
+    id: "joystick",
     problem: "“The joystick is bad.”",
     cause:
       "It only worked inside a small zone and stopped hard at its rim, so quick turns meant lifting the thumb and starting again.",
     fix: "Start the stick anywhere the thumb lands, let it follow the thumb past the rim, and reach full speed with less drag.",
   },
   {
+    id: "cargo",
     problem: "“The cargo bar is hidden under the game.”",
     cause:
       "The arena was sized from the screen height. Inside an app's web view the real height is smaller, so the arena overflowed onto the cargo bar.",
@@ -76,6 +113,9 @@ export function TinyRushIteration() {
                     Fix
                   </p>
                   <p className="text-gray-600 leading-relaxed">{f.fix}</p>
+                </div>
+                <div className="md:col-span-3 border-t border-gray-100 pt-6">
+                  {fixVisuals[f.id]}
                 </div>
               </div>
             ))}

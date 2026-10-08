@@ -219,6 +219,7 @@ export function TinyRushFlow() {
             targets, used to decide when hints appear and when the tension
             ramps up.
           </Lead>
+          <div className="relative">
           <div className="flex h-12 rounded-xl overflow-hidden">
             {pacing.map((p) => (
               <div
@@ -229,6 +230,16 @@ export function TinyRushFlow() {
                 <span className="hidden sm:inline">{p.name}</span>
               </div>
             ))}
+          </div>
+            {/* Simulated first pickup → first delivery (medians), on the same 0–63 s scale. */}
+            <div
+              className="absolute -top-2 bottom-0 border-x-2 border-gray-900/70 pointer-events-none"
+              style={{ left: `${(3.9 / 63) * 100}%`, width: `${((7.2 - 3.9) / 63) * 100}%` }}
+            >
+              <span className="absolute bottom-full left-0 mb-1 text-[10px] uppercase tracking-wider text-gray-500 whitespace-nowrap">
+                Simulated: 1st pickup → 1st delivery
+              </span>
+            </div>
           </div>
           <div className="relative h-4 text-xs text-gray-400 font-mono tabular-nums">
             {[0, 3, 13, 53, 63].map((t) => (
@@ -251,6 +262,24 @@ export function TinyRushFlow() {
                 <p className="text-sm text-gray-600 leading-relaxed">{p.text}</p>
               </div>
             ))}
+          </div>
+          <div className="bg-white border border-gray-100 rounded-lg p-6 grid md:grid-cols-[auto_auto_1fr] gap-6 md:gap-12 items-center">
+            <div className="space-y-1">
+              <p className="text-3xl font-light tracking-tight" style={{ color: ACCENT }}>~0.9 s</p>
+              <p className="text-sm text-gray-600">first pickup after GO</p>
+            </div>
+            <div className="space-y-1">
+              <p className="text-3xl font-light tracking-tight" style={{ color: ACCENT }}>~4 s</p>
+              <p className="text-sm text-gray-600">first delivery after GO</p>
+            </div>
+            <p className="text-sm text-gray-600 leading-relaxed">
+              <span className="text-gray-900">Simulated, not a playtest.</span>{" "}
+              Medians of 16 matches with a bot that plays like the rival: same
+              speed and rules, re-planning a few times per second (first
+              delivery ranged from 1.6 to 6.2 s). The first point lands well
+              inside the Learning phase. A first-time player will be slower;
+              measuring that is the playtest I'd run next.
+            </p>
           </div>
         </div>
       </section>
