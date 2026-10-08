@@ -96,10 +96,10 @@ function Swatch({ hex, name, role }: { hex: string; name: string; role: string }
   );
 }
 
-function Specimen({ img, label, note, className = "" }: { img: string; label: string; note?: string; className?: string }) {
+function Specimen({ img, label, note, className = "", boxClassName = "min-h-[96px]" }: { img: string; label: string; note?: string; className?: string; boxClassName?: string }) {
   return (
     <figure className={`space-y-2 ${className}`}>
-      <div className="rounded-xl bg-[#e8f6ff] p-3 flex items-center justify-center min-h-[96px]">
+      <div className={`rounded-xl bg-[#e8f6ff] p-3 flex items-center justify-center ${boxClassName}`}>
         <img src={kit(img)} alt={label} loading="lazy" className="max-h-40 w-auto max-w-full rounded-lg" />
       </div>
       <figcaption>
@@ -286,13 +286,13 @@ export function TinyRushUIKit() {
           <div className="grid md:grid-cols-[1fr_2fr] gap-10 items-start">
             <div>
               <h3 className="text-lg text-gray-900 mb-4">Desktop panel</h3>
-              <Specimen img="ui-desktop-panel" label="YOU card + cargo" note="Landscape uses big side panels; score up to 108 px" />
+              <Specimen img="ui-desktop-panel" boxClassName="h-52" label="YOU card + cargo" note="Landscape uses big side panels; score up to 108 px" />
             </div>
             <div>
               <h3 className="text-lg text-gray-900 mb-4">Buttons and dialogs</h3>
               <div className="grid sm:grid-cols-2 gap-6">
-                <Specimen img="ui-btn-play" label="Primary button" note="68 px tall, 3D press, idle nudge every few seconds" />
-                <Specimen img="ui-pause-card" label="Pause" note="One primary action, two secondary" />
+                <Specimen img="ui-btn-play" boxClassName="h-52" label="Primary button" note="68 px tall, 3D press, idle nudge every few seconds" />
+                <Specimen img="ui-pause-card" boxClassName="h-52" label="Pause" note="One primary action, two secondary" />
               </div>
             </div>
           </div>
