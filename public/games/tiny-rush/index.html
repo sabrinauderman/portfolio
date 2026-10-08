@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+    />
+    <meta name="theme-color" content="#bfe8ff" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <title>Tiny Rush</title>
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='36' r='22' fill='%23ef3b36'/%3E%3Cpath d='M32 14c2-6 8-9 14-8-1 6-6 10-14 8z' fill='%2350b83c'/%3E%3C/svg%3E" />
+    <script type="module" crossorigin src="./assets/index--0rGOFFJ.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-Bp9PSQuB.css">
+  </head>
+  <body>
+    <div id="app">
+      <!-- In-match layout. Grid areas are rearranged by CSS for portrait / landscape. -->
+      <main id="layout" class="layout" aria-label="Tiny Rush">
+        <section class="hud-card hud-you" aria-label="Your score">
+          <div class="hud-who">
+            <span class="hud-icon" data-icon="truck-you"></span><span class="hud-label">YOU</span>
+          </div>
+          <div class="hud-score" id="score-you">0</div>
+        </section>
+
+        <section class="hud-cargo" id="cargo" aria-label="Cargo">
+          <span class="cargo-label">CARGO</span>
+          <div class="cargo-slots" id="cargo-slots"></div>
+          <span class="cargo-text"><span id="cargo-count">0</span>/5</span>
+        </section>
+
+        <div class="hud-center">
+        <section class="hud-timer" aria-label="Time left">
+          <svg class="timer-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="13.5" r="8" fill="none" stroke="currentColor" stroke-width="2.6" />
+            <path d="M12 9.5v4.5l2.6 1.8M9.5 2.8h5" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" />
+          </svg>
+          <span id="timer">60</span>
+        </section>
+        <button class="btn-pause" id="btn-pause" aria-label="Pause">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6" y="5" width="4.2" height="14" rx="1.6" fill="currentColor"/><rect x="13.8" y="5" width="4.2" height="14" rx="1.6" fill="currentColor"/></svg>
+        </button>
+        </div>
+
+        <section class="hud-card hud-rival" aria-label="Rival score">
+          <div class="hud-who">
+            <span class="hud-icon" data-icon="truck-rival"></span><span class="hud-label">RIVAL</span>
+          </div>
+          <div class="hud-score" id="score-rival">0</div>
+        </section>
+
+        <div class="stage" id="stage">
+          <div class="arena" id="arena">
+            <div class="countdown" id="countdown" aria-live="assertive"></div>
+          </div>
+        </div>
+
+        <div class="controls" id="controls" aria-hidden="true"></div>
+      </main>
+
+      <!-- Floating joystick layer: it can appear wherever the thumb lands. -->
+      <div class="joystick" id="joystick" aria-hidden="true">
+        <div class="joy-base" id="joy-base"><div class="joy-knob" id="joy-knob"></div></div>
+      </div>
+
+      <!-- Main menu -->
+      <div class="screen menu is-visible" id="menu">
+        <div class="screen-card">
+          <h1 class="logo"><span>Tiny</span><span>Rush</span></h1>
+          <div class="menu-truck" id="menu-truck"></div>
+          <ol class="rules">
+            <li><span class="rule-icon" data-icon="apple"></span><span>Grab apples</span></li>
+            <li><span class="rule-arrow">›</span></li>
+            <li><span class="rule-icon" data-icon="basket"></span><span>Drop at base</span></li>
+            <li><span class="rule-arrow">›</span></li>
+            <li><span class="rule-icon" data-icon="trophy"></span><span>Beat Blue</span></li>
+          </ol>
+          <p class="menu-tip">Watch out: <b>mud</b> and <b>bumps</b> spill your apples!</p>
+          <button class="btn-play" id="btn-play">PLAY</button>
+          <p class="menu-hint">
+            <span class="only-keys">Drive with <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> or arrow keys</span>
+            <span class="only-touch">Drive with the joystick</span>
+          </p>
+        </div>
+        <button class="btn-mute" data-mute aria-label="Toggle sound"></button>
+      </div>
+
+      <!-- Pause -->
+      <div class="screen pause" id="pause">
+        <div class="screen-card">
+          <h2 class="pause-title">Paused</h2>
+          <button class="btn-play" id="btn-resume">RESUME</button>
+          <div class="pause-actions">
+            <button class="btn-secondary" id="btn-restart">Restart</button>
+            <button class="btn-secondary" id="btn-quit">Quit to menu</button>
+          </div>
+          <p class="menu-hint only-keys"><kbd>Esc</kbd> to resume</p>
+        </div>
+        <button class="btn-mute" data-mute aria-label="Toggle sound"></button>
+      </div>
+
+      <!-- Results -->
+      <div class="screen results" id="results">
+        <div class="confetti" id="confetti"></div>
+        <div class="screen-card">
+          <div class="result-badge" id="result-badge"></div>
+          <h2 class="result-title" id="result-title">You win!</h2>
+          <div class="final-scores">
+            <div class="final you"><span class="final-label">YOU</span><span class="final-num" id="final-you">0</span></div>
+            <div class="final-vs">vs</div>
+            <div class="final rival"><span class="final-label">RIVAL</span><span class="final-num" id="final-rival">0</span></div>
+          </div>
+          <button class="btn-play" id="btn-again">PLAY AGAIN</button>
+        </div>
+        <button class="btn-mute" data-mute aria-label="Toggle sound"></button>
+      </div>
+    </div>
+  </body>
+</html>

@@ -6,6 +6,8 @@ import { TrackingToolProjectPage } from "./pages/TrackingToolProjectPage";
 import { CountingLandProjectPage } from "./pages/CountingLandProjectPage";
 import { CultiveProjectPage } from "./pages/CultiveProjectPage";
 import { RemoteSettingsProjectPage } from "./pages/RemoteSettingsProjectPage";
+import { GameDesignPage } from "./pages/GameDesignPage";
+import { TinyRushProjectPage } from "./pages/TinyRushProjectPage";
 
 export const router = createBrowserRouter(
   [
@@ -16,6 +18,14 @@ export const router = createBrowserRouter(
     {
       path: "/projects",
       Component: ProjectsPage,
+    },
+    {
+      path: "/projects/game-design",
+      Component: GameDesignPage,
+    },
+    {
+      path: "/projects/game-design/tiny-rush",
+      Component: TinyRushProjectPage,
     },
     {
       path: "/projects/test-hub",
