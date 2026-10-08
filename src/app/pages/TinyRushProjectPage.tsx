@@ -3,11 +3,13 @@ import { Link } from "react-router";
 import { TinyRushHero } from "../components/tiny-rush/TinyRushHero";
 import { TinyRushProjectOverview } from "../components/tiny-rush/TinyRushProjectOverview";
 import { TinyRushDesign } from "../components/tiny-rush/TinyRushDesign";
+import { TinyRushFlow } from "../components/tiny-rush/TinyRushFlow";
+import { TinyRushUIKit } from "../components/tiny-rush/TinyRushUIKit";
 import { TinyRushIteration } from "../components/tiny-rush/TinyRushIteration";
 import { TinyRushProcess } from "../components/tiny-rush/TinyRushProcess";
 import { ACCENT } from "../components/tiny-rush/shared";
 
-const sections = ["design", "iteration", "process"] as const;
+const sections = ["design", "flow", "ui kit", "iteration", "process"] as const;
 
 export function TinyRushProjectPage() {
   const contentRef = useRef<HTMLDivElement>(null);
@@ -41,7 +43,7 @@ export function TinyRushProjectPage() {
         {/* Tab Navigation */}
         <nav className="sticky top-[59px] z-40 bg-white border-y border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
           <div className="max-w-6xl mx-auto px-6 py-4">
-            <div className="flex gap-8">
+            <div className="flex gap-6 md:gap-8 overflow-x-auto whitespace-nowrap">
               {sections.map((section) => (
                 <button
                   key={section}
@@ -76,6 +78,8 @@ export function TinyRushProjectPage() {
           className="max-w-6xl mx-auto px-6 py-16 scroll-mt-[115px]"
         >
           {activeSection === "design" && <TinyRushDesign />}
+          {activeSection === "flow" && <TinyRushFlow />}
+          {activeSection === "ui kit" && <TinyRushUIKit />}
           {activeSection === "iteration" && <TinyRushIteration />}
           {activeSection === "process" && <TinyRushProcess />}
         </div>

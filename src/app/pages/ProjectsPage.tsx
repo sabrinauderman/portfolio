@@ -150,28 +150,27 @@ export function ProjectsPage() {
               </Link>
             ))}
 
-            {/* Game Design folder: opens a page listing the game projects. */}
-            <Link to="/projects/game-design" className="group space-y-6">
-              <div className="relative aspect-[4/3] transition-transform group-hover:scale-[1.02]">
+            {/* Game Design folder: spans the full row and opens a page listing the game projects. */}
+            <Link to="/projects/game-design" className="group space-y-6 md:col-span-2">
+              <div className="relative aspect-[4/3] md:aspect-[21/8] transition-transform group-hover:scale-[1.01]">
                 {/* Folder tab */}
-                <div className="absolute top-0 left-0 h-6 w-2/5 rounded-t-2xl bg-[#f6cfa8]" />
+                <div className="absolute top-0 left-0 h-6 w-2/5 md:w-1/5 rounded-t-2xl bg-[#f6cfa8]" />
                 <div className="absolute inset-x-0 bottom-0 top-4 rounded-2xl rounded-tl-none bg-[#fde8d4] shadow-lg overflow-hidden">
-                  {gameProjects.slice(0, 3).map((g, i) => (
-                    <div
-                      key={g.id}
-                      className="absolute left-[10%] right-[10%] top-[12%] bottom-[12%] rounded-xl overflow-hidden shadow-xl bg-white"
-                      style={{
-                        transform: `translate(${i * 4}%, ${i * -4}%) rotate(${i === 0 ? -2 : 3 * i}deg)`,
-                        zIndex: 3 - i,
-                      }}
-                    >
-                      <ImageWithFallback
-                        src={g.image}
-                        alt={`${g.title} preview`}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  ))}
+                  <div className="absolute inset-0 flex items-center justify-center gap-[4%] px-[6%] py-[8%]">
+                    {gameProjects.slice(0, 3).map((g, i) => (
+                      <div
+                        key={g.id}
+                        className="h-full flex-1 min-w-0 rounded-xl overflow-hidden shadow-xl bg-white transition-transform group-hover:-translate-y-1"
+                        style={{ transform: `rotate(${i % 2 === 0 ? -2 : 2}deg)` }}
+                      >
+                        <ImageWithFallback
+                          src={g.image}
+                          alt={`${g.title} preview`}
+                          className="w-full h-full object-cover"
+                        />
+                      </div>
+                    ))}
+                  </div>
                   <div className="absolute top-4 right-4 z-10 bg-white/90 backdrop-blur-sm text-gray-900 text-xs font-medium px-3 py-1.5 rounded-full shadow-lg">
                     {gameProjects.length} {gameProjects.length === 1 ? "project" : "projects"}
                   </div>
