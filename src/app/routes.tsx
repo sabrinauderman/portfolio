@@ -40,6 +40,11 @@ export const router = createBrowserRouter(
       Component: TrackingToolProjectPage,
     },
     {
+      path: "/projects/game-design/counting-land",
+      Component: CountingLandProjectPage,
+    },
+    {
+      // Old URL, kept so existing links still work.
       path: "/projects/counting-land",
       Component: CountingLandProjectPage,
     },

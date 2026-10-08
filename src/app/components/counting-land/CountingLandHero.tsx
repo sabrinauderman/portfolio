@@ -5,13 +5,13 @@ export function CountingLandHero() {
   return (
     <section className="max-w-6xl mx-auto px-6 pt-24 pb-16">
       <div className="space-y-6">
-        {/* Back to Projects Link */}
+        {/* Back to Game Design Link */}
         <Link
-          to="/projects"
+          to="/projects/game-design"
           className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
         >
           <span>←</span>
-          <span>Back to Projects</span>
+          <span>Back to Game Design</span>
         </Link>
 
         <div className="space-y-2">

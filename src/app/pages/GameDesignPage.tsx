@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router";
 import { ImageWithFallback } from "../components/figma/ImageWithFallback";
 import tinyRushCover from "@/assets/tiny-rush/cover.jpg";
+import countingLandCover from "@/assets/868a48a727e9336537459cfa3c0a01865a90d3fd.png";
 
 export const gameProjects = [
   {
@@ -13,6 +14,18 @@ export const gameProjects = [
     tags: ["Casual", "Mobile + Desktop", "Playable"],
     color: "#e8741a",
     image: tinyRushCover,
+    playable: true,
+  },
+  {
+    id: "counting-land",
+    title: "Counting Land",
+    description:
+      "An iPad educational app teaching math to children with Down Syndrome through playful, interactive activities with real-world objects.",
+    role: "UX Designer",
+    tags: ["Educational", "iPad", "Accessibility"],
+    color: "#8b6b87",
+    image: countingLandCover,
+    playable: false,
   },
 ];
 
@@ -51,8 +64,8 @@ export function GameDesignPage() {
               Game Design
             </h1>
             <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
-              Playable prototypes and game UX studies: core loops, onboarding,
-              HUDs, controls and game feel, tested on real devices.
+              Games and playful learning apps: core loops, onboarding, HUDs,
+              controls and game feel, tested on real devices.
             </p>
           </div>
 
@@ -72,9 +85,11 @@ export function GameDesignPage() {
                     alt={`${project.title} gameplay`}
                     className="w-full h-full object-cover"
                   />
-                  <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-gray-900 text-xs font-medium px-3 py-1.5 rounded-full shadow-lg">
-                    ▶ Playable
-                  </div>
+                  {project.playable && (
+                    <div className="absolute top-4 right-4 bg-white/90 backdrop-blur-sm text-gray-900 text-xs font-medium px-3 py-1.5 rounded-full shadow-lg">
+                      ▶ Playable
+                    </div>
+                  )}
                 </div>
 
                 <div className="space-y-3">

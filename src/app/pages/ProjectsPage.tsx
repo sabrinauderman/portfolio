@@ -5,7 +5,6 @@ import { gameProjects } from "./GameDesignPage";
 
 // Import project cover images
 import testHubCover from "@/assets/test-hub/cover.jpg";
-import countingLandCover from "@/assets/868a48a727e9336537459cfa3c0a01865a90d3fd.png";
 import cultiveCover from "@/assets/09319fc5b22c8317d7fc141ad4a210009295fbda.png";
 import trackingToolCover from "@/assets/13ea1494f77e74c75cc4b6c229fae9de3e2ae247.png";
 import remoteSettingsCover from "@/assets/remote-settings/baselines.jpg";
@@ -43,17 +42,6 @@ const projects = [
     image: trackingToolCover,
     isComponent: false,
     hasNDA: true,
-  },
-  {
-    id: "counting-land",
-    title: "Counting Land",
-    description:
-      "An iPad educational app teaching math to children with Down Syndrome through playful, interactive activities with real-world objects.",
-    role: "UX Designer",
-    color: "#8b6b87",
-    image: countingLandCover,
-    isComponent: false,
-    hasNDA: false,
   },
   {
     id: "cultive",
@@ -200,9 +188,8 @@ export function ProjectsPage() {
                   </span>
                 </div>
                 <p className="text-gray-600 leading-relaxed">
-                  Playable prototypes and game UX studies: core loops,
-                  onboarding, HUDs, controls and game feel, tested on real
-                  devices.
+                  Games and playful learning apps: core loops, onboarding,
+                  HUDs, controls and game feel, tested on real devices.
                 </p>
               </div>
             </Link>
