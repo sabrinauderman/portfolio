@@ -55,8 +55,8 @@ export function HomePage() {
           </div>
 
           <p className="text-2xl text-gray-600 max-w-2xl leading-relaxed">
-            Product Designer with a PM&apos;s toolkit. From discovery to launch,
-            powered by AI.
+            Product Designer with a PM&apos;s toolkit. I take products from
+            discovery to launch.
           </p>
           <div className="flex gap-4 pt-4">
             <Link
@@ -120,13 +120,13 @@ export function HomePage() {
                 <h3 className="text-base font-medium text-gray-900 mb-2">
                   Design & Prototyping
                 </h3>
-                <p className="text-gray-600">Figma, Figma Make, Claude Design, UIKit/SwiftUI, Sketch, Adobe Photoshop</p>
+                <p className="text-gray-600">Figma, Figma Make, Claude Design, interactive prototypes</p>
               </div>
               <div>
                 <h3 className="text-base font-medium text-gray-900 mb-2">
-                  AI & Development
+                  AI in my process
                 </h3>
-                <p className="text-gray-600">Claude, Claude Code, Vibe Coding, Swift</p>
+                <p className="text-gray-600">Research synthesis, AI-assisted prototyping and automation with Claude and Claude Code</p>
               </div>
               <div>
                 <h3 className="text-base font-medium text-gray-900 mb-2">
@@ -144,13 +144,7 @@ export function HomePage() {
                 <h3 className="text-base font-medium text-gray-900 mb-2">
                   Methodology
                 </h3>
-                <p className="text-gray-600">Agile, Enterprise Design Thinking, Project Management</p>
-              </div>
-              <div>
-                <h3 className="text-base font-medium text-gray-900 mb-2">
-                  Soft Skills
-                </h3>
-                <p className="text-gray-600">Clear Communication, Leadership, Documentation</p>
+                <p className="text-gray-600">Agile, Enterprise Design Thinking</p>
               </div>
             </div>
           </div>

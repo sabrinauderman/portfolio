@@ -9,7 +9,7 @@ export function TrackingToolProjectOverview() {
             <h3 className="text-sm uppercase tracking-wider text-gray-400 mb-3">
               Role
             </h3>
-            <p className="text-gray-900">UX/UI Designer & Project Manager</p>
+            <p className="text-gray-900">Product Designer</p>
           </div>
           <div>
             <h3 className="text-sm uppercase tracking-wider text-gray-400 mb-3">

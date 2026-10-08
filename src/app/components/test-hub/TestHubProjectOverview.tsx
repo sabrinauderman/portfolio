@@ -9,7 +9,7 @@ export function TestHubProjectOverview() {
             <h3 className="text-sm uppercase tracking-wider text-gray-400 mb-3">
               Role
             </h3>
-            <p className="text-gray-900">UX/UI Designer & Product Manager</p>
+            <p className="text-gray-900">Product Designer & Product Manager</p>
           </div>
           <div>
             <h3 className="text-sm uppercase tracking-wider text-gray-400 mb-3">

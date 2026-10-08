@@ -14,8 +14,8 @@ const projects = [
     id: "remote-settings",
     title: "Remote Settings",
     description:
-      "A redesign of Madbox's live configuration tool, bringing QA into the flow and using AI to decide how much review each change needs before it reaches players. In progress, not shipped yet.",
-    role: "UX/UI Designer & PM",
+      "A redesign of Madbox's live configuration tool that brings QA into the flow and uses AI to decide how much review each change needs. Still in progress.",
+    role: "PM & Product Designer",
     color: "#5b7fa6",
     image: remoteSettingsCover,
     isComponent: false,
@@ -26,7 +26,7 @@ const projects = [
     title: "Test Hub",
     description:
       "Madbox's internal platform for game tests: Game Managers see what's live, how it's performing and whether to ship, without opening Looker. Launched in four months.",
-    role: "UX/UI Designer & PM",
+    role: "Product Designer & PM",
     color: "#3f8f8a",
     image: testHubCover,
     isComponent: false,
@@ -37,12 +37,15 @@ const projects = [
     title: "Tracking Tool",
     description:
       "An internal platform centralizing event tracking management at Madbox, streamlining QA processes across Analytics, Game Developers, and QA teams.",
-    role: "UX/UI Designer & PM",
+    role: "Product Designer",
     color: "#d4834f",
     image: trackingToolCover,
     isComponent: false,
     hasNDA: true,
   },
+];
+
+const earlierProjects = [
   {
     id: "cultive",
     title: "Cultive",
@@ -55,6 +58,75 @@ const projects = [
     hasNDA: false,
   },
 ];
+
+type Project = (typeof projects)[number];
+
+function ProjectCard({
+  project,
+  compact = false,
+}: {
+  project: Project;
+  compact?: boolean;
+}) {
+  return (
+    <Link to={`/projects/${project.id}`} className="group space-y-6">
+      {/* Project Image */}
+      <div
+        className="aspect-[4/3] rounded-2xl overflow-hidden transition-transform group-hover:scale-[1.02] relative bg-white shadow-lg"
+        style={{ borderTop: `4px solid ${project.color}` }}
+      >
+        <ImageWithFallback
+          src={project.image}
+          alt={`${project.title} project preview`}
+          className="w-full h-full object-cover"
+        />
+
+        {/* Privacy blur overlays for Tracking Tool names */}
+        {project.id === "tracking-tool" && (
+          <>
+            {/* Blur overlay for the Assignee column names */}
+            <div className="absolute left-[46%] top-[35.5%] w-[10%] h-[5%] privacy-blur bg-white/40" />
+            <div className="absolute left-[46%] top-[42.5%] w-[10%] h-[5%] privacy-blur bg-white/40" />
+            <div className="absolute left-[46%] top-[49.5%] w-[10%] h-[5%] privacy-blur bg-white/40" />
+            <div className="absolute left-[46%] top-[56.5%] w-[10%] h-[5%] privacy-blur bg-white/40" />
+            <div className="absolute left-[46%] top-[63.5%] w-[10%] h-[5%] privacy-blur bg-white/40" />
+            <div className="absolute left-[46%] top-[70.5%] w-[10%] h-[5%] privacy-blur bg-white/40" />
+            <div className="absolute left-[46%] top-[77.5%] w-[10%] h-[5%] privacy-blur bg-white/40" />
+            <div className="absolute left-[46%] top-[84.5%] w-[10%] h-[5%] privacy-blur bg-white/40" />
+          </>
+        )}
+
+        {/* NDA Badge */}
+        {project.hasNDA && (
+          <div className="absolute top-4 right-4 bg-gray-900/90 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-full border border-white/20 shadow-lg">
+            NDA
+          </div>
+        )}
+      </div>
+
+      {/* Project Info */}
+      <div className="space-y-3">
+        <div className="flex flex-col gap-2">
+          <h2 className={`${compact ? "text-2xl" : "text-3xl"} font-light text-gray-900 group-hover:text-gray-600 transition-colors`}>
+            {project.title}
+          </h2>
+          <span
+            className="text-xs uppercase tracking-wider px-3 py-1 rounded-full self-start"
+            style={{
+              backgroundColor: `${project.color}20`,
+              color: project.color,
+            }}
+          >
+            {project.role}
+          </span>
+        </div>
+        <p className="text-gray-600 leading-relaxed">
+          {project.description}
+        </p>
+      </div>
+    </Link>
+  );
+}
 
 export function ProjectsPage() {
   return (
@@ -86,70 +158,13 @@ export function ProjectsPage() {
             </h1>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-12">
+          <div className="grid md:grid-cols-3 gap-10">
             {projects.map((project) => (
-              <Link
-                key={project.id}
-                to={`/projects/${project.id}`}
-                className="group space-y-6"
-              >
-                {/* Project Image */}
-                <div
-                  className="aspect-[4/3] rounded-2xl overflow-hidden transition-transform group-hover:scale-[1.02] relative bg-white shadow-lg"
-                  style={{ borderTop: `4px solid ${project.color}` }}
-                >
-                  <ImageWithFallback
-                    src={project.image}
-                    alt={`${project.title} project preview`}
-                    className="w-full h-full object-cover"
-                  />
-
-                  {/* Privacy blur overlays for Tracking Tool names */}
-                  {project.id === "tracking-tool" && (
-                    <>
-                      {/* Blur overlay for the Assignee column names */}
-                      <div className="absolute left-[46%] top-[35.5%] w-[10%] h-[5%] privacy-blur bg-white/40" />
-                      <div className="absolute left-[46%] top-[42.5%] w-[10%] h-[5%] privacy-blur bg-white/40" />
-                      <div className="absolute left-[46%] top-[49.5%] w-[10%] h-[5%] privacy-blur bg-white/40" />
-                      <div className="absolute left-[46%] top-[56.5%] w-[10%] h-[5%] privacy-blur bg-white/40" />
-                      <div className="absolute left-[46%] top-[63.5%] w-[10%] h-[5%] privacy-blur bg-white/40" />
-                      <div className="absolute left-[46%] top-[70.5%] w-[10%] h-[5%] privacy-blur bg-white/40" />
-                      <div className="absolute left-[46%] top-[77.5%] w-[10%] h-[5%] privacy-blur bg-white/40" />
-                      <div className="absolute left-[46%] top-[84.5%] w-[10%] h-[5%] privacy-blur bg-white/40" />
-                    </>
-                  )}
-
-                  {/* NDA Badge */}
-                  {project.hasNDA && (
-                    <div className="absolute top-4 right-4 bg-gray-900/90 backdrop-blur-sm text-white text-xs font-medium px-3 py-1.5 rounded-full border border-white/20 shadow-lg">
-                      NDA
-                    </div>
-                  )}
-                </div>
-
-                {/* Project Info */}
-                <div className="space-y-3">
-                  <div className="flex flex-col gap-2">
-                    <h2 className="text-3xl font-light text-gray-900 group-hover:text-gray-600 transition-colors">
-                      {project.title}
-                    </h2>
-                    <span
-                      className="text-xs uppercase tracking-wider px-3 py-1 rounded-full self-start"
-                      style={{
-                        backgroundColor: `${project.color}20`,
-                        color: project.color,
-                      }}
-                    >
-                      {project.role}
-                    </span>
-                  </div>
-                  <p className="text-gray-600 leading-relaxed">
-                    {project.description}
-                  </p>
-                </div>
-              </Link>
+              <ProjectCard key={project.id} project={project} compact />
             ))}
+          </div>
 
+          <div className="grid md:grid-cols-2 gap-12">
             {/* Game Design folder: spans the full row and opens a page listing the game projects. */}
             <Link to="/projects/game-design" className="group space-y-6 md:col-span-2">
               <div className="relative aspect-[4/3] md:aspect-[21/8] transition-transform group-hover:scale-[1.01]">
@@ -192,6 +207,15 @@ export function ProjectsPage() {
                 </p>
               </div>
             </Link>
+          </div>
+
+          <div className="pt-8 border-t border-gray-100 space-y-10">
+            <h2 className="text-2xl font-light text-gray-900">Earlier work</h2>
+            <div className="grid md:grid-cols-3 gap-10">
+              {earlierProjects.map((project) => (
+                <ProjectCard key={project.id} project={project} compact />
+              ))}
+            </div>
           </div>
         </div>
       </section>
