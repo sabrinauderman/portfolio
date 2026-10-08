@@ -1,10 +1,24 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link } from "react-router";
-import desktopGameplay from "@/assets/tiny-rush/desktop-gameplay.jpg";
+import gameplayVideo from "@/assets/tiny-rush/gameplay.mp4";
+import gameplayPoster from "@/assets/tiny-rush/gameplay-poster.jpg";
 import { ACCENT, GAME_URL } from "./shared";
 
 export function TinyRushHero() {
   const [playing, setPlaying] = useState(false);
+  const reduceMotion =
+    typeof window !== "undefined" &&
+    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // React sets `muted` only as a property; iOS Safari also wants the attribute to autoplay.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.setAttribute("muted", "");
+    v.muted = true;
+    if (!reduceMotion) v.play().catch(() => {});
+  }, [playing, reduceMotion]);
 
   return (
     <section className="max-w-6xl mx-auto px-6 pt-24 pb-16">
@@ -45,9 +59,9 @@ export function TinyRushHero() {
         </div>
       </div>
 
-      {/* Playable embed: loads only when asked, so the page stays light. */}
-      <div className="mt-12 hidden md:block">
-        <div className="relative aspect-[16/10] rounded-2xl overflow-hidden shadow-xl border border-gray-100 bg-gray-50">
+      {/* Gameplay loop on every screen; on desktop it doubles as the entry to the playable embed. */}
+      <div className="mt-12">
+        <div className="relative aspect-video rounded-2xl overflow-hidden shadow-xl border border-gray-100 bg-gray-50">
           {playing ? (
             <iframe
               src={GAME_URL}
@@ -56,29 +70,42 @@ export function TinyRushHero() {
               allow="autoplay; fullscreen"
             />
           ) : (
-            <button
-              type="button"
-              onClick={() => setPlaying(true)}
-              className="group absolute inset-0 w-full h-full"
-              aria-label="Play Tiny Rush here"
-            >
-              <img
-                src={desktopGameplay}
-                alt="Tiny Rush on desktop: score panels flank a square farm arena"
+            <>
+              <video
+                ref={videoRef}
+                src={gameplayVideo}
+                poster={gameplayPoster}
+                autoPlay={!reduceMotion}
+                controls={reduceMotion}
+                muted
+                loop
+                playsInline
+                aria-label="Tiny Rush gameplay: collecting apples, a full cargo, deliveries and a win"
                 className="w-full h-full object-cover"
               />
-              <span className="absolute inset-0 bg-gray-900/25 group-hover:bg-gray-900/35 transition-colors" />
-              <span
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full px-8 py-4 text-white text-lg tracking-wide shadow-lg transition-transform group-hover:scale-105"
-                style={{ backgroundColor: ACCENT }}
+              <button
+                type="button"
+                onClick={() => setPlaying(true)}
+                className="group absolute inset-0 w-full h-full hidden md:block"
+                aria-label="Play Tiny Rush here"
               >
-                ▶ Play here
-              </span>
-            </button>
+                <span
+                  className="absolute right-6 bottom-6 rounded-full px-6 py-3 text-white text-base tracking-wide shadow-lg transition-transform group-hover:scale-105"
+                  style={{ backgroundColor: ACCENT }}
+                >
+                  ▶ Play here
+                </span>
+              </button>
+            </>
           )}
         </div>
         <p className="mt-3 text-sm text-gray-500">
-          Click inside the game once so it receives your keyboard. Esc pauses.
+          Gameplay capture of a full match, cut to the opening and the final
+          rush. The orange truck is driven by a copy of the rival AI.
+          <span className="hidden md:inline">
+            {" "}Click to play it yourself; click inside the game once so it
+            receives your keyboard. Esc pauses.
+          </span>
         </p>
       </div>
     </section>

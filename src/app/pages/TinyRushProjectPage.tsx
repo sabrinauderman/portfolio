@@ -2,6 +2,7 @@ import React, { useRef, useState } from "react";
 import { Link } from "react-router";
 import { TinyRushHero } from "../components/tiny-rush/TinyRushHero";
 import { TinyRushProjectOverview } from "../components/tiny-rush/TinyRushProjectOverview";
+import { TinyRushHighlights } from "../components/tiny-rush/TinyRushHighlights";
 import { TinyRushDesign } from "../components/tiny-rush/TinyRushDesign";
 import { TinyRushFlow } from "../components/tiny-rush/TinyRushFlow";
 import { TinyRushUIKit } from "../components/tiny-rush/TinyRushUIKit";
@@ -39,6 +40,7 @@ export function TinyRushProjectPage() {
       <div className="pt-20">
         <TinyRushHero />
         <TinyRushProjectOverview />
+        <TinyRushHighlights />
 
         {/* Tab Navigation */}
         <nav className="sticky top-[59px] z-40 bg-white border-y border-gray-200 shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
