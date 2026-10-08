@@ -5,7 +5,6 @@ import { gameProjects } from "./GameDesignPage";
 
 // Import project cover images
 import testHubCover from "@/assets/test-hub/cover.jpg";
-import cultiveCover from "@/assets/09319fc5b22c8317d7fc141ad4a210009295fbda.png";
 import trackingToolCover from "@/assets/13ea1494f77e74c75cc4b6c229fae9de3e2ae247.png";
 import remoteSettingsCover from "@/assets/remote-settings/baselines.jpg";
 
@@ -14,8 +13,8 @@ const projects = [
     id: "remote-settings",
     title: "Remote Settings",
     description:
-      "A redesign of Madbox's live configuration tool, bringing QA into the flow and using AI to decide how much review each change needs before it reaches players. In progress, not shipped yet.",
-    role: "PM & Product Designer",
+      "A redesign of Madbox's live configuration tool that brings QA into the flow and uses AI to decide how much review each change needs. Still in progress.",
+    role: "Product Manager & Product Designer",
     color: "#5b7fa6",
     image: remoteSettingsCover,
     isComponent: false,
@@ -26,7 +25,7 @@ const projects = [
     title: "Test Hub",
     description:
       "Madbox's internal platform for game tests: Game Managers see what's live, how it's performing and whether to ship, without opening Looker. Launched in four months.",
-    role: "Product Designer & PM",
+    role: "Product Designer & Product Manager",
     color: "#3f8f8a",
     image: testHubCover,
     isComponent: false,
@@ -42,17 +41,6 @@ const projects = [
     image: trackingToolCover,
     isComponent: false,
     hasNDA: true,
-  },
-  {
-    id: "cultive",
-    title: "Cultive",
-    description:
-      "An app to discover cultural activities in your neighborhood, easily accessed on foot, helping you learn more about where you live while caring for your well-being.",
-    role: "UX Designer",
-    color: "#6b8e6b",
-    image: cultiveCover,
-    isComponent: false,
-    hasNDA: false,
   },
 ];
 
@@ -84,6 +72,9 @@ export function ProjectsPage() {
             <h1 className="text-6xl font-light tracking-tight text-gray-900 mb-4">
               Projects
             </h1>
+            <p className="text-xl text-gray-600 leading-relaxed">
+              Product design for tools &amp; SaaS, and UX/UI for games.
+            </p>
           </div>
 
           <div className="grid md:grid-cols-2 gap-12">
@@ -150,11 +141,11 @@ export function ProjectsPage() {
               </Link>
             ))}
 
-            {/* Game Design folder: spans the full row and opens a page listing the game projects. */}
-            <Link to="/projects/game-design" className="group space-y-6 md:col-span-2">
-              <div className="relative aspect-[4/3] md:aspect-[21/8] transition-transform group-hover:scale-[1.01]">
+            {/* Game Design folder: same size as a project card, opens a page listing the game projects. */}
+            <Link to="/projects/game-design" className="group space-y-6">
+              <div className="relative aspect-[4/3] transition-transform group-hover:scale-[1.02]">
                 {/* Folder tab */}
-                <div className="absolute top-0 left-0 h-6 w-2/5 md:w-1/5 rounded-t-2xl bg-[#f6cfa8]" />
+                <div className="absolute top-0 left-0 h-6 w-2/5 rounded-t-2xl bg-[#f6cfa8]" />
                 <div className="absolute inset-x-0 bottom-0 top-4 rounded-2xl rounded-tl-none bg-[#fde8d4] shadow-lg overflow-hidden">
                   <div className="absolute inset-0 flex items-center justify-center gap-[4%] px-[6%] py-[8%]">
                     {gameProjects.slice(0, 3).map((g, i) => (
@@ -183,7 +174,7 @@ export function ProjectsPage() {
                     Game Design
                   </h2>
                   <span className="text-xs uppercase tracking-wider px-3 py-1 rounded-full self-start bg-[#e8741a20] text-[#e8741a]">
-                    Folder · Game & UX/UI Design
+                    Game & UX/UI Design
                   </span>
                 </div>
                 <p className="text-gray-600 leading-relaxed">
