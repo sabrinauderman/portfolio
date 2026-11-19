@@ -88,7 +88,16 @@ export function HomePage() {
               I&apos;m a product designer who thinks in systems: one pattern
               that scales across every case, interactions that answer the
               user&apos;s next question, and details like states and microcopy
-              that make a tool feel finished. I also run the product side, so I
+              that make a tool feel finished. At Madbox I also started a
+              token-based{" "}
+              <Link
+                to="/projects/design-system"
+                className="underline decoration-gray-300 underline-offset-4 hover:decoration-gray-700 transition-colors"
+              >
+                design system
+              </Link>{" "}
+              for our internal tools, with foundations, 30+ components and
+              shared patterns like the filter bar. I also run the product side, so I
               own the roadmap, align stakeholders and ground every decision in
               evidence rather than opinion. I do my best work in technical teams
               where accountability and iteration matter.
