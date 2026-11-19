@@ -64,6 +64,19 @@ export function TrackingToolImpact() {
           manual steps where tracking broke, so data could be trusted across
           every game.
         </p>
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-px bg-gray-200 border border-gray-200 rounded-lg overflow-hidden mb-8">
+          {[
+            ["~50%", "less time per DQA round", "From about a full day to half a day or less, as reported by the QA team."],
+            ["0", "manual filter setups", "Event attributes become filters automatically, removing the step behind most errors."],
+            ["1", "source of truth for 3 teams", "Analytics, Game Developers and QA work from the same repository instead of scattered docs."],
+          ].map(([value, label, note]) => (
+            <div key={label} className="bg-white p-6">
+              <p className="text-4xl font-light tracking-tight" style={{ color: ACCENT }}>{value}</p>
+              <p className="text-sm font-medium text-gray-900 mt-1">{label}</p>
+              <p className="text-xs text-gray-500 leading-relaxed mt-2">{note}</p>
+            </div>
+          ))}
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {changes.map((c) => (
             <div
