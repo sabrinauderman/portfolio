@@ -1,4 +1,31 @@
-// Project card cover for the Madbox Design System case: an inline SVG, so no binary asset is needed.
-const svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 800 600\"><rect width=\"800\" height=\"600\" fill=\"#fafafa\"/><text x=\"60\" y=\"110\" font-family=\"system-ui,Arial,sans-serif\" font-size=\"44\" font-weight=\"700\"><tspan fill=\"#ec4899\">MAD</tspan><tspan fill=\"#f59e0b\">BO</tspan><tspan fill=\"#ff6347\">X</tspan></text><text x=\"62\" y=\"140\" font-family=\"system-ui,Arial,sans-serif\" font-size=\"14\" letter-spacing=\"5\" fill=\"#737373\">DESIGN SYSTEM</text><rect x=\"60\" y=\"200\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#fff5f3\" stroke=\"#e5e5e5\"/><rect x=\"128\" y=\"200\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#ffe8e3\" stroke=\"#e5e5e5\"/><rect x=\"196\" y=\"200\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#ffd5cc\" stroke=\"#e5e5e5\"/><rect x=\"264\" y=\"200\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#ffb8a8\" stroke=\"#e5e5e5\"/><rect x=\"332\" y=\"200\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#ff8a73\" stroke=\"#e5e5e5\"/><rect x=\"400\" y=\"200\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#ff6347\" stroke=\"#e5e5e5\"/><rect x=\"468\" y=\"200\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#ff4526\" stroke=\"#e5e5e5\"/><rect x=\"536\" y=\"200\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#e63312\" stroke=\"#e5e5e5\"/><rect x=\"604\" y=\"200\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#c72b0f\" stroke=\"#e5e5e5\"/><rect x=\"672\" y=\"200\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#a32610\" stroke=\"#e5e5e5\"/><rect x=\"60\" y=\"300\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#fafafa\" stroke=\"#e5e5e5\"/><rect x=\"128\" y=\"300\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#f5f5f5\" stroke=\"#e5e5e5\"/><rect x=\"196\" y=\"300\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#e5e5e5\" stroke=\"#e5e5e5\"/><rect x=\"264\" y=\"300\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#d4d4d4\" stroke=\"#e5e5e5\"/><rect x=\"332\" y=\"300\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#a3a3a3\" stroke=\"#e5e5e5\"/><rect x=\"400\" y=\"300\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#737373\" stroke=\"#e5e5e5\"/><rect x=\"468\" y=\"300\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#525252\" stroke=\"#e5e5e5\"/><rect x=\"536\" y=\"300\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#404040\" stroke=\"#e5e5e5\"/><rect x=\"604\" y=\"300\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#262626\" stroke=\"#e5e5e5\"/><rect x=\"672\" y=\"300\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#171717\" stroke=\"#e5e5e5\"/><rect x=\"60\" y=\"400\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#10b981\"/><rect x=\"128\" y=\"400\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#ef4444\"/><rect x=\"196\" y=\"400\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#f59e0b\"/><rect x=\"264\" y=\"400\" width=\"64\" height=\"72\" rx=\"6\" fill=\"#3b82f6\"/><rect x=\"400\" y=\"412\" width=\"150\" height=\"48\" rx=\"8\" fill=\"#ff6347\"/><text x=\"475\" y=\"442\" text-anchor=\"middle\" font-family=\"system-ui,Arial,sans-serif\" font-size=\"16\" font-weight=\"600\" fill=\"#fff\">Button</text><rect x=\"566\" y=\"412\" width=\"174\" height=\"48\" rx=\"8\" fill=\"#fff\" stroke=\"#e5e5e5\"/><text x=\"653\" y=\"442\" text-anchor=\"middle\" font-family=\"system-ui,Arial,sans-serif\" font-size=\"16\" font-weight=\"600\" fill=\"#171717\">Outline</text></svg>";
+// Project card cover for the Madbox Design System case: an inline SVG built
+// from the system's own tokens, so no binary asset is needed.
+const primary = ["#fff5f3", "#ffe8e3", "#ffd5cc", "#ffb8a8", "#ff8a73", "#ff6347", "#ff4526", "#e63312", "#c72b0f", "#a32610"];
+const neutral = ["#fafafa", "#f5f5f5", "#e5e5e5", "#d4d4d4", "#a3a3a3", "#737373", "#525252", "#404040", "#262626", "#171717"];
+const semantic = ["#10b981", "#ef4444", "#f59e0b", "#3b82f6"];
+const font = "system-ui,Arial,sans-serif";
+
+const swatches = (colors: string[], y: number, stroke: boolean) =>
+  colors
+    .map(
+      (c, i) =>
+        `<rect x="${60 + i * 68}" y="${y}" width="64" height="72" rx="6" fill="${c}"${stroke ? ' stroke="#e5e5e5"' : ""}/>`,
+    )
+    .join("");
+
+const svg = [
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">',
+  '<rect width="800" height="600" fill="#fafafa"/>',
+  `<text x="60" y="110" font-family="${font}" font-size="44" font-weight="700"><tspan fill="#ec4899">MAD</tspan><tspan fill="#f59e0b">BO</tspan><tspan fill="#ff6347">X</tspan></text>`,
+  `<text x="62" y="140" font-family="${font}" font-size="14" letter-spacing="5" fill="#737373">DESIGN SYSTEM</text>`,
+  swatches(primary, 200, true),
+  swatches(neutral, 300, true),
+  swatches(semantic, 400, false),
+  `<rect x="400" y="412" width="150" height="48" rx="8" fill="#ff6347"/>`,
+  `<text x="475" y="442" text-anchor="middle" font-family="${font}" font-size="16" font-weight="600" fill="#fff">Button</text>`,
+  `<rect x="566" y="412" width="174" height="48" rx="8" fill="#fff" stroke="#e5e5e5"/>`,
+  `<text x="653" y="442" text-anchor="middle" font-family="${font}" font-size="16" font-weight="600" fill="#171717">Outline</text>`,
+  "</svg>",
+].join("");
 
 export default `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
