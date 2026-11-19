@@ -212,10 +212,19 @@ function dailySeries(t: Test, m: Metric, v: { main: number; tested: number }) {
 
 type Series = { label: string; color: string; values: number[]; dashed?: boolean };
 
-function LineChartBox({ title, xLabels, series, format, shade, wide }: { title: string; xLabels: string[]; series: Series[]; format: (v: number) => string; shade?: number[]; wide?: boolean }) {
-  const W = wide ? 860 : 420, H = wide ? 220 : 210, L = 46, R = 12, T = 12, B = 26;
+function LineChartBox({ title, xLabels, series, format, shade, wide, cap }: { title: string; xLabels: string[]; series: Series[]; format: (v: number) => string; shade?: number[]; wide?: boolean; cap?: number }) {
+  const ref = React.useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(wide ? 760 : 370);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const ro = new ResizeObserver(([e]) => setWidth(Math.max(240, Math.round(e.contentRect.width))));
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, []);
+  const W = width, H = wide ? 180 : 160, L = 44, R = 10, T = 10, B = 22;
   const all = series.flatMap((s) => s.values);
-  const min = Math.min(...all) * 0.92, max = Math.max(...all) * 1.06;
+  const min = Math.min(...all) * 0.92, max = Math.min(Math.max(...all) * 1.06, cap ?? Infinity);
   const n = xLabels.length;
   const x = (i: number) => L + (n === 1 ? 0.5 : i / (n - 1)) * (W - L - R);
   const y = (v: number) => T + (1 - (v - min) / (max - min || 1)) * (H - T - B);
@@ -225,7 +234,7 @@ function LineChartBox({ title, xLabels, series, format, shade, wide }: { title: 
   return (
     <div className="border border-gray-200 rounded p-3 min-w-0">
       <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
-        <p className="text-sm font-medium text-gray-800">{title}</p>
+        <p className="text-[13px] font-medium text-gray-800">{title}</p>
         <div className="flex flex-wrap gap-3 text-[11px] text-gray-600">
           {series.map((s) => (
             <span key={s.label} className="flex items-center gap-1">
@@ -235,7 +244,8 @@ function LineChartBox({ title, xLabels, series, format, shade, wide }: { title: 
           ))}
         </div>
       </div>
-      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" role="img" aria-label={title}>
+      <div ref={ref} className="w-full">
+      <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`} className="block" role="img" aria-label={title}>
         <defs>
           <pattern id="th-unb" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
             <rect width="6" height="6" fill="#f3f4f6" />
@@ -261,6 +271,7 @@ function LineChartBox({ title, xLabels, series, format, shade, wide }: { title: 
           </g>
         ))}
       </svg>
+      </div>
     </div>
   );
 }
@@ -328,14 +339,14 @@ function TestModal({ test, onClose }: { test: Test; onClose: () => void }) {
         role="dialog"
         aria-modal="true"
         aria-label={title}
-        className="relative w-full max-w-[900px] max-h-full flex flex-col bg-white rounded shadow-2xl animate-[th-in_200ms_ease-out]"
+        className="relative w-full max-w-[820px] max-h-full flex flex-col bg-white rounded shadow-2xl animate-[th-in_200ms_ease-out]"
       >
         {/* Header */}
         <div className="flex flex-wrap items-start justify-between gap-3 px-5 pt-5 pb-3">
           <div className="min-w-0">
             <div className="flex flex-wrap items-center gap-2 mb-1">
               <span className="w-6 h-6 rounded-full flex items-center justify-center text-white text-[11px] font-bold" style={{ background: test.icon }}>{test.game[0]}</span>
-              <h4 className="text-[1.1rem] font-semibold text-gray-900">{title}</h4>
+              <h4 className="text-base font-semibold text-gray-900">{title}</h4>
               <span className="h-[22px] px-2 rounded-full text-[11px] font-semibold flex items-center bg-black/[.08] text-gray-800">{test.type}</span>
             </div>
             <p className="text-xs italic text-gray-500">
@@ -380,12 +391,12 @@ function TestModal({ test, onClose }: { test: Test; onClose: () => void }) {
 
         {/* Scrollable content */}
         <div className="overflow-y-auto px-5 pb-6">
-          <p className="text-base font-semibold text-gray-900 mb-3">Performance Overview</p>
+          <p className="text-sm font-semibold text-gray-900 mb-2.5">Performance Overview</p>
           <div className="flex flex-wrap gap-3 mb-5">
             {overview.map(([label, value, d]) => (
-              <div key={label} className="flex-1 min-w-[140px] border border-gray-200 rounded p-4">
-                <p className="text-sm text-gray-500 mb-1">{label}</p>
-                <p className="text-xl font-semibold text-gray-900 mb-1">{value}</p>
+              <div key={label} className="flex-1 min-w-[140px] border border-gray-200 rounded p-3">
+                <p className="text-xs text-gray-500 mb-1">{label}</p>
+                <p className="text-lg font-semibold text-gray-900 mb-0.5">{value}</p>
                 {label === "Installs" && base && <p className="text-xs text-gray-500">50% main / 50% tested</p>}
                 {d !== null && (
                   <p className="text-xs flex items-center gap-1">
@@ -400,7 +411,7 @@ function TestModal({ test, onClose }: { test: Test; onClose: () => void }) {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <LineChartBox title="Retention Rate Over Time" xLabels={retDays} series={arms(ret)} format={(v) => `${Math.round(v * 100)}%`} />
+            <LineChartBox title="Retention Rate Over Time" cap={1} xLabels={retDays} series={arms(ret)} format={(v) => `${Math.round(v * 100)}%`} />
             <LineChartBox title={base && test.type !== "AB Test" ? "ROAS Evolution" : "LTV Evolution"} xLabels={ltvDays} series={arms(ltv)} format={(v) => `$${v.toFixed(2)}`} />
           </div>
 
@@ -419,7 +430,7 @@ function TestModal({ test, onClose }: { test: Test; onClose: () => void }) {
           </div>
 
           <div className="mt-4 border border-gray-200 rounded overflow-x-auto">
-            <table className="w-full text-[13px]">
+            <table className="w-full text-[12.5px]">
               <thead>
                 <tr className="bg-black/[.04] text-gray-900">
                   <th className="text-left font-semibold px-4 py-2 min-w-[130px]">Metric</th>
@@ -464,6 +475,10 @@ function TestModal({ test, onClose }: { test: Test; onClose: () => void }) {
             </table>
           </div>
           <p className="text-[11px] text-gray-400 mt-2">Click any metric row to see it day by day in the chart above.</p>
+        </div>
+        <div className="flex items-center justify-between gap-3 px-5 py-2.5 border-t border-gray-100 bg-gray-50 rounded-b text-[11px] text-gray-500">
+          <span>Illustrative data · not real Madbox games or figures</span>
+          <span className="hidden sm:inline">Esc to close</span>
         </div>
       </div>
     </div>
@@ -523,7 +538,7 @@ export function TestHubPlayground() {
             </button>
           ))}
         </div>
-        <p className="text-xs text-gray-400">Recreated in React · fictional games and data</p>
+        <p className="text-xs text-gray-400">Recreated in React · illustrative data</p>
       </div>
 
       {/* Product frame */}
