@@ -240,10 +240,10 @@ export function HomePage() {
                 sabrina.u@hotmail.com
               </a>
               <a
-                href="tel:+34689219501"
+                href="tel:+972552916171"
                 className="block hover:text-gray-900 transition-colors"
               >
-                +34 689 219 501
+                +972 55-291-6171
               </a>
               <a
                 href="https://www.linkedin.com/in/sabrina-uderman-979933206"
