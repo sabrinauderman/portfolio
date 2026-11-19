@@ -141,7 +141,7 @@ export function ProjectsPage() {
               </Link>
             ))}
 
-            {/* Game Design folder: same size as a project card, opens a page listing the game projects. */}
+            {/* Side Hustles folder: same size as a project card, opens a page listing the game projects. */}
             <Link to="/projects/game-design" className="group space-y-6">
               <div className="relative aspect-[4/3] transition-transform group-hover:scale-[1.02]">
                 {/* Folder tab */}
@@ -171,7 +171,7 @@ export function ProjectsPage() {
               <div className="space-y-3">
                 <div className="flex flex-col gap-2">
                   <h2 className="text-3xl font-light text-gray-900 group-hover:text-gray-600 transition-colors">
-                    Game Design
+                    Side Hustles
                   </h2>
                   <span className="text-xs uppercase tracking-wider px-3 py-1 rounded-full self-start bg-[#e8741a20] text-[#e8741a]">
                     Game & UX/UI Design
