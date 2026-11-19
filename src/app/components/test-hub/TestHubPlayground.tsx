@@ -105,36 +105,43 @@ const RAIL = [
 
 /* ---------- Bar ---------- */
 
-function Bar({ t, from, to, cols, selected, onClick }: { t: Test; from: number; to: number; cols: number; selected: Test | null; onClick: () => void }) {
+const isLive = (t: Test) => t.end >= TODAY;
+const effEnd = (t: Test) => Math.min(t.end, TODAY); // live tests stop on today's cell
+const darken = (hex: string) => `linear-gradient(rgba(0,0,0,.25), rgba(0,0,0,.25)), ${hex}`;
+
+function Bar({ t, from, to, selected, onClick }: { t: Test; from: number; to: number; selected: Test | null; onClick: () => void }) {
   const on = selected?.id === t.id;
+  const live = isLive(t);
   const s = Math.max(t.start, from) - from;
-  const e = Math.min(t.end, to) - from;
-  const roundL = t.start >= from;
-  const roundR = t.end <= to;
+  const e = Math.min(effEnd(t), to) - from;
+  const startsHere = t.start >= from;
+  const endsHere = effEnd(t) <= to;
+  // Rounded only at the real start/end; live tests keep a square right edge.
+  const r = (cond: boolean) => (cond ? 10 : 0);
+  const radius = `${r(startsHere)}px ${r(endsHere && !live)}px ${r(endsHere && !live)}px ${r(startsHere)}px`;
   return (
     <button
       onClick={onClick}
       aria-expanded={on}
-      aria-label={`${t.type}: ${t.game} ${t.label || t.pills?.map((p) => p[1]).join(" vs ")}. Open details`}
-      className={`relative h-[22px] flex overflow-hidden text-left transition-all ${on ? "ring-2 ring-offset-1 ring-gray-900 z-10" : "hover:brightness-110"} ${selected && !on ? "opacity-40" : ""}`}
-      style={{
-        gridColumn: `${s + 1} / ${e + 2}`,
-        borderRadius: `${roundL ? 6 : 0}px ${roundR ? 6 : 0}px ${roundR ? 6 : 0}px ${roundL ? 6 : 0}px`,
-        fontFamily: FONT,
-      }}
+      aria-label={`${t.type}: ${t.game} ${t.label || t.pills?.map((p) => p[1]).join(" vs ")}${live ? " (live)" : ""}. Open details`}
+      className={`relative min-h-[19.6px] flex text-left transition-all ${on ? "ring-2 ring-offset-1 ring-gray-900 z-10" : "hover:brightness-110"} ${selected && !on ? "opacity-40" : ""}`}
+      style={{ gridColumn: `${s + 1} / ${e + 2}`, borderRadius: radius, fontFamily: FONT }}
     >
       {Array.from({ length: e - s + 1 }, (_, i) => {
         const day = from + s + i;
         const unb = t.unbalanced.includes(day);
-        const future = day > TODAY;
+        const fadedToday = live && day === TODAY && from !== to; // daily view shows the full bar
+        const first = i === 0;
+        const last = i === e - s;
         return (
           <span
             key={i}
-            className="flex-1 h-full"
-            title={unb ? "Not enough balanced installs on this day" : undefined}
+            className="flex-1 self-stretch"
+            title={fadedToday ? "Still running" : unb ? "Not enough balanced installs on this day" : undefined}
             style={{
-              background: future
-                ? `${t.color}33`
+              borderRadius: `${first ? r(startsHere) : 0}px ${last ? r(endsHere && !live) : 0}px ${last ? r(endsHere && !live) : 0}px ${first ? r(startsHere) : 0}px`,
+              background: fadedToday
+                ? `linear-gradient(to right, ${t.color}40 50%, transparent 50%)`
                 : unb
                   ? `repeating-linear-gradient(45deg, ${t.color} 0 5px, ${t.color}99 5px 10px)`
                   : t.color,
@@ -142,23 +149,23 @@ function Bar({ t, from, to, cols, selected, onClick }: { t: Test; from: number; 
           />
         );
       })}
-      {(roundL || s === 0) && (
+      {(startsHere || s === 0) && (
         <span
-          className="absolute inset-y-0 left-0 max-w-full flex items-center gap-1 pl-1 pr-2 text-[10.5px] text-white whitespace-nowrap overflow-hidden pointer-events-none"
-          style={{ background: t.start > TODAY ? undefined : t.color, color: t.start > TODAY ? "#374151" : undefined, borderRadius: "inherit" }}
+          className="absolute inset-y-0 left-0 max-w-full flex items-center gap-1 pr-2 text-[10px] font-semibold leading-[1.2] text-white whitespace-nowrap overflow-hidden pointer-events-none"
+          style={{ background: t.color, borderRadius: radius, paddingLeft: startsHere ? 8 : 5 }}
         >
-          <span className="w-4 h-4 rounded-full flex-shrink-0 border border-white/70 flex items-center justify-center text-[8px] font-semibold" style={{ background: t.icon }}>
+          <span className="w-[14px] h-[14px] rounded-full flex-shrink-0 border border-white/70 flex items-center justify-center text-[7px] font-bold" style={{ background: t.icon }}>
             {t.game[0]}
           </span>
           {t.pills?.map(([a, b], i) => (
             <React.Fragment key={i}>
-              {i > 0 && <span className="font-medium">vs</span>}
-              <span className="px-1 rounded-[3px] bg-white/25 text-[9.5px] font-medium">{a}</span>
-              <span className="font-medium">{b}</span>
+              {i > 0 && <span>vs</span>}
+              <span className="inline-flex items-center px-[5px] rounded-lg text-[9px] font-bold leading-[1.5]" style={{ background: darken(t.color) }}>{a}</span>
+              <span>{b}</span>
             </React.Fragment>
           ))}
-          {t.label && <span className="font-medium">{t.label}</span>}
-          <span className="opacity-80">{t.meta}</span>
+          {t.label && <span>{t.label}</span>}
+          <span className="font-normal opacity-75">{t.meta}</span>
         </span>
       )}
     </button>
@@ -233,7 +240,7 @@ function Detail({ test, onClose }: { test: Test; onClose: () => void }) {
           <div>
             <p className="text-[11px] uppercase tracking-wider mb-0.5" style={{ color: test.color }}>{test.type} · {test.game}</p>
             <h4 className="text-lg text-gray-900">{title}</h4>
-            <p className="text-xs text-gray-500">{test.meta} · {fmtShort(test.start)} – {fmtShort(test.end)}</p>
+            <p className="text-xs text-gray-500">{test.meta} · {fmtShort(test.start)} – {isLive(test) ? "Live" : fmtShort(test.end)}</p>
           </div>
         </div>
         <div className="flex items-center gap-2">
@@ -302,7 +309,7 @@ export function TestHubPlayground() {
   const weeks =
     range === "monthly" ? [0, 7, 14, 21, 28] : range === "weekly" ? [14] : [];
   const anyInView =
-    range === "daily" ? tests.some((t) => t.start <= TODAY && t.end >= TODAY) : tests.some((t) => weeks.some((w) => t.end >= w && t.start <= Math.min(w + 6, MONTH_DAYS - 1)));
+    range === "daily" ? tests.some((t) => t.start <= TODAY && t.end >= TODAY) : tests.some((t) => weeks.some((w) => effEnd(t) >= w && t.start <= Math.min(w + 6, MONTH_DAYS - 1)));
   const showEmpty = state === "empty" || (state === "live" && !anyInView);
 
   const pick = (t: Test) => setSelected((s) => (s?.id === t.id ? null : t));
@@ -478,7 +485,7 @@ export function TestHubPlayground() {
                     {state === "live" && !showEmpty && range !== "daily" &&
                       weeks.map((w) => {
                         const last = Math.min(w + 6, MONTH_DAYS - 1);
-                        const inWeek = tests.filter((t) => t.end >= w && t.start <= last);
+                        const inWeek = tests.filter((t) => effEnd(t) >= w && t.start <= last);
                         const open = expanded.includes(w);
                         const shown = open ? inWeek : inWeek.slice(0, MAX_ROWS);
                         const more = inWeek.length - shown.length;
@@ -506,7 +513,7 @@ export function TestHubPlayground() {
                             <div className="relative px-3 pb-2 space-y-[5px] min-h-[40px]">
                               {shown.map((t) => (
                                 <div key={t.id} className="grid grid-cols-7">
-                                  <Bar t={t} from={w} to={last} cols={7} selected={selected} onClick={() => pick(t)} />
+                                  <Bar t={t} from={w} to={last} selected={selected} onClick={() => pick(t)} />
                                 </div>
                               ))}
                               {(more > 0 || open) && inWeek.length > MAX_ROWS && (
@@ -530,7 +537,7 @@ export function TestHubPlayground() {
                       <div className="p-3 space-y-[5px]">
                         {tests.filter((t) => t.start <= TODAY && t.end >= TODAY).map((t) => (
                           <div key={t.id} className="grid grid-cols-1">
-                            <Bar t={{ ...t, start: TODAY, end: TODAY }} from={TODAY} to={TODAY} cols={1} selected={selected?.id === t.id ? { ...t, start: TODAY, end: TODAY } : selected} onClick={() => pick(t)} />
+                            <Bar t={{ ...t, start: TODAY, end: TODAY }} from={TODAY} to={TODAY} selected={selected?.id === t.id ? { ...t, start: TODAY, end: TODAY } : selected} onClick={() => pick(t)} />
                           </div>
                         ))}
                       </div>
@@ -539,7 +546,7 @@ export function TestHubPlayground() {
 
                   {state === "live" && !showEmpty && !selected && (
                     <p className="text-[11px] text-gray-400 px-4 py-2.5 border-t border-gray-100">
-                      Click any test to open it. Striped days didn’t have enough balanced installs to trust; faded days are still ahead.
+                      Click any test to open it. Striped days didn’t have enough balanced installs to trust; live tests fade on today’s cell because they’re still running.
                     </p>
                   )}
 
