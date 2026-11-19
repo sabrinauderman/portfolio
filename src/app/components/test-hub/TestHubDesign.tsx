@@ -40,6 +40,13 @@ const testTypes = [
   ["A/B Test", "Groups vs. control inside the same version, with eligible users and LTV."],
 ];
 
+const interactions = [
+  ["Click a KPI, the chart follows", "Clicking any row in the KPI table repaints the daily chart for that metric, so exploring a test never means leaving the view."],
+  ["Unbalanced days are shaded, not hidden", "Days without enough balanced installs stay on the calendar with a shaded state, so GMs see what is running and know which data to trust."],
+  ["Share the exact view", "A copy icon shares the test exactly as you see it, replacing the 2–10 dashboards people used to send around each day."],
+  ["Deep links, already filtered", "“See more details” opens the right Looker dashboards pre-filtered for that test and game: no setup, no searching."],
+];
+
 export function TestHubDesign() {
   return (
     <div className="space-y-16">
@@ -81,8 +88,10 @@ export function TestHubDesign() {
             Four Test Types, One Pattern
           </h2>
           <p className="text-gray-600 leading-relaxed">
-            Every test type gets its own KPI set, but the layout never changes.
-            Once a GM learns one test, they can read all of them.
+            Every test type gets its own KPI set, but the layout never changes:
+            the same headline tiles, charts and KPI table are reused as one
+            component system. Once a GM learns one test, they can read all of
+            them, and a new test type is a new KPI set, not a new screen.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -93,6 +102,29 @@ export function TestHubDesign() {
               style={{ backgroundColor: `${ACCENT}0d`, borderColor: ACCENT }}
             >
               <h4 className="text-2xl font-light text-gray-900 mb-2">{title}</h4>
+              <p className="text-gray-600 leading-relaxed">{text}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Interaction details */}
+      <div className="max-w-5xl mx-auto px-8 space-y-8 pt-8">
+        <div>
+          <h2 className="text-3xl font-light tracking-tight text-gray-900 mb-4">
+            Interaction Details
+          </h2>
+          <p className="text-gray-600 leading-relaxed">
+            Small behaviors that make the tool feel fast and trustworthy.
+          </p>
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {interactions.map(([title, text]) => (
+            <div key={title} className="bg-white border border-gray-100 rounded-lg p-8">
+              <p className="text-xs uppercase tracking-wider mb-2" style={{ color: ACCENT }}>
+                Interaction
+              </p>
+              <h4 className="font-medium text-gray-900 mb-3">{title}</h4>
               <p className="text-gray-600 leading-relaxed">{text}</p>
             </div>
           ))}

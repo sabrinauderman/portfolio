@@ -10,17 +10,6 @@ import remoteSettingsCover from "@/assets/remote-settings/baselines.jpg";
 
 const projects = [
   {
-    id: "remote-settings",
-    title: "Remote Settings",
-    description:
-      "A redesign of Madbox's live configuration tool that brings QA into the flow and uses AI to decide how much review each change needs. Still in progress.",
-    role: "Product Manager & Product Designer",
-    color: "#5b7fa6",
-    image: remoteSettingsCover,
-    isComponent: false,
-    hasNDA: true,
-  },
-  {
     id: "test-hub",
     title: "Test Hub",
     description:
@@ -28,6 +17,17 @@ const projects = [
     role: "Product Designer & Product Manager",
     color: "#3f8f8a",
     image: testHubCover,
+    isComponent: false,
+    hasNDA: true,
+  },
+  {
+    id: "remote-settings",
+    title: "Remote Settings",
+    description:
+      "A redesign of Madbox's live configuration tool that brings QA into the flow and uses AI to decide how much review each change needs. Still in progress.",
+    role: "Product Manager & Product Designer",
+    color: "#5b7fa6",
+    image: remoteSettingsCover,
     isComponent: false,
     hasNDA: true,
   },

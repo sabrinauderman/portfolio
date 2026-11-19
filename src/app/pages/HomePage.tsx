@@ -55,8 +55,8 @@ export function HomePage() {
           </div>
 
           <p className="text-2xl text-gray-600 max-w-2xl leading-relaxed">
-            Product Designer with a PM&apos;s toolkit. I take products from
-            discovery to launch.
+            Product Designer with a PM&apos;s toolkit. I design systems, not
+            just screens, and take them from discovery to a polished launch.
           </p>
           <div className="flex gap-4 pt-4">
             <Link
@@ -85,11 +85,13 @@ export function HomePage() {
           </div>
           <div className="space-y-6">
             <p className="text-lg text-gray-700 leading-relaxed">
-              I&apos;m a product designer who also runs the product side,
-              taking tools from discovery to launch. I own the roadmap, align stakeholders
-              and design the solution, grounding every decision in evidence
-              rather than opinion. I do my best work in technical teams where
-              accountability and iteration matter.
+              I&apos;m a product designer who thinks in systems: one pattern
+              that scales across every case, interactions that answer the
+              user&apos;s next question, and details like states and microcopy
+              that make a tool feel finished. I also run the product side, so I
+              own the roadmap, align stakeholders and ground every decision in
+              evidence rather than opinion. I do my best work in technical teams
+              where accountability and iteration matter.
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
               I fall in love with the problem, not the solution. Before I open
