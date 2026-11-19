@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 
 /*
  * Interactive recreation of Test Hub's "Test Summary" calendar and test detail,
@@ -41,48 +42,8 @@ const TESTS: Test[] = [
   { id: "t9", type: "AB Test", game: "Harbor Hop", icon: "#0ea5e9", color: "#9333ea", pills: [["Prod", "50%"]], label: "AB Test: Onboarding_Skip", meta: "Android · US", start: 3, end: 8, unbalanced: [] },
 ];
 
-/* ---------- Fictional KPI data ---------- */
-
-type Kpi = { key: string; label: string; unit: string; control: number; test: number };
-
-function rand(seed: number) {
-  let s = seed;
-  return () => {
-    s = (s * 9301 + 49297) % 233280;
-    return s / 233280;
-  };
-}
-
-function kpisFor(test: Test): Kpi[] {
-  const r = rand(test.id.charCodeAt(1) * 31);
-  const k = (key: string, label: string, unit: string, base: number, spread: number): Kpi => ({
-    key, label, unit, control: base, test: +(base * (1 + (r() - 0.35) * spread)).toFixed(2),
-  });
-  return [
-    k("installs", "Installs", "", 4200 + Math.round(r() * 3000), 0.1),
-    k("d1", "D1 retention", "%", 38 + Math.round(r() * 8), 0.12),
-    k("d7", "D7 retention", "%", 11 + Math.round(r() * 4), 0.18),
-    k("ltv", "LTV D7", "$", +(0.42 + r() * 0.2).toFixed(2), 0.2),
-    k("playtime", "Playtime / user", "min", 21 + Math.round(r() * 9), 0.15),
-  ];
-}
-
-function series(test: Test, kpi: Kpi) {
-  const keySeed = [...kpi.key].reduce((a, c, i) => a + c.charCodeAt(0) * (i + 3), 0);
-  const r = rand(test.id.charCodeAt(1) * 7 + keySeed * 13);
-  const days = Math.min(test.end, TODAY) - test.start + 1; // no data for days still ahead
-  return Array.from({ length: Math.max(days, 1) }, (_, i) => {
-    const wobble = 1 + (r() - 0.5) * 0.12;
-    const trend = 1 + (i / days) * 0.04;
-    return { day: test.start + i, control: kpi.control * wobble * trend, test: kpi.test * (wobble + (r() - 0.5) * 0.05) * trend };
-  });
-}
-
 const dayNum = (i: number) => i + 1;
 const fmtShort = (i: number) => `${dayNum(i)} Nov`;
-const fmtVal = (v: number, unit: string) =>
-  unit === "$" ? `$${v.toFixed(2)}` : unit === "%" ? `${v.toFixed(1)}%` : unit === "min" ? `${v.toFixed(1)} min` : Math.round(v).toLocaleString("en-GB");
-
 type ViewState = "live" | "loading" | "empty" | "error";
 type Range = "monthly" | "weekly" | "daily";
 const WEEKDAYS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
@@ -172,127 +133,342 @@ function Bar({ t, from, to, selected, onClick }: { t: Test; from: number; to: nu
   );
 }
 
-/* ---------- Chart & detail ---------- */
+/* ---------- Fictional metrics ---------- */
 
-function Chart({ test, kpi }: { test: Test; kpi: Kpi }) {
-  const data = useMemo(() => series(test, kpi), [test, kpi]);
-  const W = 560, H = 170, P = 28;
-  const vals = data.flatMap((d) => [d.control, d.test]);
-  const min = Math.min(...vals) * 0.96, max = Math.max(...vals) * 1.04;
-  const x = (i: number) => P + (i / Math.max(1, data.length - 1)) * (W - P * 2);
-  const y = (v: number) => H - P - ((v - min) / (max - min || 1)) * (H - P * 2);
-  const path = (k: "control" | "test") => data.map((d, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(d[k]).toFixed(1)}`).join(" ");
-  const step = (W - P * 2) / Math.max(1, data.length - 1);
+const MAIN = "#3b82f6"; // main / control (blue)
+const TESTED = "#f97316"; // tested / variant (orange)
+const MUI_BLUE = "#1976d2";
+
+type Metric = { key: string; label: string; unit: "" | "%" | "$" | "x"; lowerBetter?: boolean };
+const METRICS: Metric[] = [
+  { key: "installs", label: "Installs", unit: "" },
+  { key: "retention_d1", label: "Retention D1", unit: "%" },
+  { key: "retention_d3", label: "Retention D3", unit: "%" },
+  { key: "retention_d7", label: "Retention D7", unit: "%" },
+  { key: "retention_d14", label: "Retention D14", unit: "%" },
+  { key: "roas_d7", label: "ROAS D7", unit: "x" },
+  { key: "ltv_d1", label: "LTV D1", unit: "$" },
+  { key: "ltv_d7", label: "LTV D7", unit: "$" },
+  { key: "cpi", label: "CPI", unit: "$", lowerBetter: true },
+];
+const BASE: Record<string, number> = {
+  installs: 6200, retention_d1: 0.41, retention_d3: 0.24, retention_d7: 0.13, retention_d14: 0.08,
+  roas_d7: 0.62, ltv_d1: 0.11, ltv_d7: 0.29, cpi: 0.47,
+};
+
+function rand(seed: number) {
+  let s = seed;
+  return () => {
+    s = (s * 9301 + 49297) % 233280;
+    return s / 233280;
+  };
+}
+
+const seedOf = (str: string) => [...str].reduce((a, c, i) => a + c.charCodeAt(0) * (i + 7), 0);
+
+function hasBaseline(t: Test) {
+  return t.type !== "Product Test";
+}
+function armLabels(t: Test): [string, string] {
+  if (t.type === "AB Test") return ["Control", "Variant B"];
+  if (t.pills && t.pills.length === 2) return [t.pills[1][1], t.pills[0][1]];
+  if (t.type === "Technical Test") return ["Previous", t.label.replace("Technical Test ", "")];
+  return ["", t.label.replace("Product Test ", "")];
+}
+
+function metricsFor(t: Test) {
+  const r = rand(seedOf(t.id) * 13);
+  const out: Record<string, { main: number; tested: number }> = {};
+  for (const m of METRICS) {
+    const base = BASE[m.key] * (0.85 + r() * 0.3);
+    const lift = (r() - 0.4) * 0.16;
+    out[m.key] = { main: base, tested: base * (1 + lift) };
+  }
+  const days = effEnd(t) - t.start + 1;
+  out.installs.main = Math.round((out.installs.main * days) / 6);
+  out.installs.tested = Math.round(out.installs.main * (0.96 + r() * 0.08));
+  return out;
+}
+
+function fmtMetric(v: number, m: Metric) {
+  if (m.unit === "%") return `${(v * 100).toFixed(2)}%`;
+  if (m.unit === "$") return `$${v.toFixed(3)}`;
+  if (m.unit === "x") return `${(v * 100).toFixed(1)}%`;
+  return Math.round(v).toLocaleString("en-US");
+}
+
+function dailySeries(t: Test, m: Metric, v: { main: number; tested: number }) {
+  const r = rand(seedOf(t.id + m.key));
+  const days = effEnd(t) - t.start + 1;
+  const scale = m.key === "installs" ? 1 / days : 1;
+  return Array.from({ length: days }, (_, i) => {
+    const w = 1 + (r() - 0.5) * 0.18;
+    const ramp = m.key === "installs" ? Math.min(1, 0.55 + i * 0.12) : 1;
+    return { day: t.start + i, main: v.main * scale * w * ramp, tested: v.tested * scale * (w + (r() - 0.5) * 0.06) * ramp };
+  });
+}
+
+/* ---------- Line chart (MUI-like) ---------- */
+
+type Series = { label: string; color: string; values: number[]; dashed?: boolean };
+
+function LineChartBox({ title, xLabels, series, format, shade, wide }: { title: string; xLabels: string[]; series: Series[]; format: (v: number) => string; shade?: number[]; wide?: boolean }) {
+  const W = wide ? 860 : 420, H = wide ? 220 : 210, L = 46, R = 12, T = 12, B = 26;
+  const all = series.flatMap((s) => s.values);
+  const min = Math.min(...all) * 0.92, max = Math.max(...all) * 1.06;
+  const n = xLabels.length;
+  const x = (i: number) => L + (n === 1 ? 0.5 : i / (n - 1)) * (W - L - R);
+  const y = (v: number) => T + (1 - (v - min) / (max - min || 1)) * (H - T - B);
+  const step = (W - L - R) / Math.max(1, n - 1);
+  const ticks = [0, 0.5, 1].map((p) => min + p * (max - min));
+  const every = Math.ceil(n / 6);
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" role="img" aria-label={`${kpi.label} per day, test vs control`}>
-      <defs>
-        <pattern id="th-stripes" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <rect width="6" height="6" fill="#f3f4f6" />
-          <line x1="0" y1="0" x2="0" y2="6" stroke="#e5e7eb" strokeWidth="3" />
-        </pattern>
-      </defs>
-      {data.map((d, i) =>
-        test.unbalanced.includes(d.day) ? <rect key={i} x={x(i) - step / 2} y={P / 2} width={step} height={H - P * 1.5} fill="url(#th-stripes)" /> : null
-      )}
-      {[0.25, 0.5, 0.75].map((t) => (
-        <line key={t} x1={P} x2={W - P} y1={P + t * (H - P * 2)} y2={P + t * (H - P * 2)} stroke="#f1f5f9" />
-      ))}
-      <path d={path("control")} fill="none" stroke="#9ca3af" strokeWidth="2" strokeDasharray="4 4" style={{ transition: "d 450ms ease" }} />
-      <path d={path("test")} fill="none" stroke={test.color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: "d 450ms ease" }} />
-      {data.map((d, i) => (
-        <circle key={i} cx={x(i)} cy={y(d.test)} r="2.5" fill={test.color} style={{ transition: "cy 450ms ease" }} />
-      ))}
-      <text x={P} y={H - 6} fontSize="10" fill="#9ca3af">{fmtShort(data[0].day)}</text>
-      <text x={W - P} y={H - 6} fontSize="10" fill="#9ca3af" textAnchor="end">{fmtShort(data[data.length - 1].day)}</text>
-    </svg>
+    <div className="border border-gray-200 rounded p-3 min-w-0">
+      <div className="flex flex-wrap items-center justify-between gap-2 mb-1">
+        <p className="text-sm font-medium text-gray-800">{title}</p>
+        <div className="flex flex-wrap gap-3 text-[11px] text-gray-600">
+          {series.map((s) => (
+            <span key={s.label} className="flex items-center gap-1">
+              <span className="w-2.5 h-2.5 rounded-full" style={{ background: s.color }} />
+              {s.label}
+            </span>
+          ))}
+        </div>
+      </div>
+      <svg viewBox={`0 0 ${W} ${H}`} className="w-full h-auto" role="img" aria-label={title}>
+        <defs>
+          <pattern id="th-unb" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <rect width="6" height="6" fill="#f3f4f6" />
+            <line x1="0" y1="0" x2="0" y2="6" stroke="#e5e7eb" strokeWidth="3" />
+          </pattern>
+        </defs>
+        {shade?.map((i) => <rect key={i} x={x(i) - step / 2} y={T} width={step} height={H - T - B} fill="url(#th-unb)" />)}
+        {ticks.map((v, i) => (
+          <g key={i}>
+            <line x1={L} x2={W - R} y1={y(v)} y2={y(v)} stroke="#eef0f3" />
+            <text x={L - 6} y={y(v) + 3} fontSize="9" fill="#9ca3af" textAnchor="end">{format(v)}</text>
+          </g>
+        ))}
+        {xLabels.map((l, i) => (i % every === 0 || i === n - 1 ? <text key={i} x={x(i)} y={H - 8} fontSize="9" fill="#9ca3af" textAnchor="middle">{l}</text> : null))}
+        {series.map((s) => (
+          <g key={s.label}>
+            <path
+              d={s.values.map((v, i) => `${i ? "L" : "M"}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(" ")}
+              fill="none" stroke={s.color} strokeWidth="2" strokeDasharray={s.dashed ? "4 4" : undefined}
+              style={{ transition: "d 450ms ease" }}
+            />
+            {s.values.map((v, i) => <circle key={i} cx={x(i)} cy={y(v)} r="2.5" fill={s.color} style={{ transition: "cy 450ms ease" }} />)}
+          </g>
+        ))}
+      </svg>
+    </div>
   );
 }
 
-function Detail({ test, onClose }: { test: Test; onClose: () => void }) {
-  const kpis = useMemo(() => kpisFor(test), [test]);
-  const [active, setActive] = useState(kpis[1].key);
+/* ---------- Test details modal ---------- */
+
+function TestModal({ test, onClose }: { test: Test; onClose: () => void }) {
+  const data = useMemo(() => metricsFor(test), [test]);
+  const base = hasBaseline(test);
+  const [mainLabel, testedLabel] = armLabels(test);
+  const [metricKey, setMetricKey] = useState("installs");
   const [copied, setCopied] = useState(false);
-  const kpi = kpis.find((k) => k.key === active) ?? kpis[0];
+  const [menu, setMenu] = useState(false);
+  const [withUnbalanced, setWithUnbalanced] = useState(false);
+  const metric = METRICS.find((m) => m.key === metricKey) ?? METRICS[0];
+  const live = isLive(test);
+  const days = effEnd(test) - test.start + 1;
 
   useEffect(() => {
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && onClose();
+    const prev = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && (menu ? setMenu(false) : onClose());
     window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
+    return () => {
+      document.body.style.overflow = prev;
+      window.removeEventListener("keydown", onKey);
+    };
+  }, [onClose, menu]);
 
   const copy = async () => {
     try {
-      await navigator.clipboard.writeText(`${window.location.href.split("#")[0]}#test=${test.id}&kpi=${kpi.key}`);
+      await navigator.clipboard.writeText(`${window.location.href.split("#")[0]}#test=${test.id}`);
     } catch {
       /* clipboard can be blocked; the feedback still shows */
     }
     setCopied(true);
-    setTimeout(() => setCopied(false), 1800);
+    setTimeout(() => setCopied(false), 1600);
   };
 
-  const title = test.label || `${test.pills?.map((p) => p[1]).join(" vs ")}`;
+  const diff = (k: string) => ((data[k].tested - data[k].main) / data[k].main) * 100;
+  const diffColor = (d: number, m: Metric) => ((m.lowerBetter ? d <= 0 : d >= 0) ? "#2e7d32" : "#d32f2f");
+  const title = test.pills?.length === 2 ? `${test.game} · ${test.pills[0][1]} vs ${test.pills[1][1]}` : `${test.game} · ${test.label || "Test"}`;
+  const meta = [test.type, ...test.meta.split(" · ")].join(" · ");
 
-  return (
-    <div className="border-t border-gray-200 bg-white animate-[th-in_220ms_ease-out]" style={{ fontFamily: FONT }}>
-      <div className="flex flex-wrap items-start justify-between gap-3 px-6 pt-5">
-        <div className="flex items-start gap-3">
-          <span className="w-9 h-9 rounded-full flex items-center justify-center text-white text-sm font-semibold" style={{ background: test.icon }}>{test.game[0]}</span>
-          <div>
-            <p className="text-[11px] uppercase tracking-wider mb-0.5" style={{ color: test.color }}>{test.type} · {test.game}</p>
-            <h4 className="text-lg text-gray-900">{title}</h4>
-            <p className="text-xs text-gray-500">{test.meta} · {fmtShort(test.start)} – {isLive(test) ? "Live" : fmtShort(test.end)}</p>
-          </div>
-        </div>
-        <div className="flex items-center gap-2">
-          <button onClick={copy} className="text-xs px-3 py-1.5 rounded border text-gray-700 hover:bg-gray-50 transition-colors" style={{ borderColor: copied ? "#16a34a" : "#e5e7eb" }} aria-live="polite">
-            {copied ? "✓ Link copied with this view" : "Copy link to this view"}
-          </button>
-          <button onClick={onClose} aria-label="Close test detail" className="w-8 h-8 rounded text-gray-400 hover:text-gray-700 hover:bg-gray-50">✕</button>
-        </div>
-      </div>
+  const overview: [string, string, number | null][] = [
+    ["Installs", Math.round(data.installs.main + (base ? data.installs.tested : 0)).toLocaleString("en-US"), null],
+    ["Retention D7", fmtMetric(data.retention_d7.tested, METRICS[3]), base ? diff("retention_d7") : null],
+    ["LTV D7", fmtMetric(data.ltv_d7.tested, METRICS[7]), base ? diff("ltv_d7") : null],
+  ];
 
-      <div className="grid grid-cols-[1fr_270px] gap-5 p-6">
-        <div className="rounded-lg border border-gray-100 p-3">
-          <div className="flex flex-wrap items-center justify-between gap-2 px-1 mb-1">
-            <p className="text-sm text-gray-800">{kpi.label} per day</p>
-            <div className="flex items-center gap-3 text-[11px] text-gray-500">
-              <span className="flex items-center gap-1"><span className="w-3 h-0.5 rounded" style={{ background: test.color }} />Test</span>
-              <span className="flex items-center gap-1"><span className="w-3 border-t-2 border-dashed border-gray-400" />Control</span>
-              {test.unbalanced.length > 0 && <span className="flex items-center gap-1"><span className="w-3 h-3 rounded-sm bg-gray-100 border border-gray-200" />Unbalanced day</span>}
+  const retDays = ["D0", "D1", "D3", "D7", "D14"];
+  const ret = (k: "main" | "tested") => [1, data.retention_d1[k], data.retention_d3[k], data.retention_d7[k], data.retention_d14[k]];
+  const ltvDays = ["D0", "D1", "D3", "D7"];
+  const ltv = (k: "main" | "tested") => [data.ltv_d1[k] * 0.45, data.ltv_d1[k], (data.ltv_d1[k] + data.ltv_d7[k]) / 2, data.ltv_d7[k]];
+  const arms = (fn: (k: "main" | "tested") => number[]): Series[] =>
+    base ? [{ label: `${mainLabel} (main)`, color: MAIN, values: fn("main") }, { label: `${testedLabel} (tested)`, color: TESTED, values: fn("tested") }] : [{ label: testedLabel, color: TESTED, values: fn("tested") }];
+
+  const daily = dailySeries(test, metric, data[metric.key]);
+  const shade = withUnbalanced ? [] : daily.map((d, i) => (test.unbalanced.includes(d.day) ? i : -1)).filter((i) => i >= 0);
+
+  return createPortal(
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-8" style={{ fontFamily: FONT }}>
+      <div className="absolute inset-0 bg-black/50 animate-[th-fade_180ms_ease-out]" onClick={onClose} aria-hidden="true" />
+      <div
+        role="dialog"
+        aria-modal="true"
+        aria-label={title}
+        className="relative w-full max-w-[900px] max-h-full flex flex-col bg-white rounded shadow-2xl animate-[th-in_200ms_ease-out]"
+      >
+        {/* Header */}
+        <div className="flex flex-wrap items-start justify-between gap-3 px-5 pt-5 pb-3">
+          <div className="min-w-0">
+            <div className="flex flex-wrap items-center gap-2 mb-1">
+              <span className="w-6 h-6 rounded-full flex items-center justify-center text-white text-[11px] font-bold" style={{ background: test.icon }}>{test.game[0]}</span>
+              <h4 className="text-[1.1rem] font-semibold text-gray-900">{title}</h4>
+              <span className="h-[22px] px-2 rounded-full text-[11px] font-semibold flex items-center bg-black/[.08] text-gray-800">{test.type}</span>
             </div>
+            <p className="text-xs italic text-gray-500">
+              {fmtShort(test.start)} 2026 – {live ? "ongoing" : `${fmtShort(test.end)} 2026`} ({days} days)
+            </p>
+            <p className="text-xs text-gray-500 mt-0.5">{meta}</p>
           </div>
-          <Chart test={test} kpi={kpi} />
+          <div className="relative flex items-center gap-1">
+            <button
+              onClick={() => setMenu((m) => !m)}
+              aria-expanded={menu}
+              className="text-[13px] px-2.5 py-1 rounded border flex items-center gap-1 hover:bg-blue-50"
+              style={{ borderColor: `${MUI_BLUE}80`, color: MUI_BLUE }}
+            >
+              See more details <span className="text-[10px]">▾</span>
+            </button>
+            {menu && (
+              <div className="absolute right-16 top-9 z-10 w-64 bg-white rounded shadow-lg border border-gray-100 py-1 text-sm text-gray-800">
+                <label className="flex items-center justify-between gap-2 px-4 py-2 hover:bg-gray-50 cursor-pointer">
+                  Include unbalanced data
+                  <input type="checkbox" checked={withUnbalanced} onChange={() => setWithUnbalanced((v) => !v)} className="accent-[#1976d2] w-4 h-4" />
+                </label>
+                <div className="border-t border-gray-100 my-1" />
+                {["Test overview (Looker)", "Retention deep dive (Looker)", "Monetization (Looker)"].map((d) => (
+                  <button key={d} onClick={() => setMenu(false)} className="w-full flex items-center gap-3 px-4 py-2 text-left hover:bg-gray-50">
+                    <span className="text-gray-500">↗</span>{d}
+                  </button>
+                ))}
+              </div>
+            )}
+            <span className="relative">
+              <button onClick={copy} aria-label="Copy link" className="w-8 h-8 rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-100">
+                <Icon d="M9 9h10v12H9zM5 15V3h10" size={17} />
+              </button>
+              {copied && <span role="status" className="absolute -bottom-7 left-1/2 -translate-x-1/2 whitespace-nowrap text-[11px] text-white bg-gray-700 rounded px-2 py-0.5">Copied!</span>}
+            </span>
+            <button onClick={onClose} aria-label="Close" className="w-8 h-8 rounded-full flex items-center justify-center text-gray-600 hover:bg-gray-100">
+              <Icon d="M6 6l12 12M18 6L6 18" size={20} />
+            </button>
+          </div>
         </div>
 
-        <table className="w-full text-sm self-start">
-          <caption className="text-left text-[11px] uppercase tracking-wider text-gray-400 pb-2">Click a KPI to chart it</caption>
-          <tbody>
-            {kpis.map((k) => {
-              const d = (k.test - k.control) / k.control;
-              const on = k.key === kpi.key;
-              return (
-                <tr key={k.key}>
-                  <td className="p-0">
-                    <button
-                      onClick={() => setActive(k.key)}
-                      aria-pressed={on}
-                      className={`w-full flex items-center justify-between gap-2 px-3 py-2 rounded text-left transition-colors ${on ? "bg-orange-50" : "hover:bg-gray-50"}`}
-                      style={on ? { boxShadow: `inset 3px 0 0 ${ORANGE}` } : undefined}
-                    >
-                      <span className="text-gray-700">{k.label}</span>
-                      <span className="flex items-center gap-2 tabular-nums">
-                        <span className="text-gray-900">{fmtVal(k.test, k.unit)}</span>
-                        <span className={`text-xs ${d >= 0 ? "text-emerald-600" : "text-rose-600"}`}>{d >= 0 ? "+" : "−"}{Math.abs(d * 100).toFixed(1)}%</span>
-                      </span>
-                    </button>
-                  </td>
+        {/* Scrollable content */}
+        <div className="overflow-y-auto px-5 pb-6">
+          <p className="text-base font-semibold text-gray-900 mb-3">Performance Overview</p>
+          <div className="flex flex-wrap gap-3 mb-5">
+            {overview.map(([label, value, d]) => (
+              <div key={label} className="flex-1 min-w-[140px] border border-gray-200 rounded p-4">
+                <p className="text-sm text-gray-500 mb-1">{label}</p>
+                <p className="text-xl font-semibold text-gray-900 mb-1">{value}</p>
+                {label === "Installs" && base && <p className="text-xs text-gray-500">50% main / 50% tested</p>}
+                {d !== null && (
+                  <p className="text-xs flex items-center gap-1">
+                    <span style={{ color: d >= 0 ? "#2e7d32" : "#d32f2f" }} className="font-semibold">
+                      {d >= 0 ? "↗" : "↘"} {d >= 0 ? "+" : ""}{d.toFixed(1)}%
+                    </span>
+                    <span className="text-gray-500">vs {mainLabel}</span>
+                  </p>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+            <LineChartBox title="Retention Rate Over Time" xLabels={retDays} series={arms(ret)} format={(v) => `${Math.round(v * 100)}%`} />
+            <LineChartBox title={base && test.type !== "AB Test" ? "ROAS Evolution" : "LTV Evolution"} xLabels={ltvDays} series={arms(ltv)} format={(v) => `$${v.toFixed(2)}`} />
+          </div>
+
+          <div className="mt-5">
+            <LineChartBox
+              title={`Daily ${metric.label}`}
+              wide
+              xLabels={daily.map((d) => fmtShort(d.day))}
+              series={base
+                ? [{ label: `${mainLabel} (main)`, color: MAIN, values: daily.map((d) => d.main) }, { label: `${testedLabel} (tested)`, color: TESTED, values: daily.map((d) => d.tested) }]
+                : [{ label: testedLabel, color: TESTED, values: daily.map((d) => d.tested) }]}
+              format={(v) => fmtMetric(v, metric)}
+              shade={shade}
+            />
+            {shade.length > 0 && <p className="text-[11px] text-gray-500 mt-1.5">Shaded days didn’t have enough balanced installs and are left out of the totals.</p>}
+          </div>
+
+          <div className="mt-4 border border-gray-200 rounded overflow-x-auto">
+            <table className="w-full text-[13px]">
+              <thead>
+                <tr className="bg-black/[.04] text-gray-900">
+                  <th className="text-left font-semibold px-4 py-2 min-w-[130px]">Metric</th>
+                  {base && (
+                    <th className="text-right font-semibold px-4 py-2">
+                      {mainLabel}
+                      <span className="block text-xs" style={{ color: MAIN }}>(main)</span>
+                    </th>
+                  )}
+                  <th className="text-right font-semibold px-4 py-2">
+                    {testedLabel}
+                    {base && <span className="block text-xs" style={{ color: TESTED }}>(tested)</span>}
+                  </th>
+                  {base && <th className="text-right font-semibold px-4 py-2">Difference</th>}
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+                {METRICS.map((m) => {
+                  const d = diff(m.key);
+                  const on = m.key === metricKey;
+                  return (
+                    <tr
+                      key={m.key}
+                      onClick={() => setMetricKey(m.key)}
+                      tabIndex={0}
+                      onKeyDown={(e) => (e.key === "Enter" || e.key === " ") && (e.preventDefault(), setMetricKey(m.key))}
+                      aria-selected={on}
+                      className={`cursor-pointer border-t border-gray-100 transition-colors ${on ? "bg-blue-500/[.08]" : "hover:bg-black/[.04]"}`}
+                    >
+                      <td className="px-4 py-2 font-medium text-gray-800">{m.label}</td>
+                      {base && <td className="px-4 py-2 text-right tabular-nums">{fmtMetric(data[m.key].main, m)}</td>}
+                      <td className="px-4 py-2 text-right tabular-nums">{fmtMetric(data[m.key].tested, m)}</td>
+                      {base && (
+                        <td className="px-4 py-2 text-right font-semibold tabular-nums" style={{ color: diffColor(d, m) }}>
+                          {d >= 0 ? "+" : ""}{d.toFixed(1)}%
+                        </td>
+                      )}
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+          <p className="text-[11px] text-gray-400 mt-2">Click any metric row to see it day by day in the chart above.</p>
+        </div>
       </div>
     </div>
+,
+    document.body
   );
 }
 
@@ -328,6 +504,7 @@ export function TestHubPlayground() {
     <div className="space-y-4">
       <style>{`
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+        @keyframes th-fade{from{opacity:0}to{opacity:1}}
         @keyframes th-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
       `}</style>
 
@@ -550,7 +727,7 @@ export function TestHubPlayground() {
                     </p>
                   )}
 
-                  {selected && state === "live" && <Detail key={selected.id} test={selected} onClose={() => setSelected(null)} />}
+                  {selected && state === "live" && <TestModal key={selected.id} test={selected} onClose={() => setSelected(null)} />}
                 </div>
               </div>
             </div>
