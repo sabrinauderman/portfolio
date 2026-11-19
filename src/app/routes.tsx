@@ -8,6 +8,7 @@ import { CultiveProjectPage } from "./pages/CultiveProjectPage";
 import { RemoteSettingsProjectPage } from "./pages/RemoteSettingsProjectPage";
 import { GameDesignPage } from "./pages/GameDesignPage";
 import { TinyRushProjectPage } from "./pages/TinyRushProjectPage";
+import { DesignSystemProjectPage } from "./pages/DesignSystemProjectPage";
 
 export const router = createBrowserRouter(
   [
@@ -34,6 +35,10 @@ export const router = createBrowserRouter(
     {
       path: "/projects/remote-settings",
       Component: RemoteSettingsProjectPage,
+    },
+    {
+      path: "/projects/design-system",
+      Component: DesignSystemProjectPage,
     },
     {
       path: "/projects/tracking-tool",

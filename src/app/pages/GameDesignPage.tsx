@@ -61,7 +61,7 @@ export function GameDesignPage() {
               <span>All projects</span>
             </Link>
             <h1 className="text-6xl font-light tracking-tight text-gray-900">
-              Game Design
+              Side Hustles
             </h1>
             <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
               Games and playful learning apps: core loops, onboarding, HUDs,

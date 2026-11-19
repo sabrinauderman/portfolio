@@ -7,8 +7,20 @@ import { gameProjects } from "./GameDesignPage";
 import testHubCover from "@/assets/test-hub/cover.jpg";
 import trackingToolCover from "@/assets/13ea1494f77e74c75cc4b6c229fae9de3e2ae247.png";
 import remoteSettingsCover from "@/assets/remote-settings/baselines.jpg";
+import designSystemCover from "@/assets/design-system/cover";
 
 const projects = [
+  {
+    id: "test-hub",
+    title: "Test Hub",
+    description:
+      "Madbox's internal platform for game tests: Game Managers see what's live, how it's performing and whether to ship, without opening Looker. Launched in four months.",
+    role: "Product Designer & Product Manager",
+    color: "#3f8f8a",
+    image: testHubCover,
+    isComponent: false,
+    hasNDA: true,
+  },
   {
     id: "remote-settings",
     title: "Remote Settings",
@@ -21,13 +33,13 @@ const projects = [
     hasNDA: true,
   },
   {
-    id: "test-hub",
-    title: "Test Hub",
+    id: "design-system",
+    title: "Madbox Design System",
     description:
-      "Madbox's internal platform for game tests: Game Managers see what's live, how it's performing and whether to ship, without opening Looker. Launched in four months.",
-    role: "Product Designer & Product Manager",
-    color: "#3f8f8a",
-    image: testHubCover,
+      "A token-based design system for Madbox's internal tools: foundations, 30+ components, Madbox patterns like the filter bar and app shell, and dark mode built in.",
+    role: "Product Designer",
+    color: "#ff6347",
+    image: designSystemCover,
     isComponent: false,
     hasNDA: true,
   },
@@ -141,7 +153,7 @@ export function ProjectsPage() {
               </Link>
             ))}
 
-            {/* Game Design folder: same size as a project card, opens a page listing the game projects. */}
+            {/* Side Hustles folder: same size as a project card, opens a page listing the game projects. */}
             <Link to="/projects/game-design" className="group space-y-6">
               <div className="relative aspect-[4/3] transition-transform group-hover:scale-[1.02]">
                 {/* Folder tab */}
@@ -171,7 +183,7 @@ export function ProjectsPage() {
               <div className="space-y-3">
                 <div className="flex flex-col gap-2">
                   <h2 className="text-3xl font-light text-gray-900 group-hover:text-gray-600 transition-colors">
-                    Game Design
+                    Side Hustles
                   </h2>
                   <span className="text-xs uppercase tracking-wider px-3 py-1 rounded-full self-start bg-[#e8741a20] text-[#e8741a]">
                     Game & UX/UI Design

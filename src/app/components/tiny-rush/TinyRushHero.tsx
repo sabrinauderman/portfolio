@@ -28,7 +28,7 @@ export function TinyRushHero() {
           className="inline-flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900 transition-colors"
         >
           <span>←</span>
-          <span>Back to Game Design</span>
+          <span>Back to Side Hustles</span>
         </Link>
 
         <div className="space-y-2">
