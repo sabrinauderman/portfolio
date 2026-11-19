@@ -7,7 +7,6 @@ import { gameProjects } from "./GameDesignPage";
 import testHubCover from "@/assets/test-hub/cover.jpg";
 import trackingToolCover from "@/assets/13ea1494f77e74c75cc4b6c229fae9de3e2ae247.png";
 import remoteSettingsCover from "@/assets/remote-settings/baselines.jpg";
-import designSystemCover from "@/assets/design-system/cover";
 
 const projects = [
   {
@@ -29,17 +28,6 @@ const projects = [
     role: "Product Manager & Product Designer",
     color: "#5b7fa6",
     image: remoteSettingsCover,
-    isComponent: false,
-    hasNDA: true,
-  },
-  {
-    id: "design-system",
-    title: "Madbox Design System",
-    description:
-      "A token-based design system for Madbox's internal tools: foundations, 30+ components, Madbox patterns like the filter bar and app shell, and dark mode built in.",
-    role: "Product Designer",
-    color: "#ff6347",
-    image: designSystemCover,
     isComponent: false,
     hasNDA: true,
   },
