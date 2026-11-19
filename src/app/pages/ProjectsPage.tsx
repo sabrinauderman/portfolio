@@ -7,7 +7,7 @@ import { gameProjects } from "./GameDesignPage";
 import testHubCover from "@/assets/test-hub/cover.jpg";
 import trackingToolCover from "@/assets/13ea1494f77e74c75cc4b6c229fae9de3e2ae247.png";
 import remoteSettingsCover from "@/assets/remote-settings/baselines.jpg";
-import designSystemCover from "@/assets/design-system/colors.jpg";
+import designSystemCover from "@/assets/design-system/cover";
 
 const projects = [
   {
