@@ -99,7 +99,8 @@ export function HomePage() {
               end and build the user journeys myself. Only then do I design.
               AI is a tool in my process, never the one making the calls: it
               helps me synthesize, prototype and automate, while the judgment
-              stays mine.
+              stays mine. I prototype in code with Claude Code: this portfolio,
+              including the interactive Test Hub recreation, is built in React.
             </p>
             <p className="text-lg text-gray-700 leading-relaxed">
               I&apos;m looking for teams that value ownership and respect, invest
