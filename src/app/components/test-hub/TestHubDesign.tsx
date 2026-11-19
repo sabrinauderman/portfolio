@@ -1,5 +1,6 @@
 import React from "react";
 import { Screenshot } from "../remote-settings/Screenshot";
+import { TestHubPlayground } from "./TestHubPlayground";
 import home from "@/assets/test-hub/home.jpg";
 import abTest from "@/assets/test-hub/ab-test.jpg";
 import rollout from "@/assets/test-hub/rollout.jpg";
@@ -61,6 +62,31 @@ export function TestHubDesign() {
         </p>
       </div>
 
+      {/* Interactive recreation */}
+      <div className="max-w-5xl mx-auto px-8 space-y-6">
+        <div className="flex items-start gap-5">
+          <div
+            className="w-1 h-20 rounded-full flex-shrink-0 mt-1"
+            style={{ background: `linear-gradient(to bottom, ${ACCENT}, ${ACCENT}33)` }}
+          />
+          <div className="flex-1">
+            <p className="text-xs uppercase tracking-wider mb-1" style={{ color: ACCENT }}>
+              Try it
+            </p>
+            <h3 className="text-2xl font-light text-gray-900 mb-2">The calendar and test view, in code</h3>
+            <p className="text-gray-600 leading-relaxed text-[15px] mb-1.5">
+              A working recreation of the core flow, so you can feel the interactions instead of reading about them.
+            </p>
+            <p className="text-sm text-gray-500 leading-relaxed">
+              Open a test, click a KPI and watch the chart follow, filter by test type, copy a link to the view,
+              and switch between the live, loading, empty and error states I designed. Built in React with
+              Claude Code; games and numbers are fictional.
+            </p>
+          </div>
+        </div>
+        <TestHubPlayground />
+      </div>
+
       {workflows.map((w, i) => (
         <div key={w.title} className="space-y-5 max-w-5xl mx-auto px-8">
           <div className="flex items-start gap-5">
@@ -115,7 +141,8 @@ export function TestHubDesign() {
             Interaction Details
           </h2>
           <p className="text-gray-600 leading-relaxed">
-            Small behaviors that make the tool feel fast and trustworthy.
+            Small behaviors that make the tool feel fast and trustworthy. The
+            first three are live in the recreation above.
           </p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
