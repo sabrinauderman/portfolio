@@ -46,9 +46,9 @@ const slides = [
   },
   {
     image: slide6,
-    step: "Outcome",
-    title: "Close on what success looks like",
-    text: "The project hasn’t shipped, so instead of promising numbers the deck ends on outcomes the team can hold the work to.",
+    step: "Result",
+    title: "End on the proof",
+    text: "Tested on 30 real issues, the old process caught 4. The new validation catches 26. One comparison closes the argument better than a list of promises.",
   },
 ];
 
