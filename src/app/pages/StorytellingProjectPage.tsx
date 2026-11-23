@@ -48,14 +48,8 @@ const slides = [
     image: slide6,
     step: "Result",
     title: "End on the proof",
-    text: "Tested on 30 real issues, the old process caught 4. The new validation catches 26. One comparison closes the argument better than a list of promises.",
+    text: "One before-and-after closes the argument better than a list of promises. The project hasn’t shipped, so the proof comes from testing on real issues.",
   },
-];
-
-const deckResult = [
-  ["30", "real issues tested"],
-  ["4", "caught by the old process"],
-  ["26", "caught by the new validation"],
 ];
 
 const process = [
@@ -224,16 +218,19 @@ export function StorytellingProjectPage() {
             </div>
             <div className="space-y-16">
               {slides.map((s, i) => (
-                <div key={s.step} className="grid md:grid-cols-5 gap-8 items-center">
+                <div
+                  key={s.step}
+                  className={s.step === "Result" ? "flex flex-col-reverse gap-6" : "grid md:grid-cols-5 gap-8 items-center"}
+                >
                   <a
                     href={s.image}
                     target="_blank"
                     rel="noreferrer"
-                    className="md:col-span-3 block rounded-xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-shadow"
+                    className={`${s.step === "Result" ? "md:w-3/5" : "md:col-span-3"} block rounded-xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-shadow`}
                   >
                     <img src={s.image} alt={`Slide ${i + 1}: ${s.title}`} className="w-full h-auto block" loading="lazy" />
                   </a>
-                  <div className="md:col-span-2 space-y-3">
+                  <div className={`${s.step === "Result" ? "max-w-3xl" : "md:col-span-2"} space-y-3`}>
                     <p className="text-sm font-semibold uppercase tracking-wider" style={{ color: ACCENT }}>
                       {String(i + 1).padStart(2, "0")} · {s.step}
                     </p>
@@ -242,27 +239,6 @@ export function StorytellingProjectPage() {
                   </div>
                 </div>
               ))}
-            </div>
-            <div
-              className="rounded-2xl p-8 border space-y-6"
-              style={{ backgroundColor: `${ACCENT}0d`, borderColor: `${ACCENT}33` }}
-            >
-              <div className="space-y-3">
-                <h3 className="text-2xl font-light text-gray-900">The result</h3>
-                <p className="text-gray-600 leading-relaxed max-w-3xl">
-                  Before shipping, we tested the new validation against 30 real
-                  issues. The old process caught 4 of them. The new validation
-                  caught 26. These results come from testing, not production.
-                </p>
-              </div>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                {deckResult.map(([value, label]) => (
-                  <div key={label} className="bg-white border border-gray-100 rounded-lg p-6 space-y-3">
-                    <p className="text-3xl font-light tracking-tight" style={{ color: ACCENT }}>{value}</p>
-                    <p className="text-sm text-gray-600 leading-relaxed">{label}</p>
-                  </div>
-                ))}
-              </div>
             </div>
           </section>
 
