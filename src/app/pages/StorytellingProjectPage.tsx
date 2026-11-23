@@ -218,16 +218,19 @@ export function StorytellingProjectPage() {
             </div>
             <div className="space-y-16">
               {slides.map((s, i) => (
-                <div key={s.step} className="grid md:grid-cols-5 gap-8 items-center">
+                <div
+                  key={s.step}
+                  className={s.step === "Result" ? "flex flex-col-reverse gap-6" : "grid md:grid-cols-5 gap-8 items-center"}
+                >
                   <a
                     href={s.image}
                     target="_blank"
                     rel="noreferrer"
-                    className="md:col-span-3 block rounded-xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-shadow"
+                    className={`${s.step === "Result" ? "md:w-3/5" : "md:col-span-3"} block rounded-xl overflow-hidden border border-gray-200 shadow-lg hover:shadow-xl transition-shadow`}
                   >
                     <img src={s.image} alt={`Slide ${i + 1}: ${s.title}`} className="w-full h-auto block" loading="lazy" />
                   </a>
-                  <div className="md:col-span-2 space-y-3">
+                  <div className={`${s.step === "Result" ? "max-w-3xl" : "md:col-span-2"} space-y-3`}>
                     <p className="text-sm font-semibold uppercase tracking-wider" style={{ color: ACCENT }}>
                       {String(i + 1).padStart(2, "0")} · {s.step}
                     </p>
