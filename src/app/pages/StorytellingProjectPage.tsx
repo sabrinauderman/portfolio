@@ -52,6 +52,12 @@ const slides = [
   },
 ];
 
+const deckResult = [
+  ["30", "real issues tested"],
+  ["4", "caught by the old process"],
+  ["26", "caught by the new validation"],
+];
+
 const process = [
   ["01", "Find the decision", "Before any layout: who is in the room, and what do they need to decide by the end? For Remote Settings, it was whether the redesign deserved to move up the priority list."],
   ["02", "Gather, then cut", "I traced real incidents from Slack threads and war room postmortems. Most of what I found didn’t make it in: the story needs the strongest evidence, not all of it."],
@@ -236,6 +242,27 @@ export function StorytellingProjectPage() {
                   </div>
                 </div>
               ))}
+            </div>
+            <div
+              className="rounded-2xl p-8 border space-y-6"
+              style={{ backgroundColor: `${ACCENT}0d`, borderColor: `${ACCENT}33` }}
+            >
+              <div className="space-y-3">
+                <h3 className="text-2xl font-light text-gray-900">The result</h3>
+                <p className="text-gray-600 leading-relaxed max-w-3xl">
+                  Before shipping, we tested the new validation against 30 real
+                  issues. The old process caught 4 of them. The new validation
+                  caught 26. These results come from testing, not production.
+                </p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                {deckResult.map(([value, label]) => (
+                  <div key={label} className="bg-white border border-gray-100 rounded-lg p-6 space-y-3">
+                    <p className="text-3xl font-light tracking-tight" style={{ color: ACCENT }}>{value}</p>
+                    <p className="text-sm text-gray-600 leading-relaxed">{label}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </section>
 

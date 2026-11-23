@@ -2,6 +2,12 @@ import React from "react";
 
 const ACCENT = "#5b7fa6";
 
+const result = [
+  { value: "30", label: "real issues tested" },
+  { value: "4", label: "caught by the old process" },
+  { value: "26", label: "caught by the new validation" },
+];
+
 const success = [
   {
     icon: "🛡️",
@@ -90,15 +96,42 @@ const quotes = [
 export function RemoteSettingsImpact() {
   return (
     <div className="space-y-16">
+      {/* Result */}
+      <div>
+        <h2 className="text-3xl font-light tracking-tight text-gray-900 mb-8">
+          Result
+        </h2>
+        <p className="text-gray-600 leading-relaxed mb-8">
+          Before shipping, we tested the new validation against 30 real issues.
+          The old process caught 4 of them. The new validation caught 26.
+        </p>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {result.map((s) => (
+            <div
+              key={s.label}
+              className="bg-white border border-gray-100 rounded-lg p-6 space-y-3"
+            >
+              <p
+                className="text-3xl font-light tracking-tight"
+                style={{ color: ACCENT }}
+              >
+                {s.value}
+              </p>
+              <p className="text-sm text-gray-600 leading-relaxed">{s.label}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Definition of Success */}
       <div>
         <h2 className="text-3xl font-light tracking-tight text-gray-900 mb-8">
           Definition of Success
         </h2>
         <p className="text-gray-600 leading-relaxed mb-8">
-          Remote Settings is still in progress and hasn&apos;t shipped, so
-          there are no production results yet. The redesign aims to make
-          changing a live game safe without making it slow.
+          Remote Settings hasn&apos;t shipped yet, so these results come from
+          testing, not production. The redesign aims to make changing a live
+          game safe without making it slow.
         </p>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
