@@ -7,6 +7,8 @@ import { gameProjects } from "./GameDesignPage";
 import testHubCover from "@/assets/test-hub/cover.jpg";
 import trackingToolCover from "@/assets/13ea1494f77e74c75cc4b6c229fae9de3e2ae247.png";
 import remoteSettingsCover from "@/assets/remote-settings/baselines.jpg";
+import designSystemCover from "@/assets/design-system/cover";
+import storytellingCover from "@/assets/storytelling/cover.jpg";
 
 const projects = [
   {
@@ -30,6 +32,28 @@ const projects = [
     image: remoteSettingsCover,
     isComponent: false,
     hasNDA: true,
+  },
+  {
+    id: "storytelling",
+    title: "Strategic Storytelling",
+    description:
+      "A business-case deck and a leadership one-pager that turn complex product work into decisions: from war room incidents and test data to a clear narrative.",
+    role: "Visual Storytelling & Data Viz",
+    color: "#7a5ba6",
+    image: storytellingCover,
+    isComponent: false,
+    hasNDA: false,
+  },
+  {
+    id: "design-system",
+    title: "Madbox Design System",
+    description:
+      "A token-based design system for Madbox's internal tools: foundations, 30+ components and shared patterns, so every tool looks and behaves the same.",
+    role: "Product Designer",
+    color: "#ff6347",
+    image: designSystemCover,
+    isComponent: false,
+    hasNDA: false,
   },
   {
     id: "tracking-tool",
@@ -73,7 +97,7 @@ export function ProjectsPage() {
               Projects
             </h1>
             <p className="text-xl text-gray-600 leading-relaxed">
-              Product design for tools &amp; SaaS, and UX/UI for games.
+              Product design for tools &amp; SaaS, visual storytelling, and UX/UI for games.
             </p>
           </div>
 
