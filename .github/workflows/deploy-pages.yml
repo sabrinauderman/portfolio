@@ -15,10 +15,9 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  # Build and deploy run as separate jobs (GitHub's recommended layout), so the
+  # Pages artifact is fully registered before the deploy job looks it up.
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -44,7 +43,13 @@ jobs:
         with:
           path: './dist'
 
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
