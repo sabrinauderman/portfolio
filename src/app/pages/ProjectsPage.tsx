@@ -37,7 +37,7 @@ const projects = [
     id: "storytelling",
     title: "Strategic Storytelling",
     description:
-      "A business-case deck and a leadership one-pager that turn complex product work into decisions: from war room incidents and test data to a clear narrative.",
+      "Three decks and one-pagers that turn complex product work into decisions: from war room incidents and test data to a clear narrative.",
     role: "Visual Storytelling & Data Viz",
     color: "#7a5ba6",
     image: storytellingCover,
