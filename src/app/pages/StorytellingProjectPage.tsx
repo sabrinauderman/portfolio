@@ -214,6 +214,12 @@ export function StorytellingProjectPage() {
                 case. Six slides, one argument: changing a live game has to become
                 safe without becoming slow.
               </p>
+              <p className="text-lg text-gray-600 max-w-3xl leading-relaxed">
+                It started as a written pitch: five risks and ten incidents, each
+                with its own story. For leadership I cut it to four numbers and one
+                pattern, because ten incidents read as bad luck, not as a problem
+                worth funding.
+              </p>
               <PdfLink file="RemoteSettings_BusinessCase_Deck.pdf">Open the full deck (PDF) →</PdfLink>
             </div>
             <div className="space-y-16">
